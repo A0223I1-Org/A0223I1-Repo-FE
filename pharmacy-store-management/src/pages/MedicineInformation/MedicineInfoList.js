@@ -94,7 +94,7 @@ export function MedicineInfoList() {
                                 <tr key={item.medicineId} onClick={() => selectRow(item)} className={medicine.medicineId === item.medicineId ? 'table-primary' : ''}>
                                     <td>{item.medicineId}</td>
                                     <td>{item.medicineGroup?.medicineGroupName}</td>
-                                    <td>{item.material}</td>
+                                    <td>{item.medicineName}</td>
                                     <td>{item.activeIngredient}</td>
                                     <td>{item.unit}</td>
                                     <td>{item.conversionUnit}</td>

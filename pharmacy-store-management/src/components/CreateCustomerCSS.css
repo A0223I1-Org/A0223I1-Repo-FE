@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+label {
+    display: inline;
+    position: absolute;
+    left: 20px;
+}
+
+input {
+    display: inline;
+    width: 200px;
+    margin-left: 200px;
+    border: 0.5px solid lightgray;
+}
+
+input:focus {
+    outline: 1.5px solid #3c9;
+    border-radius: 2px;
+}
+
+select {
+    display: inline;
+    width: 200px;
+    margin-left: 200px;
+    border: 0.5px solid lightgray;
+}
+
+select:focus {
+    outline: 1.5px solid #3c9;
+    border-radius: 2px;
+}
+
+fieldset {
+    border: 1px solid darkgray;
+    padding: 20px;
+    position: relative;
+    width: 500px;
+}
+
+legend {
+    padding: 10px;
+    all: revert;
+}
+
+
+button:hover {
+    background-color: #45a049;
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+a:hover{
+    color: white;
+}
+.btn-custom {
+    background-color: #123456;
+    color: #ffffff;
+}
+
+.btn-custom:hover {
+    background-color: #0c253f;
+    color: #ffffff;
+}
+@media screen and (max-width: 500px) {
+    fieldset {
+        width: 250px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+    }
+    span{
+        margin-left: 210px;
+    }
+    .btn{
+        margin: 0;
+    }
+
+}

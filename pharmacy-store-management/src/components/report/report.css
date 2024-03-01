@@ -1,0 +1,56 @@
+/*input{*/
+/*    display: inline-block;*/
+/*}*/
+body{
+    font-family: "Poppins";
+}
+legend{
+    all: revert;
+}
+fieldset{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+.form-group div {
+    margin-right: 140px;
+}
+.form-group div:last-child {
+    margin-right: 0;
+}
+
+.report{
+    display: flex;
+    justify-content: center;
+}
+
+.report .debt{
+    margin: auto 150px;
+}
+.report .list{
+    margin: auto 150px;
+}
+.action{
+    display: flex;
+    justify-content: space-between;
+}
+.action .chart{
+    margin-right: 660px;
+}
+.report {
+    display: flex; /* Sử dụng flexbox để thẳng hàng các div con */
+    justify-content: center; /* Các div con sẽ được căn giữa trong không gian flex container */
+}
+.report .debt{
+    margin-top: 10px;
+}
+.report .list{
+    margin-top: 10px;
+}
+.col-10 fieldset {
+    margin-top:15px;
+}

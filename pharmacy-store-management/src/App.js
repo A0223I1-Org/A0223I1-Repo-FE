@@ -1,22 +1,18 @@
 import './App.css';
+import {ReportChart} from "./components/report/report-chart";
+import {Report} from "./components/report/report";
+import {ToastContainer} from "react-toastify";
+import {Route, Routes} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <>
+    <Routes>
+      <Route path="/" element={<Report/>}></Route>
+      <Route path="/chart" element={<ReportChart/>}></Route>
+    </Routes>
+    <ToastContainer />
+  </>
   );
 }
 

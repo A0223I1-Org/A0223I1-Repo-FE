@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const findAllCustomer = async () => {
+export const findAllCustomer = async (pageNumber) => {
     try {
-        const result = await axios.get(`http://localhost:8080/api/customer/list`);
+        const result = await axios.get('http://localhost:8080/api/customer/list');
         console.log(result.data.content);
         return result.data.content;
     } catch (e) {

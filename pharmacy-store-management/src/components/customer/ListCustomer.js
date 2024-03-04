@@ -5,13 +5,15 @@ import toast from "bootstrap/js/src/toast";
 export const ListCustomer = () => {
     const [customers, setCustomers] = useState([]);
     const [idCustomerDelete, setIdCustomerDelete] = useState([]);
-
+    const [sortOption, setSortOption] = useState('');
     const [selectedRow, setSelectedRow] = useState(null);
     const highlightedRowRef = useRef(null);
+
 
     const fetchApi = async () => {
         try {
             const result = await CustomerService.findAllCustomer();
+            console.log(result)
             setCustomers(result);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -44,6 +46,21 @@ export const ListCustomer = () => {
             highlightedRow.classList.remove('selected-row');
         }
     };
+
+    const sortedCustomers = [...customers].sort((a, b) => {
+        switch (sortOption) {
+            case 'Nhóm khách hàng':
+                return a.customerType.localeCompare(b.customerType);
+            case 'Tên khách hàng':
+                return a.customerName.localeCompare(b.customerName);
+            case 'Địa chỉ':
+                return a.address.localeCompare(b.address);
+            case 'SĐT':
+                return a.phoneNumber.localeCompare(b.phoneNumber);
+            default:
+                return 0;
+        }
+    });
 
     const handleDeleteButtonClick = () => {
         if (selectedRow) {
@@ -93,14 +110,14 @@ export const ListCustomer = () => {
                                         </select>
                                         <input type="text" className="form-control" aria-label="Sizing example input"
                                                aria-describedby="inputGroup-sizing-sm"/>
-                                        <button className="myButton"><i className="bi bi-search"></i> Tìm kiếm
+                                        <button className="btn btn-primary"><i className="bi bi-search"></i> Tìm kiếm
                                         </button>
                                     </a>
                                 </div>
                                 <div className="sort">
                                     <span>Sắp xếp theo</span>
                                     <a>
-                                        <select className="form-select">
+                                        <select className="form-select" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
                                             <option selected>Vui lòng chọn</option>
                                             <option value="Nhóm khách hàng">Nhóm khách hàng</option>
                                             <option value="Tên khách hàng">Tên khách hàng</option>
@@ -115,44 +132,38 @@ export const ListCustomer = () => {
                     <div>
                         <fieldset className="border rounded-3 p-3">
                             <legend><b>Danh sách khách hàng</b></legend>
-                            <table className="myTable">
-                                <thead>
-                                <tr className="row-scope">
-                                    <td>Mã khách hàng</td>
-                                    <td>Tên khách hàng</td>
-                                    <td>Tuổi</td>
-                                    <td>Địa chỉ</td>
-                                    <td>SĐT</td>
-                                    <td>Nhóm khách hàng</td>
-                                    <td>Ghi chú</td>
-                                </tr>
-                                </thead>
-                                {/*<tr className="table-row" onClick={highlightRow}>*/}
-                                {/*    <td>KH01</td>*/}
-                                {/*    <td className="row-name">Nguyễn Thu Minh</td>*/}
-                                {/*    <td>23</td>*/}
-                                {/*    <td className="row-address">Liên Chiểu, Đà Nẵng</td>*/}
-                                {/*    <td>032548976</td>*/}
-                                {/*    <td>Khách lẻ</td>*/}
-                                {/*    <td></td>*/}
-                                {/*</tr>*/}
-                                <tbody>
-                                {customers.map((customer, index) => (
-                                    <tr className="table-row" key={index} onClick={(event) => {
-                                        highlightRow(event);
-                                        setIdCustomerDelete(customer.customerId);
-                                    }}>
-                                        <td>{customer.customerId}</td>
-                                        <td className="row-name">{customer.customerName}</td>
-                                        <td>{customer.age}</td>
-                                        <td className="row-address">{customer.address}</td>
-                                        <td>{customer.phoneNumber}</td>
-                                        <td>{customer.customerType}</td>
-                                        <td>{customer.note}</td>
+
+                            <div className="table-responsive">
+                                <table className="myTable">
+                                    <thead>
+                                    <tr className="row-scope">
+                                        <td>Mã khách hàng</td>
+                                        <td>Tên khách hàng</td>
+                                        <td>Tuổi</td>
+                                        <td>Địa chỉ</td>
+                                        <td>SĐT</td>
+                                        <td>Nhóm khách hàng</td>
+                                        <td>Ghi chú</td>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    {sortedCustomers.map((customer, index) => (
+                                        <tr className="table-row" key={index} onClick={(event) => {
+                                            highlightRow(event);
+                                            setIdCustomerDelete(customer.customerId);
+                                        }}>
+                                            <td>{customer.customerId}</td>
+                                            <td className="row-name">{customer.customerName}</td>
+                                            <td>{customer.age}</td>
+                                            <td className="row-address">{customer.address}</td>
+                                            <td>{customer.phoneNumber}</td>
+                                            <td>{customer.customerType}</td>
+                                            <td>{customer.note}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
                             <nav aria-label="Page navigation example">
                                 <ul className="pagination justify-content-center">
                                     <li className="page-item"><span className="page-link" href="#">Trước</span></li>
@@ -168,7 +179,7 @@ export const ListCustomer = () => {
                         </button>
                         <button type="button" className="btn btn-success"><i className="bi bi-plus-circle"></i> Thêm
                         </button>
-                        <button type="button" className="btn btn-custom"><i className="bi bi-pencil-square"></i> Sửa
+                        <button type="button" className="btn btn-secondary"><i className="bi bi-pencil-square"></i> Sửa
                         </button>
                         <button type="button" className="btn btn-danger" onClick={handleDeleteButtonClick}>
                             <i className="bi bi-x-circle"></i> Xóa

@@ -1,5 +1,18 @@
 import axios from "axios";
 
+export const getCustomerById = async (idCustomerEdit) =>{
+    try{
+        const result = await axios.get('http://localhost:8080/api/customer/getCustomerByIdd/'+idCustomerEdit)
+        console.log(result.data)
+        return result.data
+    }
+    catch (e){
+        console.log(e)
+        throw e
+    }
+}
+
+
 export const createCustomer = async (newCustomer) => {
     try {
         await axios.post('http://localhost:8080/api/customer/createCustomer', newCustomer)

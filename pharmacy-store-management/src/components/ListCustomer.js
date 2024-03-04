@@ -1,10 +1,23 @@
 import {useEffect, useRef, useState} from "react";
 import './ListCustomer.css';
 import * as CustomerService from "../../src/utils/InformationService/CustomerManagementService/CustomerService";
-import toast from "bootstrap/js/src/toast";
+import toast from "react-toastify";
 import {NavLink} from "react-router-dom";
+
 export const ListCustomer = () => {
     const [customers, setCustomers] = useState([]);
+    const [selectedCustomer, setSelectedCustomer] = useState(
+        {
+            customerId: '',
+            customerName: "",
+            age: 18,
+            address: "",
+            phoneNumber: "",
+            customerType: "",
+            note: "",
+            accountId: 0
+        }
+    );
     const [idCustomerDelete, setIdCustomerDelete] = useState([]);
 
     const [selectedRow, setSelectedRow] = useState(null);
@@ -16,6 +29,15 @@ export const ListCustomer = () => {
             setCustomers(result);
         } catch (error) {
             console.error('Error fetching data:', error);
+        }
+    }
+    const fetchSelectedCustomer = async (id) => {
+        try {
+            const result = await CustomerService.getCustomerById(id);
+            console.log(result)
+            setSelectedCustomer(result);
+        } catch (error) {
+            console.error('Error getting data:', error);
         }
     }
 
@@ -38,7 +60,6 @@ export const ListCustomer = () => {
             highlightedRowRef.current = row;
         }
     };
-
     const removeHighlight = () => {
         const highlightedRow = document.querySelector('.selected-row');
         if (highlightedRow) {
@@ -73,6 +94,47 @@ export const ListCustomer = () => {
         removeHighlight();
     };
 
+    const handleEditButtonClick = async () => {
+        if (selectedRow) {
+            try {
+                const customer = selectedCustomer;
+                const editModal = document.getElementById('editModal');
+                document.getElementById('customerId').value = customer.customerId;
+                document.getElementById('customerName').value = customer.customerName;
+                document.getElementById('address').value = customer.address;
+                document.getElementById('age').value = customer.age;
+                document.getElementById('phoneNumber').value = customer.phoneNumber;
+                document.getElementById('customerType').value = customer.customerType;
+                document.getElementById('note').value = customer.note;
+
+                editModal.classList.add('show');
+                editModal.style.display = 'block';
+            } catch (error) {
+                console.error('Error fetching customer data:', error);
+            }
+        } else {
+            alert('Chọn nhân viên cần chỉnh sửa');
+        }
+    };
+    const saveChanges = async () => {
+        const newCustomer = selectedCustomer
+        newCustomer.customerId = document.getElementById('customerId').value
+        newCustomer.customerName = document.getElementById('customerName').value
+        newCustomer.address = document.getElementById('address').value
+        newCustomer.age =document.getElementById('age').value
+        newCustomer.phoneNumber =document.getElementById('phoneNumber').value
+        newCustomer.customerTyp=document.getElementById('customerType').value
+        newCustomer.note = document.getElementById('note').value
+        console.log(selectedCustomer)
+        await CustomerService.updateCustomer(newCustomer)
+        closeModal()
+        removeHighlight()
+    };
+
+    const closeModal = () => {
+        const modal = document.getElementById('editModal');
+        modal.style.display= 'none'
+    }
     return (
         <div className="container">
             <div className="row">
@@ -128,20 +190,12 @@ export const ListCustomer = () => {
                                     <td>Ghi chú</td>
                                 </tr>
                                 </thead>
-                                {/*<tr className="table-row" onClick={highlightRow}>*/}
-                                {/*    <td>KH01</td>*/}
-                                {/*    <td className="row-name">Nguyễn Thu Minh</td>*/}
-                                {/*    <td>23</td>*/}
-                                {/*    <td className="row-address">Liên Chiểu, Đà Nẵng</td>*/}
-                                {/*    <td>032548976</td>*/}
-                                {/*    <td>Khách lẻ</td>*/}
-                                {/*    <td></td>*/}
-                                {/*</tr>*/}
                                 <tbody>
                                 {customers.map((customer, index) => (
                                     <tr className="table-row" key={index} onClick={(event) => {
-                                        highlightRow(event);
                                         setIdCustomerDelete(customer.customerId);
+                                        highlightRow(event)
+                                        fetchSelectedCustomer(customer.customerId)
                                     }}>
                                         <td>{customer.customerId}</td>
                                         <td className="row-name">{customer.customerName}</td>
@@ -167,8 +221,11 @@ export const ListCustomer = () => {
                         <button type="button" className="btn btn-secondary" style={{width: "auto"}}><i
                             className="bi bi-info-square"></i> Thông tin chi tiết
                         </button>
-                        <NavLink to='/createCustomer' className='btn btn-success'><i className="bi bi-plus-circle"></i> Thêm</NavLink>
-                        <button type="button" className="btn btn-custom"><i className="bi bi-pencil-square"></i> Sửa
+                        <NavLink to='/createCustomer' className='btn btn-success'><i
+                            className="bi bi-plus-circle"></i> Thêm</NavLink>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#editModal"
+                                className="btn btn-custom" onClick={handleEditButtonClick}><i
+                            className="bi bi-pencil-square"></i> Sửa
                         </button>
                         <button type="button" className="btn btn-danger" onClick={handleDeleteButtonClick}>
                             <i className="bi bi-x-circle"></i> Xóa
@@ -201,6 +258,110 @@ export const ListCustomer = () => {
                                     onClick={handleCancelDelete}>Hủy
                             </button>
                             <button type="button" className="btn btn-danger" onClick={handleConfirmDelete}>Xóa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal fade" tabIndex="-1" id="editModal" aria-labelledby="editModalLabel"
+                 aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header text-center">
+                            <h5 className="modal-title w-100" id="editModalLabel">Sửa Thông Tin Khách Hàng</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <form>
+                                        <div className="mb-3">
+                                            <label htmlFor="customerId" className="form-label">Mã khách hàng:</label>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="customerName" className="form-label">Tên khách hàng:</label>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="address" className="form-label">Địa chỉ:</label>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="age" className="form-label">Tuổi:</label>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="phoneNumber" className="form-label">SĐT:</label>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="customerType" className="form-label">Nhóm khách hàng:</label>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="note" className="form-label">Ghi chú: </label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="col-md-8">
+                                    <form>
+                                        <div className="mb-3">
+                                            <input type="text" readOnly id="customerId" name="customerId"
+                                                   className="form-control " style={{color:"blue",background:"gray"}}/>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <input type="text" id="customerName" name="customerName"
+                                                   pattern="[a-zA-Z ]+"
+                                                   title="Tên chỉ được chứa ký tự và khoảng trắng" required
+                                                   className="form-control"/>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <input type="text" id="address" name="address" required
+                                                   className="form-control"/>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <input type="text" id="age" name="age" pattern="\d{1,3}"
+                                                   title="Tuổi chỉ được nhập là số và tối đa 3 chữ số" required
+                                                   className="form-control"/>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <input type="text" id="phoneNumber" name="phoneNumber" required
+                                                   className="form-control"/>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <select required id="customerType" name="customerType"
+                                                    className="form-control">
+                                                <option value="">--Chọn--</option>
+                                                <option value="Khách lẻ">Khách lẻ</option>
+                                                <option value="Khách sỉ">Khách sỉ</option>
+                                                <option value="Khách theo đơn">Khách theo đơn</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <input type="text" id="note" name="note" required
+                                                   className="form-control"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="submit" onClick={saveChanges} className="btn btn-success" id="btnSaveEdit">
+                                    <i className="bi bi-plus-circle"></i> Chấp nhận
+                                </button>
+                                <button type="reset" className="btn btn-secondary"><i
+                                    className="bi bi-arrow-clockwise"></i> Đặt lại
+                                </button>
+                                <button type="button" data-dismiss="modal" onClick={closeModal} className="btn btn-primary"><i
+                                    className="bi bi-arrow-return-left"></i> Trở về
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

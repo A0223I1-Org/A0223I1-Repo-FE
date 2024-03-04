@@ -13,7 +13,7 @@ export function UpdateCustomer() {
         age: 18,
         address: '',
         phone: '',
-        customerType: 'Khách lẻ',
+        customerType: '',
         note: '',
     })
     const navigate = useNavigate()

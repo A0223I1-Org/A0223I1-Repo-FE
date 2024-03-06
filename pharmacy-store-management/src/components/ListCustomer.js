@@ -1,8 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import './ListCustomer.css';
 import * as CustomerService from "../../src/utils/InformationService/CustomerManagementService/CustomerService";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 export const ListCustomer = () => {
+    const navigate = useNavigate()
     const [customers, setCustomers] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false); // State để điều khiển hiển thị modal thêm nhà cung cấp
     const [newCustomer, setNewCustomer] = useState({
@@ -182,7 +185,7 @@ export const ListCustomer = () => {
         newCustomer.note = document.getElementById('note').value
         console.log(selectedCustomer)
         await CustomerService.updateCustomer(newCustomer)
-        closeModal()
+        navigate("/listCustomer")
         removeHighlight()
     };
     const saveCreate = async () =>{
@@ -196,8 +199,9 @@ export const ListCustomer = () => {
         newCreateCustomer.note = document.getElementById('createCustomerNote').value
         console.log(newCreateCustomer)
         await CustomerService.createCustomer(newCreateCustomer)
+        toast('🦄 New customer was added')
+        navigate("/listCustomer")
         setLastestCustomerId(newCreateCustomer.customerId)
-        await fetchApi();
         handleCloseAddModal();
     }
 
@@ -217,16 +221,18 @@ export const ListCustomer = () => {
                                 <div className="search-selected">
                                     <span>Lọc theo</span>
                                     <a style={{display: "flex", alignItems: "center"}}>
-                                        <select className="form-select">
-                                            <option selected>Vui lòng chọn</option>
-                                            <option value="Nhóm khách hàng">Nhóm khách hàng</option>
-                                            <option value="Tên khách hàng">Tên khách hàng</option>
-                                            <option value="Địa chỉ">Địa chỉ</option>
-                                            <option value="SĐT">Số điện thoại</option>
+                                        <select className="form-select" value={searchType} onChange={handleSearchTypeChange}>
+                                            <option value="customerType" >Nhóm khách hàng</option>
+                                            <option value="customerName">Tên khách hàng</option>
+                                            <option value="customerAge">Tuổi khách hàng</option>
                                         </select>
                                         <input type="text" className="form-control" aria-label="Sizing example input"
-                                               aria-describedby="inputGroup-sizing-sm"/>
-                                        <button className="myButton"><i className="bi bi-search"></i> Tìm kiếm
+                                               aria-describedby="inputGroup-sizing-sm"
+                                               value={searchInput}
+                                               onChange={handleSearchInputChange}
+                                        />
+                                        <button className="myButton"><i className="bi bi-search"
+                                                                        onClick={handleSearch}></i> Tìm kiếm
                                         </button>
                                     </a>
                                 </div>
@@ -341,7 +347,7 @@ export const ListCustomer = () => {
                         <div className="modal-header text-center">
                             <h5 className="modal-title w-100" id="editModalLabel">Sửa Thông Tin Khách Hàng</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                    aria-label="Close" onClick={closeModal}></button>
                         </div>
                         <div className="modal-body">
                             <div className="row">

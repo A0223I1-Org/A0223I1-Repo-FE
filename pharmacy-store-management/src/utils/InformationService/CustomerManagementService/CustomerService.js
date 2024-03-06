@@ -1,7 +1,27 @@
 import axios from "axios";
 
-export const searchCustomer = (searchType, searchValue) => {
-
+export const searchCustomer = async (searchType, searchValue) => {
+    try{
+        if(searchType === 'customerName'){
+            const result = await axios.get('http://localhost:8080/api/customer/list/searchByName?customerName='+searchValue)
+            console.log(result.data.content);
+            return result.data.content;
+        }
+        else if (searchType === 'customerType'){
+            const result = await axios.get('http://localhost:8080/api/customer/list/searchByType?customerType='+searchValue)
+            console.log(result.data.content);
+            return result.data.content;
+        }
+        else if (searchType === 'customerAge'){
+            const result = await axios.get('http://localhost:8080/api/customers/getCustomersByAge/'+searchValue)
+            console.log(result.data.content);
+            return result.data.content;
+        }
+    }
+    catch (e){
+        console.log(e)
+        throw e
+    }
 };
 
 

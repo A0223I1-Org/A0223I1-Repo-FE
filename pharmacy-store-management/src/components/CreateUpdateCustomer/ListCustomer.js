@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import './ListCustomer.css';
-import * as CustomerService from "../../src/utils/InformationService/CustomerManagementService/CustomerService";
+import * as CustomerService from "../../utils/InformationService/CustomerManagementService/CustomerService";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 

@@ -1,22 +1,18 @@
 import './App.css';
+import {ListCustomer} from "./components/ListCustomer";
+import {BrowserRouter as Router,Route, Routes} from "react-router-dom";
+import React from "react";
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+          <Routes>
+              <Route path="/listCustomer" element={<ListCustomer/>}></Route>
+          </Routes>
+      </Router>
+    </>
   );
 }
 

@@ -9,13 +9,11 @@ import {MedicineInfoList} from "./pages/MedicineInformation/MedicineInfoList";
 function App() {
   return (
     <>
-      <Router>
           <Routes>
               <Route path="/listCustomer" element={<ListCustomer/>}></Route>
               <Route path="/medicineGroup" element={<MedicineGroupList/>}></Route>
               <Route path="/medicineInfo" element={<MedicineInfoList/>}></Route>
           </Routes>
-      </Router>
     </>
   );
 }

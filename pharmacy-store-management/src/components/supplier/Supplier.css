@@ -78,7 +78,10 @@ nav {
     justify-content: center;
 }
 .chucNang{
+    display: flex;
+    justify-content: flex-end;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 .btn-success {
     margin-left: 44.8%;

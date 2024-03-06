@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import './Supplier.css';
 import * as SupplierService from "../../utils/InformationService/SupplierManagementService/SupplierService";
+import 'react-toastify/dist/ReactToastify.css';
+import {toast} from "react-toastify";
+import * as Yup from 'yup';
+
 
 export const Supplier = () => {
-    const defaultSearchType = "supplierId"; // Giá trị mặc định cho loại tìm kiếm
-    const defaultOrderBy = "supplierId"; // Giá trị mặc định cho phương thức sắp xếp
+    const defaultSearchType = "supplierId";
+    const defaultOrderBy = "supplierId";
+
     const [suppliers, setSuppliers] = useState([]);
     const [searchType, setSearchType] = useState("supplierId");
     const [searchValue, setSearchValue] = useState("");
@@ -12,9 +17,10 @@ export const Supplier = () => {
     const [idSupplierDelete, setIdSupplierDelete] = useState(null);
     const [selectedRow, setSelectedRow] = useState(null);
     const highlightedRowRef = useRef(null);
-    const [searchInput, setSearchInput] = useState(""); // Thêm state mới để lưu trữ giá trị tìm kiếm mới
+    const [searchInput, setSearchInput] = useState("");
+    const [errors, setErrors] = useState({});
 
-    const [showAddModal, setShowAddModal] = useState(false); // State để điều khiển hiển thị modal thêm nhà cung cấp
+    const [showAddModal, setShowAddModal] = useState(false);
     const [newSupplierData, setNewSupplierData] = useState({
         supplierId: "",
         supplierName: "",
@@ -22,11 +28,22 @@ export const Supplier = () => {
         phoneNumber: "",
         email: "",
         note: ""
-    }); // State để lưu thông tin của nhà cung cấp mới
+    });
 
-    const fetchSuppliers = async () => {
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editSupplierData, setEditSupplierData] = useState(null);
+    const [selectedSupplierId, setSelectedSupplierId] = useState(null); // Thêm state để lưu trữ ID của nhà cung cấp được chọn để chỉnh sửa
+
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5); // Số mục trên mỗi trang
+    const totalItems = suppliers.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+
+    const fetchSuppliers = async (page, size) => {
         try {
-            const result = await SupplierService.findAllSupplier(orderBy, searchType, searchValue);
+            const result = await SupplierService.findAllSupplier(orderBy, searchType, searchValue, page, size);
             setSuppliers(result);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -34,7 +51,17 @@ export const Supplier = () => {
     };
     useEffect(() => {
         fetchSuppliers();
-    }, [orderBy, searchType, searchValue]);
+    }, [orderBy, searchType, searchValue, currentPage]); // Thêm currentPage vào dependency array
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const handlePaginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        console.log("current page is: ",pageNumber);
+        fetchSuppliers(pageNumber, itemsPerPage);
+    };
+    const indexOfLastItem = currentPage * itemsPerPage - 1;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = suppliers.slice(indexOfFirstItem, indexOfLastItem);
 
     const highlightRow = (event, supplier) => {
         const row = event.currentTarget;
@@ -45,14 +72,15 @@ export const Supplier = () => {
         if (row === selectedRow) {
             setSelectedRow(null);
             setIdSupplierDelete(null);
+            setSelectedSupplierId(null); // Reset selectedSupplierId khi không có hàng nào được chọn
         } else {
             row.classList.add('selected-row');
             setSelectedRow(row);
             highlightedRowRef.current = row;
             setIdSupplierDelete(supplier.supplierId);
+            setSelectedSupplierId(supplier.supplierId); // Lưu ID của nhà cung cấp được chọn
         }
     };
-
     const removeHighlight = () => {
         const highlightedRow = document.querySelector('.selected-row');
         if (highlightedRow) {
@@ -61,22 +89,22 @@ export const Supplier = () => {
     };
 
     const handleSearchInputChange = (event) => {
-        setSearchInput(event.target.value); // Cập nhật giá trị tìm kiếm mới
+        setSearchInput(event.target.value);
     };
 
     const handleSearch = () => {
-        setSearchValue(searchInput); // Sử dụng giá trị tìm kiếm mới
-        fetchSuppliers(); // Gọi hàm tìm kiếm
+        setSearchValue(searchInput);
+        fetchSuppliers();
     };
 
     const handleSortChange = (event) => {
-        console.log(event.target.value)
         setOrderBy(event.target.value);
     };
 
     const handleSearchTypeChange = (event) => {
         setSearchType(event.target.value);
     };
+
     const handleReset = () => {
         setSearchType(defaultSearchType);
         setSearchValue("");
@@ -84,19 +112,50 @@ export const Supplier = () => {
         setIdSupplierDelete(null);
         setSelectedRow(null);
     };
-    const handleShowAddModal = () => {
-        setShowAddModal(true); // Khi bấm vào nút "Thêm mới", hiển thị modal thêm nhà cung cấp
-    };
-    const handleAddSupplier = async () => {
+    const supplierSchema = Yup.object().shape({
+        supplierId: Yup.string().required('Vui lòng nhập mã nhà cung cấp').max(50, 'Mã nhà cung cấp không được quá 50 ký tự'),
+        supplierName: Yup.string().required('Vui lòng nhập tên nhà cung cấp').max(50, 'Tên nhà cung cấp không được quá 50 ký tự'),
+        address: Yup.string().max(50, 'Địa chỉ không được quá 50 ký tự'),
+        phoneNumber: Yup.string().matches(/^[0-9]+$/, 'Số điện thoại chỉ được chứa các số').max(11, 'Số điện thoại không được quá 11 ký tự'),
+        email: Yup.string().email('Email không hợp lệ'),
+    });
+// Hàm validate dữ liệu sử dụng schema đã định nghĩa
+    const validateSupplierData = async (supplierData) => {
         try {
-            await SupplierService.addSupplier(newSupplierData); // Gửi đi dữ liệu từ state newSupplierData
-            await fetchSuppliers(); // Làm mới danh sách nhà cung cấp
-            handleCloseAddModal(); // Đóng modal sau khi thêm thành công
-        } catch (error) {
-            console.error('Error adding supplier:', error);
-            // Xử lý lỗi nếu cần thiết
+            await supplierSchema.validate(supplierData, { abortEarly: false });
+            return {}; // Không có lỗi
+        } catch (errors) {
+            // Chuyển đổi các lỗi thành định dạng key-value để dễ dàng hiển thị
+            const formattedErrors = {};
+            errors.inner.forEach(error => {
+                formattedErrors[error.path] = error.message;
+            });
+            return formattedErrors;
         }
     };
+    const handleShowAddModal = () => {
+        setShowAddModal(true);
+    };
+
+    const handleAddSupplier = async () => {
+        const errors = await validateSupplierData(newSupplierData);
+        if (Object.keys(errors).length === 0) {
+            try {
+                await SupplierService.addSupplier(newSupplierData);
+                await fetchSuppliers();
+                handleCloseAddModal();
+                toast('Thêm nhà cung cấp thành công!');
+            } catch (error) {
+                console.error('Error adding supplier:', error);
+                toast('Xảy ra lỗi khi thêm nhà cung cấp!');
+            }
+        } else {
+            console.error('Validation errors:', errors);
+            setErrors(errors); // Cập nhật giá trị của errors
+            toast('Vui lòng nhập đúng thông tin!');
+        }
+    };
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setNewSupplierData(prevState => ({
@@ -106,8 +165,9 @@ export const Supplier = () => {
     };
 
     const handleCloseAddModal = () => {
-        setShowAddModal(false); // Đóng modal thêm nhà cung cấp
+        setShowAddModal(false);
     };
+
     const handleDeleteButtonClick = () => {
         if (selectedRow) {
             const deleteItem = selectedRow.querySelector('.row-name').textContent;
@@ -119,11 +179,12 @@ export const Supplier = () => {
 
     const handleConfirmDelete = async () => {
         await SupplierService.deleteSupplier(idSupplierDelete);
-        // toast.success('Xóa khánh hàng ${suppliers.find((x) => x.supplierId === idSupplierDelete)?.supplierName} thành công.')
         await fetchSuppliers();
         const deleteModal = document.getElementById('deleteModal');
         deleteModal.classList.remove('show');
         deleteModal.style.display = 'none';
+        toast('Xóa nhà cung cấp thành công!');
+
         removeHighlight();
     };
 
@@ -134,6 +195,54 @@ export const Supplier = () => {
         setSelectedRow(null);
         removeHighlight();
     };
+    const handleEditChange = (event) => {
+        const { name, value } = event.target;
+        setEditSupplierData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleCloseEditModal = () => {
+        setShowEditModal(false);
+        removeHighlight();
+
+    };
+    const handleShowEditModal = () => {
+        if (selectedRow) {
+            if (selectedSupplierId) {
+                const selectedSupplier = suppliers.find(supplier => supplier.supplierId === selectedSupplierId);
+                setEditSupplierData(selectedSupplier);
+                setShowEditModal(true); // Sử dụng setShowEditModal để hiển thị modal chỉnh sửa
+            } else {
+                console.error('Selected row does not contain supplierId.');
+            }
+        } else {
+            console.error('No row selected.');
+        }
+    };
+
+// Trong phương thức handleEditSupplier
+    const handleEditSupplier = async () => {
+        const errors = await validateSupplierData(editSupplierData);
+        if (Object.keys(errors).length === 0) {
+            try {
+                await SupplierService.updateSupplier(selectedSupplierId, editSupplierData);
+                await fetchSuppliers();
+                handleCloseEditModal();
+                toast('Cập nhật nhà cung cấp thành công!');
+            } catch (error) {
+                console.error('Error updating supplier:', error);
+                toast('Xảy ra lỗi khi cập nhật nhà cung cấp!');
+            }
+        } else {
+            console.error('Validation errors:', errors);
+            setErrors(errors); // Cập nhật giá trị của errors
+            toast('Vui lòng nhập đúng thông tin!');
+        }
+        removeHighlight();
+    };
+
 
     return (
         <div className="container">
@@ -159,7 +268,7 @@ export const Supplier = () => {
                                             aria-label="Sizing example input"
                                             aria-describedby="inputGroup-sizing-sm"
                                             value={searchInput}
-                                            onChange={handleSearchInputChange} // Sử dụng hàm này để cập nhật giá trị tìm kiếm mới
+                                            onChange={handleSearchInputChange}
                                         />
                                         <button className="myButton" onClick={handleSearch}>
                                             <i className="bi bi-search"></i> Tìm kiếm
@@ -198,7 +307,7 @@ export const Supplier = () => {
                                 {suppliers && suppliers.length > 0 ? (
                                     suppliers.map((supplier, index) => (
                                         <tr className="table-row" key={index} onClick={(event) => highlightRow(event, supplier)}>
-                                            <td>{supplier.supplierId}</td>
+                                            <td className="row-id">{supplier.supplierId}</td>
                                             <td className="row-name">{supplier.supplierName}</td>
                                             <td className="row-address">{supplier.address}</td>
                                             <td>{supplier.phoneNumber}</td>
@@ -215,21 +324,26 @@ export const Supplier = () => {
                             </table>
                             <nav aria-label="Page navigation example">
                                 <ul className="pagination justify-content-center">
-                                    <li className="page-item"><span className="page-link" href="#">Trước</span></li>
-                                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                    <li className="page-item"><span className="page-link" href="#">Sau</span></li>
+                                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                        <span className="page-link" onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
+                                    </li>
+                                    {Array.from({ length: totalPages }, (_, index) => (
+                                        <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                                            <span className="page-link" onClick={() => handlePaginate(index + 1)}>{index + 1}</span>
+                                        </li>
+                                    ))}
+                                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                        <span className="page-link" onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
+                                    </li>
                                 </ul>
                             </nav>
                         </fieldset>
                     </div>
                     <div className="chucNang">
-                        <button type="button" className="btn btn-secondary" style={{ width: "auto" }}>
-                            <i className="bi bi-info-square"></i> Thông tin chi tiết
-                        </button>
                         <button type="button" className="btn btn-success" onClick={handleShowAddModal}>
                             <i className="bi bi-plus-circle"></i> Thêm
                         </button>
-                        <button type="button" className="btn btn-custom">
+                        <button type="button" className="btn btn-custom" onClick={handleShowEditModal}>
                             <i className="bi bi-pencil-square"></i> Sửa
                         </button>
                         <button type="button" className="btn btn-danger" onClick={handleDeleteButtonClick}>
@@ -242,7 +356,6 @@ export const Supplier = () => {
                 </div>
                 <div className="col-1"></div>
             </div>
-            {/* Delete Modal */}
             <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -264,7 +377,6 @@ export const Supplier = () => {
                     </div>
                 </div>
             </div>
-            {/* Modal thêm nhà cung cấp */}
             {showAddModal && (
                 <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
                     <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -274,27 +386,33 @@ export const Supplier = () => {
                                 <button type="button" className="btn-close" onClick={handleCloseAddModal} aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                {/* Form thêm nhà cung cấp */}
                                 <form>
                                     <div className="mb-3">
                                         <label htmlFor="supplierId" className="form-label modal-label">Mã nhà cung cấp</label>
                                         <input type="text" className="form-control" id="supplierId" name="supplierId" placeholder="ex: DOMESCO" onChange={handleChange} required />
+                                        {errors.supplierId && <div className="text-danger">{errors.supplierId}</div>}
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="supplierName" className="form-label modal-label">Tên nhà cung cấp</label>
                                         <input type="text" className="form-control" id="supplierName" name="supplierName" placeholder="ex: Công ty DOMESCO" onChange={handleChange} required />
+                                        {errors.supplierName && <div className="text-danger">{errors.supplierName}</div>}
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="supplierAddress" className="form-label modal-label">Địa chỉ</label>
                                         <input type="text" className="form-control" id="supplierAddress" name="address" placeholder="ex: 123 Phan Đăng Lưu, Đà Nẵng" onChange={handleChange}/>
+                                        {errors.address && <div className="text-danger">{errors.address}</div>}
+
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="supplierPhone" className="form-label modal-label">Điện thoại</label>
                                         <input type="tel" className="form-control" id="supplierPhone" name="phoneNumber" placeholder="ex: 0972346898" onChange={handleChange}/>
+                                        {errors.phoneNumber && <div className="text-danger">{errors.phoneNumber}</div>}
+
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="supplierEmail" className="form-label modal-label">Email</label>
                                         <input type="email" className="form-control" id="supplierEmail" name="email" placeholder="ex: abc123@gmail.com" onChange={handleChange}/>
+                                        {errors.email && <div className="text-danger">{errors.email}</div>}
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="supplierNote" className="form-label modal-label">Ghi chú</label>
@@ -303,10 +421,58 @@ export const Supplier = () => {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                {/* Nút "Thêm" */}
                                 <button type="button" className="btn btn-success" onClick={handleAddSupplier}><i className="bi bi-plus-circle"></i> Thêm</button>
-                                {/* Nút "Hủy" */}
                                 <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i className="bi bi-arrow-return-left"></i> Trở về</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {showEditModal && (
+                <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
+                    <div className="modal-dialog modal-dialog-centered modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header text-center">
+                                <h5 className="modal-title w-100" id="editSupplierModalLabel">Sửa Thông Tin Nhà Cung Cấp</h5>
+                                <button type="button" className="btn-close" onClick={handleCloseEditModal} aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <form>
+                                    {/* Điền thông tin nhà cung cấp được chọn vào các input */}
+                                    <div className="mb-3">
+                                        <label htmlFor="supplierId" className="form-label modal-label">Mã nhà cung cấp</label>
+                                        <input type="text" className="form-control" id="supplierId" name="supplierId" value={editSupplierData.supplierId} onChange={handleEditChange} required />
+                                        {errors.supplierId && <div className="text-danger">{errors.supplierId}</div>}
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="supplierName" className="form-label modal-label">Tên nhà cung cấp</label>
+                                        <input type="text" className="form-control" id="supplierName" name="supplierName" value={editSupplierData.supplierName} onChange={handleEditChange} required />
+                                        {errors.supplierName && <div className="text-danger">{errors.supplierName}</div>}
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="supplierAddress" className="form-label modal-label">Địa chỉ</label>
+                                        <input type="text" className="form-control" id="supplierAddress" name="address" value={editSupplierData.address} onChange={handleEditChange} />
+                                        {errors.address && <div className="text-danger">{errors.address}</div>}
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="supplierPhone" className="form-label modal-label">Điện thoại</label>
+                                        <input type="tel" className="form-control" id="supplierPhone" name="phoneNumber" value={editSupplierData.phoneNumber} onChange={handleEditChange} />
+                                        {errors.phoneNumber && <div className="text-danger">{errors.phoneNumber}</div>}
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="supplierEmail" className="form-label modal-label">Email</label>
+                                        <input type="email" className="form-control" id="supplierEmail" name="email" value={editSupplierData.email} onChange={handleEditChange} />
+                                        {errors.email && <div className="text-danger">{errors.email}</div>}
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="supplierNote" className="form-label modal-label">Ghi chú</label>
+                                        <textarea className="form-control" id="supplierNote" name="note" rows="3" value={editSupplierData.note} onChange={handleEditChange}></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-success" onClick={handleEditSupplier}><i className="bi bi-check-circle"></i> Hoàn thành</button>
+                                <button type="button" className="btn btn-primary" onClick={handleCloseEditModal}><i className="bi bi-arrow-return-left"></i> Trở về</button>
                             </div>
                         </div>
                     </div>

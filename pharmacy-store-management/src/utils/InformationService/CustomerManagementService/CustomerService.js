@@ -1,8 +1,13 @@
 import axios from "axios";
 
+export const searchCustomer = (searchType, searchValue) => {
+
+};
+
+
 export const getCustomerById = async (idCustomerEdit) =>{
     try{
-        const result = await axios.get('http://localhost:8080/api/customer/getCustomerByIdd/'+idCustomerEdit)
+        const result = await axios.get('http://localhost:8080/api/customer/getCustomerById/'+idCustomerEdit)
         console.log(result.data)
         return result.data
     }

@@ -1,11 +1,20 @@
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './ListCustomer.css';
 import * as CustomerService from "../../src/utils/InformationService/CustomerManagementService/CustomerService";
-import toast from "react-toastify";
-import {NavLink} from "react-router-dom";
 
 export const ListCustomer = () => {
     const [customers, setCustomers] = useState([]);
+    const [showAddModal, setShowAddModal] = useState(false); // State để điều khiển hiển thị modal thêm nhà cung cấp
+    const [newCustomer, setNewCustomer] = useState({
+        customerId: '',
+        customerName: "",
+        age: 18,
+        address: "",
+        phoneNumber: "",
+        customerType: "",
+        note: "",
+        accountId: 0
+    });
     const [selectedCustomer, setSelectedCustomer] = useState(
         {
             customerId: '',
@@ -19,13 +28,30 @@ export const ListCustomer = () => {
         }
     );
     const [idCustomerDelete, setIdCustomerDelete] = useState([]);
-
+    const [searchType, setSearchType] = useState('customerName');
+    const [searchValue, setSearchValue] = useState("");
+    const [searchInput, setSearchInput] = useState(""); // Thêm state mới để lưu trữ giá trị tìm kiếm mới
     const [selectedRow, setSelectedRow] = useState(null);
     const highlightedRowRef = useRef(null);
+    const [lastestCustomerId,setLastestCustomerId] = useState("")
+
+    const generateCustomerId = () =>{
+        const currentNumber = parseInt(lastestCustomerId.slice(2),10)
+        const nextNumber = currentNumber + 1;
+        const nextCustomerId = `KH${nextNumber.toString().padStart(2, "0")}`
+        console.log(nextCustomerId)
+        return nextCustomerId
+    }
 
     const fetchApi = async () => {
         try {
             const result = await CustomerService.findAllCustomer();
+            if (result.length > 0) {
+                // Find the customer with the highest ID
+                const latestCustomer = result.reduce((prev, current) => (parseInt(prev.customerId.slice(2),10) > parseInt(current.customerId.slice(2),10)) ? prev : current);
+                setLastestCustomerId(latestCustomer.customerId);
+            }
+            console.log(lastestCustomerId)
             setCustomers(result);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -40,11 +66,40 @@ export const ListCustomer = () => {
             console.error('Error getting data:', error);
         }
     }
+    const fetchCustomersBySearch = async () => {
+        try {
+            const result = await CustomerService.searchCustomer(searchType,searchValue);
+            setCustomers(result);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
         fetchApi()
-    }, [])
+    }, [searchValue,searchType])
 
+    const handleSearchTypeChange = (event) => {
+        setSearchType(event.target.value);
+    };
+    const handleSearchInputChange = (event) => {
+        setSearchInput(event.target.value); // Cập nhật giá trị tìm kiếm mới
+    };
+
+    const handleSearch = () => {
+        setSearchValue(searchInput); // Sử dụng giá trị tìm kiếm mới
+        fetchCustomersBySearch(); // Gọi hàm tìm kiếm
+    };
+    const handleShowAddModal = () => {
+        // const newCustomerId = generateCustomerId()
+        // console.log(newCustomerId)
+        // document.getElementById("createCustomerId").value = newCustomerId
+        setShowAddModal(true); // Khi bấm vào nút "Thêm mới", hiển thị modal thêm khách hàng
+    };
+
+    const handleCloseAddModal = () => {
+        setShowAddModal(false); // Đóng modal thêm nhà cung cấp
+    };
     const highlightRow = (event) => {
         const row = event.currentTarget;
         console.log(row)
@@ -130,6 +185,21 @@ export const ListCustomer = () => {
         closeModal()
         removeHighlight()
     };
+    const saveCreate = async () =>{
+        const newCreateCustomer = newCustomer
+        newCreateCustomer.customerId = document.getElementById('createCustomerId').value
+        newCreateCustomer.customerName = document.getElementById('createCustomerName').value
+        newCreateCustomer.address = document.getElementById('createCustomerAddress').value
+        newCreateCustomer.age =document.getElementById('createCustomerAge').value
+        newCreateCustomer.phoneNumber =document.getElementById('createCustomerPhoneNumber').value
+        newCreateCustomer.customerType =document.getElementById('createCustomerType').value
+        newCreateCustomer.note = document.getElementById('createCustomerNote').value
+        console.log(newCreateCustomer)
+        await CustomerService.createCustomer(newCreateCustomer)
+        setLastestCustomerId(newCreateCustomer.customerId)
+        await fetchApi();
+        handleCloseAddModal();
+    }
 
     const closeModal = () => {
         const modal = document.getElementById('editModal');
@@ -221,8 +291,9 @@ export const ListCustomer = () => {
                         <button type="button" className="btn btn-secondary" style={{width: "auto"}}><i
                             className="bi bi-info-square"></i> Thông tin chi tiết
                         </button>
-                        <NavLink to='/createCustomer' className='btn btn-success'><i
-                            className="bi bi-plus-circle"></i> Thêm</NavLink>
+                        <button type="button" className="btn btn-success" onClick={handleShowAddModal} >
+                            <i className="bi bi-plus-circle"></i> Thêm
+                        </button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#editModal"
                                 className="btn btn-custom" onClick={handleEditButtonClick}><i
                             className="bi bi-pencil-square"></i> Sửa
@@ -237,7 +308,7 @@ export const ListCustomer = () => {
                 </div>
                 <div className="col-1"></div>
             </div>
-            {/* Modal */}
+            {/* Modal Delete*/}
             <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel"
                  aria-hidden="true">
                 <div className="modal-dialog">
@@ -262,6 +333,7 @@ export const ListCustomer = () => {
                     </div>
                 </div>
             </div>
+            {/* Modal update*/}
             <div className="modal fade" tabIndex="-1" id="editModal" aria-labelledby="editModalLabel"
                  aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -366,6 +438,66 @@ export const ListCustomer = () => {
                     </div>
                 </div>
             </div>
+            {/* Modal create*/}
+            {showAddModal && (
+                <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
+                    <div className="modal-dialog modal-dialog-centered modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header text-center">
+                                <h5 className="modal-title w-100" id="addCustomerModalLabel">Thêm mới khách hàng</h5>
+                                <button type="button" className="btn-close" onClick={handleCloseAddModal} aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <form>
+                                    <div className="mb-3">
+                                        <label htmlFor="createCustomerId" className="form-label modal-label">Mã khách hàng</label>
+                                        <input type="text" className="form-control" id="createCustomerId" name="createCustomerId"
+                                               style={{background:"gray",color:"blue"}}
+                                               value={generateCustomerId()}  readOnly />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="createCustomerName" className="form-label modal-label">Tên khách hàng</label>
+                                        <input type="text" className="form-control" id="createCustomerName" name="createCustomerName" required />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="createCustomerAge" className="form-label modal-label">Tuổi: </label>
+                                        <input type="text" className="form-control" id="createCustomerAge" name="createCustomerAge" required />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="createCustomerAddress" className="form-label modal-label">Địa chỉ</label>
+                                        <input type="text" className="form-control" id="createCustomerAddress" name="createCustomerAddress"  />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="createCustomerPhoneNumber" className="form-label modal-label">Điện thoại</label>
+                                        <input type="tel" className="form-control" id="createCustomerPhoneNumber" name="createCustomerPhoneNumber" placeholder="ex: 0972346898" />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="createCustomerType" className="form-label modal-label">Nhóm khách hàng: </label>
+                                        <select required id="createCustomerType" name="createCustomerType"
+                                                className="form-control">
+                                            <option value="">--Chọn--</option>
+                                            <option value="Khách lẻ">Khách lẻ</option>
+                                            <option value="Khách sỉ">Khách sỉ</option>
+                                            <option value="Khách theo đơn">Khách theo đơn</option>
+                                        </select>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="createCustomerNote" className="form-label modal-label">Ghi chú</label>
+                                        <textarea className="form-control" id="createCustomerNote" name="createCustomerNote" rows="3" ></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-success" onClick={saveCreate}><i className="bi bi-plus-circle"></i> Thêm</button>
+                                <button type="reset" className="btn btn-secondary"><i
+                                    className="bi bi-arrow-clockwise"></i> Đặt lại
+                                </button>
+                                <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i className="bi bi-arrow-return-left"></i> Trở về</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

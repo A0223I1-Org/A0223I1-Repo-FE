@@ -1,12 +1,32 @@
 import {useEffect, useState} from "react";
 import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineInformationService";
 import {toast} from "react-toastify";
+import axios from "axios";
+
+const attributes = [
+    "medicineId", "medicineGroup", "medicineName", "activeIngredient", "importPrice", "retailPrice", "wholesalePrice"
+]
+
+const conditions = [
+    "Bằng", "Lớn hơn", "Nhỏ hơn", "Lớn hơn bằng", "Nhỏ hơn bằng", "Khác", "Tất cả"
+]
 
 export function MedicineInfoList() {
     const [medicines, setMedicines] = useState([]);
     const [medicine, setMedicine] = useState("");
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const [attributeSearchField, setAttributeSearchField] = useState("");
+    const [conditionSearchField, setConditionSearchField] = useState("");
+    const [textSearchField, setTextSearchField] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+
+    // const [searchAttributes, setSearchAttributes] = useState(attributes);
+    // const [searchConditions, setSearchConditions] = useState(conditions);
+
+
 
     const getAllMedicine = async () => {
         try {
@@ -42,6 +62,33 @@ export function MedicineInfoList() {
         getAllMedicine();
         toast("Delete successfully!")
     };
+
+    const getMedicineByCondition = async () => {
+        try {
+            if (attributeSearchField == null || attributeSearchField === "" || conditionSearchField == null || conditionSearchField === "" || textSearchField == null || textSearchField === "") {
+                setErrorMessage("Phải điền tất cả các trường!!!")
+                return;
+            }
+
+            console.log(textSearchField);
+            console.log(attributeSearchField);
+            const data = await axios.get(`http://localhost:8080/api/v1/medicine/search`, {
+                params: {
+                    attribute: attributeSearchField,
+                    condition: conditionSearchField,
+                    searchText: textSearchField
+                }
+            });
+            setMedicines(data.data)
+            if (data.data.length < 1) {
+                setErrorMessage("Không thể tìm kiếm");
+                return;
+            }
+            setErrorMessage("");
+        } catch (e) {
+            console.log(e)
+        }
+    }
     return (
         <>
             <div className="container">
@@ -50,20 +97,36 @@ export function MedicineInfoList() {
                 <fieldset className="border border-dark border-3 rounded-3 p-3 mt-4">
                     <legend><h2>Bộ lọc</h2></legend>
                     <div className="row">
+                        {errorMessage && <div className="text-danger"><h4>{errorMessage}</h4></div>}
                         <h3 className="col-lg-2">Lọc theo</h3>
 
-                        <select name="" id="medicineId" className="col-lg-2">
-                            <option value=""> - Mã Thuốc - </option>
-                            <option value="">----</option>
+                        <select name="" id="medicineId" className="col-lg-2"
+                                value={attributeSearchField} onChange={e => setAttributeSearchField(e.target.value)}>
+                            <option value=""> - Thuộc tính - </option>
+                            <option value="medicineId"> Mã Thuốc </option>
+                            <option value="medicineGroup"> Nhóm Thuốc </option>
+                            <option value="medicineName"> Tên Thuốc </option>
+                            <option value="activeIngredient"> Hoạt chất </option>
+                            <option value="importPrice"> Giá nhập </option>
+                            <option value="retailPrice"> Giá bán lẻ </option>
+                            <option value="wholesalePrice"> Giá bán sỉ </option>
+
                         </select>
 
-                        <select name="" id="condition" className="col-lg-2 mx-3">
+                        <select name="" id="condition" className="col-lg-2 mx-3"
+                        value={conditionSearchField} onChange={e => setConditionSearchField(e.target.value)}>
                             <option value=""> - Điều kiện - </option>
-                            <option value="">----</option>
+                            <option value="Bằng"> Bằng </option>
+                            <option value="Lớn hơn"> Lớn hơn </option>
+                            <option value="Nhỏ hơn"> Nhỏ hơn </option>
+                            <option value="Lớn hơn bằng"> Lớn hơn bằng </option>
+                            <option value="Nhỏ hơn bằng"> Nhỏ hơn bằng </option>
+                            <option value="Khác"> Khác </option>
+                            <option value="Tất cả"> Tất cả </option>
                         </select>
 
-                        <input type="text" className="col-lg-3 mx-3"/>
-                        <button className="col-lg-2 btn btn-primary"><i className="bi bi-search"></i> Lọc kết quả</button>
+                        <input type="text" className="col-lg-3 mx-3" onChange={e => setTextSearchField(e.target.value)}/>
+                        <button onClick={() => getMedicineByCondition()} className="col-lg-2 btn btn-primary"><i className="bi bi-search"></i> Lọc kết quả</button>
                     </div>
                 </fieldset>
 

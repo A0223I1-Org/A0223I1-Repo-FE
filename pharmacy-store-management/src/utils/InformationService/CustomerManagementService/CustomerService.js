@@ -13,7 +13,7 @@ export const searchCustomer = async (searchType, searchValue) => {
             return result.data.content;
         }
         else if (searchType === 'customerAge'){
-            const result = await axios.get('http://localhost:8080/api/customers/getCustomersByAge/'+searchValue)
+            const result = await axios.get('http://localhost:8080/api/customer/list/searchByAge?age='+searchValue)
             console.log(result.data.content);
             return result.data.content;
         }

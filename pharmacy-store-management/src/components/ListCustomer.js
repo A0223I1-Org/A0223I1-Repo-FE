@@ -73,6 +73,7 @@ export const ListCustomer = () => {
         try {
             const result = await CustomerService.searchCustomer(searchType,searchValue);
             setCustomers(result);
+            console.log(result)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -179,13 +180,14 @@ export const ListCustomer = () => {
         newCustomer.customerId = document.getElementById('customerId').value
         newCustomer.customerName = document.getElementById('customerName').value
         newCustomer.address = document.getElementById('address').value
-        newCustomer.age =document.getElementById('age').value
+        newCustomer.age = document.getElementById('age').value
         newCustomer.phoneNumber =document.getElementById('phoneNumber').value
-        newCustomer.customerTyp=document.getElementById('customerType').value
+        newCustomer.customerType =document.getElementById('customerType').value
         newCustomer.note = document.getElementById('note').value
         console.log(selectedCustomer)
         await CustomerService.updateCustomer(newCustomer)
-        navigate("/listCustomer")
+        closeModal()
+        fetchApi()
         removeHighlight()
     };
     const saveCreate = async () =>{
@@ -200,7 +202,8 @@ export const ListCustomer = () => {
         console.log(newCreateCustomer)
         await CustomerService.createCustomer(newCreateCustomer)
         toast('🦄 New customer was added')
-        navigate("/listCustomer")
+        closeModal()
+        fetchApi()
         setLastestCustomerId(newCreateCustomer.customerId)
         handleCloseAddModal();
     }
@@ -231,8 +234,8 @@ export const ListCustomer = () => {
                                                value={searchInput}
                                                onChange={handleSearchInputChange}
                                         />
-                                        <button className="myButton"><i className="bi bi-search"
-                                                                        onClick={handleSearch}></i> Tìm kiếm
+                                        <button className="myButton" type="submit" onClick={handleSearch}>
+                                            <i className="bi bi-search"></i> Tìm kiếm
                                         </button>
                                     </a>
                                 </div>

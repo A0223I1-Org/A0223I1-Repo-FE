@@ -19,7 +19,8 @@ export const Supplier = () => {
     const highlightedRowRef = useRef(null);
     const [searchInput, setSearchInput] = useState("");
     const [errors, setErrors] = useState({});
-
+    const [totalItems, setTotalItems] = useState(0); // Thêm state cho tổng số mục
+    const [totalPages, setTotalPages] = useState(0); // Thêm state cho tổng số trang
     const [showAddModal, setShowAddModal] = useState(false);
     const [newSupplierData, setNewSupplierData] = useState({
         supplierId: "",
@@ -35,23 +36,47 @@ export const Supplier = () => {
     const [selectedSupplierId, setSelectedSupplierId] = useState(null); // Thêm state để lưu trữ ID của nhà cung cấp được chọn để chỉnh sửa
 
     // Pagination states
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const [itemsPerPage] = useState(5); // Số mục trên mỗi trang
-    const totalItems = suppliers.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
 
 
     const fetchSuppliers = async (page, size) => {
         try {
+            // Lấy danh sách nhà cung cấp từ API
             const result = await SupplierService.findAllSupplier(orderBy, searchType, searchValue, page, size);
+
+            // Đếm tổng số phần tử từ API
+            const totalCount = await SupplierService.findAllSupplier(orderBy, searchType, searchValue);
+
+            // Tính tổng số trang dựa trên tổng số phần tử và số phần tử trên mỗi trang
+            const totalPageCount = Math.ceil(totalCount.length / size);
+
+            // Cập nhật tổng số trang và tổng số phần tử
+            setTotalPages(totalPageCount);
+            setTotalItems(totalCount);
+            // Kiểm tra và cập nhật lại trang hiện tại nếu cần
+            if (currentPage >= totalPageCount) {
+                setCurrentPage(totalPageCount - 1);
+            }
+            // Cập nhật danh sách nhà cung cấp
             setSuppliers(result);
+
+            console.log(result);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+
+
+
+
+
+
     useEffect(() => {
-        fetchSuppliers();
-    }, [orderBy, searchType, searchValue, currentPage]); // Thêm currentPage vào dependency array
+        fetchSuppliers(currentPage, itemsPerPage);
+    }, [searchType, searchValue, currentPage, itemsPerPage, totalPages]);
+
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const handlePaginate = (pageNumber) => {
@@ -59,9 +84,11 @@ export const Supplier = () => {
         console.log("current page is: ",pageNumber);
         fetchSuppliers(pageNumber, itemsPerPage);
     };
-    const indexOfLastItem = currentPage * itemsPerPage - 1;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = suppliers.slice(indexOfFirstItem, indexOfLastItem);
+
+    // console.log("currentPage:", currentPage);
+    // console.log("itemsPerPage:", itemsPerPage);
+    // console.log("totalItems:", totalItems);
+    // console.log("totalPages:", totalPages);
 
     const highlightRow = (event, supplier) => {
         const row = event.currentTarget;
@@ -88,26 +115,39 @@ export const Supplier = () => {
         }
     };
 
-    const handleSearchInputChange = (event) => {
-        setSearchInput(event.target.value);
-    };
 
-    const handleSearch = () => {
-        setSearchValue(searchInput);
-        fetchSuppliers();
-    };
+
+
+
+
 
     const handleSortChange = (event) => {
         setOrderBy(event.target.value);
     };
 
+    const handleSearchInputChange = (event) => {
+        setSearchInput(event.target.value);
+    };
+
+    const handleSearch = async () => {
+        setSearchValue(searchInput); // Cập nhật giá trị của searchValue từ searchInput
+        setCurrentPage(0); // Reset trang về trang đầu tiên khi thực hiện tìm kiếm
+        console.log("search type : ", searchType);
+        console.log("order by: ", orderBy);
+        await fetchSuppliers(0, itemsPerPage); // Gọi hàm fetchSuppliers với trang hiện tại và số lượng mục trên mỗi trang
+    };
+
+
     const handleSearchTypeChange = (event) => {
         setSearchType(event.target.value);
+        console.log("search type : ", searchType);
+        console.log("order by: ", orderBy);
     };
 
     const handleReset = () => {
         setSearchType(defaultSearchType);
         setSearchValue("");
+        setSearchInput("");
         setOrderBy(defaultOrderBy);
         setIdSupplierDelete(null);
         setSelectedRow(null);
@@ -141,6 +181,12 @@ export const Supplier = () => {
         const errors = await validateSupplierData(newSupplierData);
         if (Object.keys(errors).length === 0) {
             try {
+                const existingSupplier = suppliers.find(supplier => supplier.supplierId === newSupplierData.supplierId);
+                if (existingSupplier) {
+                    toast('Mã nhà cung cấp đã tồn tại. Vui lòng chọn mã khác!');
+                    return;
+                }
+
                 await SupplierService.addSupplier(newSupplierData);
                 await fetchSuppliers();
                 handleCloseAddModal();
@@ -151,7 +197,7 @@ export const Supplier = () => {
             }
         } else {
             console.error('Validation errors:', errors);
-            setErrors(errors); // Cập nhật giá trị của errors
+            setErrors(errors);
             toast('Vui lòng nhập đúng thông tin!');
         }
     };
@@ -324,15 +370,15 @@ export const Supplier = () => {
                             </table>
                             <nav aria-label="Page navigation example">
                                 <ul className="pagination justify-content-center">
-                                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                    <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
                                         <span className="page-link" onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
                                     </li>
                                     {Array.from({ length: totalPages }, (_, index) => (
-                                        <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-                                            <span className="page-link" onClick={() => handlePaginate(index + 1)}>{index + 1}</span>
+                                        <li key={index} className={`page-item ${currentPage === index  ? 'active' : ''}`}>
+                                            <span className="page-link" onClick={() => handlePaginate(index )}>{index + 1}</span>
                                         </li>
                                     ))}
-                                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                    <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
                                         <span className="page-link" onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
                                     </li>
                                 </ul>

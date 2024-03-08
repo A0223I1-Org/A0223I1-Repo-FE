@@ -4,6 +4,8 @@ const BASE_URL = 'http://localhost:8080/api/suppliers';
 
 export const findAllSupplier = async (orderBy, searchType, searchValue, page, size) => {
     try {
+        console.log("API URL:", `${BASE_URL}/listSupplier?orderBy=${orderBy}&searchType=${searchType}&searchValue=${searchValue}&page=${page}&size=${size}`);
+
         const result = await axios.get(`${BASE_URL}/listSupplier`, {
             params: {
                 orderBy,
@@ -13,6 +15,7 @@ export const findAllSupplier = async (orderBy, searchType, searchValue, page, si
                 size
             }
         });
+
         console.log(result.data.content);
         return result.data.content;
     } catch (e) {

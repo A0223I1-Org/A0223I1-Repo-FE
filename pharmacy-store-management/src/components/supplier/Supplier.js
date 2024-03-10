@@ -75,7 +75,8 @@ export const Supplier = () => {
 
     useEffect(() => {
         fetchSuppliers(currentPage, itemsPerPage);
-    }, [searchType, searchValue, currentPage, itemsPerPage, totalPages]);
+    }, [searchType, searchValue, orderBy, currentPage, itemsPerPage, totalPages]);
+
 
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -122,8 +123,11 @@ export const Supplier = () => {
 
 
     const handleSortChange = (event) => {
-        setOrderBy(event.target.value);
+        const newOrderBy = event.target.value;
+        setOrderBy(newOrderBy); // Cập nhật giá trị orderBy ngay lập tức
+        fetchSuppliers(currentPage, itemsPerPage); // Gọi fetchSuppliers với thứ tự mới
     };
+
 
     const handleSearchInputChange = (event) => {
         setSearchInput(event.target.value);
@@ -150,6 +154,7 @@ export const Supplier = () => {
         setSearchInput("");
         setOrderBy(defaultOrderBy);
         setIdSupplierDelete(null);
+        setCurrentPage(0);
         setSelectedRow(null);
     };
     const supplierSchema = Yup.object().shape({
@@ -259,7 +264,7 @@ export const Supplier = () => {
             if (selectedSupplierId) {
                 const selectedSupplier = suppliers.find(supplier => supplier.supplierId === selectedSupplierId);
                 setEditSupplierData(selectedSupplier);
-                setShowEditModal(true); // Sử dụng setShowEditModal để hiển thị modal chỉnh sửa
+                setShowEditModal(true);
             } else {
                 console.error('Selected row does not contain supplierId.');
             }
@@ -357,7 +362,7 @@ export const Supplier = () => {
                                             <td className="row-name">{supplier.supplierName}</td>
                                             <td className="row-address">{supplier.address}</td>
                                             <td>{supplier.phoneNumber}</td>
-                                            <td>{supplier.toPayDebt}</td>
+                                            <td>{supplier.toPayDebt.toLocaleString()} đ</td>
                                             <td>{supplier.note}</td>
                                         </tr>
                                     ))

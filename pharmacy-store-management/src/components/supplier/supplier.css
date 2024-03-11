@@ -16,11 +16,6 @@ body {
     text-align: left;
     width: 200px;
 }
-.myTable {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    border-radius: 2px;
-}
 .form-select{
     width: 100%;
     margin-right: 10px;
@@ -104,8 +99,10 @@ nav {
 
 
 
-
 .myTable {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    border-radius: 2px;
     width: 100%;
     border-collapse: collapse;
 }
@@ -135,38 +132,4 @@ i{
     margin-right: 5px;
 }
 
-.form-group {
-    display: flex;
-    /*justify-content: space-between;*/
 
-}
-
-
-.form-group div {
-    margin-right: 85px;
-}
-
-.form-group div:last-child {
-    margin-right: 0;
-}
-.report{
-    display: flex;
-}
-
-.report .debt{
-    margin: auto 150px;
-}
-.report .list{
-    margin: auto 150px;
-}
-.action{
-    display: flex;
-    justify-content: space-between;
-}
-.action .chart{
-    margin-right: 660px;
-    margin-left: 20px;
-}
-.right{
-    text-align: right;
-}

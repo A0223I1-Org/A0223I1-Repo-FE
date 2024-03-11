@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import './Supplier.css';
+import './supplier.css';
 import * as SupplierService from "../../utils/InformationService/SupplierManagementService/SupplierService";
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from "react-toastify";

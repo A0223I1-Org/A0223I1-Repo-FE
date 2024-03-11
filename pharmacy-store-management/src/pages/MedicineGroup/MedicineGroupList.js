@@ -154,7 +154,6 @@ export function MedicineGroupList() {
                             <input type="text" className="form-control" id="groupName"  value={medicineGroupName} onChange={(e) => setMedicineGroupName(e.target.value)}/>
                             {errorMessage && <div className="text-danger">{errorMessage}</div>}
                         </div>
-                        <button type="submit" className="btn btn-primary">Lưu</button>
                     </form>
                 </fieldset>
 

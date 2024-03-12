@@ -1,56 +1,55 @@
-/*input{*/
-/*    display: inline-block;*/
-/*}*/
-body{
+.LoiTH-report body{
     font-family: "Poppins";
 }
-legend{
+.LoiTH-report legend{
     all: revert;
 }
-fieldset{
+.LoiTH-report fieldset{
     width: 100%;
     margin-bottom: 20px;
 }
-
-.form-group {
+.LoiTH-report .form-group {
     display: flex;
     flex-wrap: wrap;
 }
-.form-group div {
+.LoiTH-report .form-group div {
     margin-right: 140px;
 }
-.form-group div:last-child {
+.LoiTH-report .form-group div:last-child {
     margin-right: 0;
 }
 
-.report{
+.LoiTH-report .report {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-.report .debt{
-    margin: auto 150px;
+.LoiTH-report .report .debt, .LoiTH-report .report .list {
+    flex: 1 0 auto;
+    margin: 0px 150px;
 }
-.report .list{
-    margin: auto 150px;
-}
-.action{
+
+.LoiTH-report .action {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap; /* Cho phép các mục bọc nếu không đủ không gian */
 }
-.action .chart{
+
+.LoiTH-report .action .chart{
     margin-right: 660px;
 }
-.report {
-    display: flex; /* Sử dụng flexbox để thẳng hàng các div con */
-    justify-content: center; /* Các div con sẽ được căn giữa trong không gian flex container */
-}
-.report .debt{
+
+.LoiTH-report .report .debt{
     margin-top: 10px;
 }
-.report .list{
+.LoiTH-report .report .list{
     margin-top: 10px;
 }
-.col-10 fieldset {
+.LoiTH-report .col-10 fieldset {
     margin-top:15px;
+}
+.LoiTH-report .yup-error-message {
+    color: red;
+    font-size: 13px;
 }

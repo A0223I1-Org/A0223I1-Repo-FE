@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import Select from 'react-select';
-import {format} from 'date-fns';
+import {format, parse} from 'date-fns';
 import './report-chart.css';
 import {toast} from "react-toastify";
 import {seeChartRevenueAndProfit} from "../../utils/ReportService/ReportService";
+import {Link} from "react-router-dom";
 
 const timeOptions = [
     {value: 'year', label: 'Năm'},
@@ -43,17 +44,7 @@ export const ReportChart = () => {
     const [averageRevenue, setAverageRevenue] = useState(0);
     const [averageProfit, setAverageProfit] = useState(0);
 
-    const handleWeekChange = (selectedWeek) => {
-        setSelectedWeek(selectedWeek);
-        if (selectedWeek && selectedYear) {
-            const startOfWeek = new Date(selectedYear.value, 0, 1);
-            startOfWeek.setDate(startOfWeek.getDate() + (selectedWeek.value - 1) * 7 - startOfWeek.getDay());
-            setStartDate(format(startOfWeek, 'dd/MM/yyyy'));
-            const endOfWeek = new Date(startOfWeek);
-            endOfWeek.setDate(endOfWeek.getDate() + 6);
-            setEndDate(format(endOfWeek, 'dd/MM/yyyy'));
-        }
-    };
+
     const calculateWeeksInYear = (year) => {
         const weeks = [];
         let currentDate = new Date(year, 0, 1);
@@ -70,6 +61,17 @@ export const ReportChart = () => {
         setSelectedTimeOption(selectedOption);
         setSelectedMonth(null);
         setSelectedYear(null);
+    };
+    const handleWeekChange = (selectedWeek) => {
+        setSelectedWeek(selectedWeek);
+        if (selectedWeek && selectedYear) {
+            const startOfWeek = new Date(selectedYear.value, 0, 1);
+            startOfWeek.setDate(startOfWeek.getDate() + (selectedWeek.value - 1) * 7 - startOfWeek.getDay());
+            setStartDate(format(startOfWeek, 'dd/MM/yyyy'));
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(endOfWeek.getDate() + 6);
+            setEndDate(format(endOfWeek, 'dd/MM/yyyy'));
+        }
     };
 
     const handleMonthChange = (selectedMonth) => {
@@ -113,32 +115,56 @@ export const ReportChart = () => {
         return '';
     };
 
+    function convertDateFormat(date) {
+        const parsedDate = parse(date, 'dd/MM/yyyy', new Date());
+        return format(parsedDate, 'yyyy-MM-dd');
+    }
+
     const handleViewChart = async () => {
+
         if (!selectedTimeOption) {
-            toast.warning('Vui lòng chọn đầy đủ thời gian.');
+            toast.warning('Vui lòng chọn loại thời gian báo cáo.');
             return;
         }
 
-        if (selectedTimeOption.value === 'month' && !selectedMonth) {
-            toast.warning('Vui lòng chọn tháng.');
-            return;
-        }
-        if (selectedTimeOption.value === 'month' && !selectedYear) {
-            toast.warning('Vui lòng chọn năm.');
-            return;
-        }
         if (selectedTimeOption.value === 'year' && !selectedYear) {
             toast.warning('Vui lòng chọn năm.');
             return;
         }
-        if (selectedTimeOption.value === 'week' && (!selectedYear || !selectedWeek)) {
-            toast.warning('Vui lòng chọn tuần hoặc năm');
-            return;
+
+        if (selectedTimeOption.value === 'month') {
+            if (!selectedYear && !selectedMonth) {
+                toast.warning('Vui lòng chọn năm và tháng.');
+                return;
+            }
+            if (!selectedYear) {
+                toast.warning('Vui lòng chọn năm.');
+                return;
+            }
+            if (!selectedMonth) {
+                toast.warning('Vui lòng chọn tháng.');
+                return;
+            }
         }
 
+        if (selectedTimeOption.value === 'week') {
+            if (!selectedYear && !selectedWeek) {
+                toast.warning('Vui lòng chọn năm và tuần.');
+                return;
+            }
+            if (!selectedYear) {
+                toast.warning('Vui lòng chọn năm.');
+                return;
+            }
+            if (!selectedWeek) {
+                toast.warning('Vui lòng chọn tuần.');
+                return;
+            }
+        }
         try {
-            console.log( selectedTimeOption.value, startDate, endDate);
-            const result = await seeChartRevenueAndProfit(selectedTimeOption.value, startDate, endDate);
+            console.log(selectedTimeOption.value, convertDateFormat(startDate), convertDateFormat(endDate))
+            const result = await seeChartRevenueAndProfit(selectedTimeOption.value,
+                convertDateFormat(startDate), convertDateFormat(endDate));
             setData(result)
             console.log(result);
 
@@ -158,8 +184,13 @@ export const ReportChart = () => {
         setShowChart(true);
     };
 
+    function formatCurrency(value) {
+        return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(value);
+    }
+
     return (
         <>
+            <div className="LoiTH-chart">
             <div className="container">
                 <div className="row">
                     <div className="col-1"></div>
@@ -169,7 +200,7 @@ export const ReportChart = () => {
                                 <legend><b>Thời gian</b></legend>
                                 <div className="time-selector">
                                     <Select value={selectedTimeOption} onChange={handleTimeChange}
-                                        options={timeOptions} placeholder="Chọn loại thời gian"/>
+                                            options={timeOptions} placeholder="Chọn loại thời gian"/>
                                     {selectedTimeOption && selectedTimeOption.value === 'year' && (
                                         <Select
                                             value={selectedYear} onChange={handleYearChange}
@@ -178,16 +209,16 @@ export const ReportChart = () => {
                                     {(selectedTimeOption && selectedTimeOption.value === 'month') && (
                                         <>
                                             <Select value={selectedMonth} onChange={handleMonthChange}
-                                                options={monthOptions} placeholder="Tháng"/>
+                                                    options={monthOptions} placeholder="Tháng"/>
                                             <Select value={selectedYear} onChange={handleYearChange}
-                                                options={yearOptions} placeholder="Năm"/>
+                                                    options={yearOptions} placeholder="Năm"/>
                                         </>
                                     )}
 
                                     {selectedTimeOption && selectedTimeOption.value === 'week' && (
                                         <>
                                             <Select value={selectedYear} onChange={handleYearChange}
-                                                options={yearOptions} placeholder="Năm"/>
+                                                    options={yearOptions} placeholder="Năm"/>
                                             <Select value={selectedWeek} onChange={handleWeekChange}
                                                     options={weekOptions} placeholder="Tuần"/>
                                         </>
@@ -206,19 +237,26 @@ export const ReportChart = () => {
                                     <div className="detail-report">
                                         <div className="revenue">
                                             <label htmlFor="revenue">Doanh thu</label>
-                                            <input type="text" name="" id="revenue" defaultValue={revenue}/>
+                                            <input type="text" name="" id="revenue" value={formatCurrency(revenue)}
+                                                   readOnly/>
                                         </div>
+
                                         <div className="profit">
                                             <label htmlFor="profit">Lợi nhuận</label>
-                                            <input type="text" name="" id="profit" defaultValue={profit}/>
+                                            <input type="text" name="" id="profit" value={formatCurrency(profit)}
+                                                   readOnly/>
                                         </div>
+
                                         <div className="revenue">
                                             <label htmlFor="medium-revenue">Doanh thu TB</label>
-                                            <input type="text" name="" id="medium-revenue" defaultValue={averageRevenue}/>
+                                            <input type="text" name="" id="medium-revenue"
+                                                   value={formatCurrency(averageRevenue)} readOnly/>
                                         </div>
+
                                         <div className="profit">
                                             <label htmlFor="medium-profit">Lợi nhuận TB</label>
-                                            <input type="text" name="" id="medium-profit" defaultValue={averageProfit}/>
+                                            <input type="text" name="" id="medium-profit"
+                                                   value={formatCurrency(averageProfit)} readOnly/>
                                         </div>
                                     </div>
                                 ) : (
@@ -256,10 +294,36 @@ export const ReportChart = () => {
                                 )}
                             </fieldset>
                         </div>
+                        <Link to="/">
+                            <button style={{float:"right"}} type="button" className="btn btn-primary"><i
+                                className="bi bi-arrow-return-left"></i> Trở về
+                            </button>
+                        </Link>
+
+
                     </div>
                     <div className="col-1"></div>
                 </div>
             </div>
+            </div>
         </>
     );
 }
+// const warnings = {
+//     'month': { message: 'Vui lòng chọn tháng và năm.', selections: ['selectedMonth', 'selectedYear'] },
+//     'year': { message: 'Vui lòng chọn năm.', selections: ['selectedYear'] },
+//     'week': { message: 'Vui lòng chọn tuần và năm.', selections: ['selectedWeek', 'selectedYear'] }
+// };
+//
+// if (!selectedTimeOption) {
+//     toast.warning('Vui lòng chọn đầy đủ thời gian.');
+//     return;
+// }
+//
+// const { message, selections } = warnings[selectedTimeOption.value];
+// for (let i = 0; i < selections.length; i++) {
+//     if (!window[selections[i]]) {
+//         toast.warning(message);
+//         return;
+//     }
+// }

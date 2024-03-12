@@ -1,87 +1,99 @@
-
-legend{
+.LoiTH-chart legend {
     all: revert;
 }
-fieldset{
+
+.LoiTH-chart fieldset {
     width: 100%;
     margin-bottom: 20px;
 }
-.form-group {
+
+.LoiTH-chart .form-group {
     display: flex;
     /*justify-content: space-between;*/
 }
-.form-group div:last-child {
+
+.LoiTH-chart .form-group div:last-child {
     margin-right: 0;
 }
-.form-group div {
+
+.LoiTH-chart .form-group div {
     margin-right: 140px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.report{
+
+.LoiTH-chart .report {
     display: flex;
 }
-.report .debt{
+
+.LoiTH-chart .report .debt {
     margin: auto 150px;
 }
-.report .list{
+
+.LoiTH-chart .report .list {
     margin: auto 150px;
 }
-.action{
+
+.LoiTH-chart .action {
     display: flex;
     justify-content: space-between;
 }
-.action .chart{
+
+.LoiTH-chart .action .chart {
     margin-right: 660px;
     margin-left: 20px;
 }
-.detail-report {
+
+.LoiTH-chart .detail-report {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
-.revenue,
-.profit {
+
+.LoiTH-chart .revenue,
+.LoiTH-chart .profit {
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-right: 20px;
 }
-.revenue input,
-.profit input {
+
+.LoiTH-chart .revenue input,
+.LoiTH-chart .profit input {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 171px;
 }
 
-.revenue label,
-.profit label {
+.LoiTH-chart .revenue label,
+.LoiTH-chart .profit label {
     margin-bottom: 5px;
     width: 100%;
 }
 
-label, select {
+.LoiTH-chart label, .LoiTH-chart select {
     margin-right: 5px;
 }
 
-select {
+.LoiTH-chart select {
     padding: 3px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
-#displayTime {
+.LoiTH-chart #displayTime {
     margin-top: 10px;
 }
-.time-selector {
+
+.LoiTH-chart .time-selector {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-#fieldset-time{
+.LoiTH-chart #fieldset-time {
     height: 170px;
     display: flex;
     flex-direction: column;  /* Hiển thị các thành phần theo chiều dọc */
@@ -89,23 +101,28 @@ select {
     gap: 10px;
     position: relative;
 }
-#fieldset-repot{
+
+.LoiTH-chart #fieldset-repot {
     height: 230px;
 }
 
-#fieldset-chart{
+.LoiTH-chart #fieldset-chart {
     height: 420px;
 }
-#timeValue,#yearValue{
+
+.LoiTH-chart #timeValue, .LoiTH-chart #yearValue {
     display: none;
 }
-.col-4{
+
+.LoiTH-chart .col-4 {
     margin-top: 25px;
 }
-.col-6{
+
+.LoiTH-chart .col-6 {
     margin-top: 25px;
 }
-.button-view-chart {
+
+.LoiTH-chart .button-view-chart {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -123,4 +140,3 @@ select {
     height: 30px;
     line-height: 24px;
 }
-

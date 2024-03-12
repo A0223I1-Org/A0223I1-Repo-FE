@@ -346,12 +346,12 @@ export const Supplier = () => {
                             <table className="myTable">
                                 <thead>
                                 <tr className="row-scope">
-                                    <td>Mã nhà cung cấp</td>
-                                    <td>Tên nhà cung cấp</td>
-                                    <td>Địa chỉ</td>
-                                    <td>SĐT</td>
-                                    <td>Công nợ</td>
-                                    <td>Ghi chú</td>
+                                    <th>Mã nhà cung cấp</th>
+                                    <th>Tên nhà cung cấp</th>
+                                    <th>Địa chỉ</th>
+                                    <th>SĐT</th>
+                                    <th>Công nợ</th>
+                                    <th>Ghi chú</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -375,19 +375,24 @@ export const Supplier = () => {
                             </table>
                             <nav aria-label="Page navigation example">
                                 <ul className="pagination justify-content-center">
-                                    <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
-                                        <span className="page-link" onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
-                                    </li>
+                                    {currentPage !== 0 && (
+                                        <li className="page-item">
+                                            <span className="page-link" onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
+                                        </li>
+                                    )}
                                     {Array.from({ length: totalPages }, (_, index) => (
-                                        <li key={index} className={`page-item ${currentPage === index  ? 'active' : ''}`}>
-                                            <span className="page-link" onClick={() => handlePaginate(index )}>{index + 1}</span>
+                                        <li key={index} className={`page-item ${currentPage === index ? 'active' : ''}`}>
+                                            <span className="page-link" onClick={() => handlePaginate(index)}>{index + 1}</span>
                                         </li>
                                     ))}
-                                    <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
-                                        <span className="page-link" onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
-                                    </li>
+                                    {currentPage !== totalPages - 1 && (
+                                        <li className="page-item">
+                                            <span className="page-link" onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
+                                        </li>
+                                    )}
                                 </ul>
                             </nav>
+
                         </fieldset>
                     </div>
                     <div className="chucNang">

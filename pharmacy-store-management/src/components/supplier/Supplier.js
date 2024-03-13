@@ -30,16 +30,11 @@ export const Supplier = () => {
         email: "",
         note: ""
     });
-
     const [showEditModal, setShowEditModal] = useState(false);
     const [editSupplierData, setEditSupplierData] = useState(null);
     const [selectedSupplierId, setSelectedSupplierId] = useState(null); // Thêm state để lưu trữ ID của nhà cung cấp được chọn để chỉnh sửa
-
-    // Pagination states
     const [currentPage, setCurrentPage] = useState(0);
     const [itemsPerPage] = useState(5); // Số mục trên mỗi trang
-
-
 
     const fetchSuppliers = async (page, size) => {
         try {
@@ -67,30 +62,15 @@ export const Supplier = () => {
             console.error('Error fetching data:', error);
         }
     };
-
-
-
-
-
-
     useEffect(() => {
         fetchSuppliers(currentPage, itemsPerPage);
     }, [searchType, searchValue, orderBy, currentPage, itemsPerPage, totalPages]);
-
-
-
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const handlePaginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         console.log("current page is: ",pageNumber);
         fetchSuppliers(pageNumber, itemsPerPage);
     };
-
-    // console.log("currentPage:", currentPage);
-    // console.log("itemsPerPage:", itemsPerPage);
-    // console.log("totalItems:", totalItems);
-    // console.log("totalPages:", totalPages);
-
     const highlightRow = (event, supplier) => {
         const row = event.currentTarget;
         removeHighlight();
@@ -115,24 +95,14 @@ export const Supplier = () => {
             highlightedRow.classList.remove('selected-row');
         }
     };
-
-
-
-
-
-
-
     const handleSortChange = (event) => {
         const newOrderBy = event.target.value;
         setOrderBy(newOrderBy); // Cập nhật giá trị orderBy ngay lập tức
         fetchSuppliers(currentPage, itemsPerPage); // Gọi fetchSuppliers với thứ tự mới
     };
-
-
     const handleSearchInputChange = (event) => {
         setSearchInput(event.target.value);
     };
-
     const handleSearch = async () => {
         setSearchValue(searchInput); // Cập nhật giá trị của searchValue từ searchInput
         setCurrentPage(0); // Reset trang về trang đầu tiên khi thực hiện tìm kiếm
@@ -140,14 +110,11 @@ export const Supplier = () => {
         console.log("order by: ", orderBy);
         await fetchSuppliers(0, itemsPerPage); // Gọi hàm fetchSuppliers với trang hiện tại và số lượng mục trên mỗi trang
     };
-
-
     const handleSearchTypeChange = (event) => {
         setSearchType(event.target.value);
         console.log("search type : ", searchType);
         console.log("order by: ", orderBy);
     };
-
     const handleReset = () => {
         setSearchType(defaultSearchType);
         setSearchValue("");
@@ -157,6 +124,7 @@ export const Supplier = () => {
         setCurrentPage(0);
         setSelectedRow(null);
     };
+
     const supplierSchema = Yup.object().shape({
         supplierId: Yup.string().required('Vui lòng nhập mã nhà cung cấp').max(50, 'Mã nhà cung cấp không được quá 50 ký tự'),
         supplierName: Yup.string().required('Vui lòng nhập tên nhà cung cấp').max(50, 'Tên nhà cung cấp không được quá 50 ký tự'),
@@ -164,7 +132,6 @@ export const Supplier = () => {
         phoneNumber: Yup.string().matches(/^[0-9]+$/, 'Số điện thoại chỉ được chứa các số').max(11, 'Số điện thoại không được quá 11 ký tự'),
         email: Yup.string().email('Email không hợp lệ'),
     });
-// Hàm validate dữ liệu sử dụng schema đã định nghĩa
     const validateSupplierData = async (supplierData) => {
         try {
             await supplierSchema.validate(supplierData, { abortEarly: false });
@@ -178,24 +145,42 @@ export const Supplier = () => {
             return formattedErrors;
         }
     };
+    const resetErrors = () => {
+        setErrors({});
+    };
     const handleShowAddModal = () => {
         setShowAddModal(true);
     };
-
     const handleAddSupplier = async () => {
         const errors = await validateSupplierData(newSupplierData);
         if (Object.keys(errors).length === 0) {
             try {
                 const existingSupplier = suppliers.find(supplier => supplier.supplierId === newSupplierData.supplierId);
+                const existingName = suppliers.find(supplier => supplier.supplierName === newSupplierData.supplierName);
+                const existingPhoneNumber = suppliers.find(supplier => supplier.phoneNumber === newSupplierData.phoneNumber);
+                const existingEmail = suppliers.find(supplier => supplier.email === newSupplierData.email);
+
+
                 if (existingSupplier) {
                     toast('Mã nhà cung cấp đã tồn tại. Vui lòng chọn mã khác!');
                     return;
                 }
-
+                if (existingName) {
+                    toast('Tên nhà cung cấp đã tồn tại. Vui lòng nhập tên khác!');
+                    return;
+                }
+                if (existingPhoneNumber) {
+                    toast('Số điện thoại đã được dùng. Vui lòng nhập số khác!');
+                    return;
+                }
+                if (existingEmail) {
+                    toast('Email đã được dùng. Vui lòng nhập email khác!');
+                    return;
+                }
                 await SupplierService.addSupplier(newSupplierData);
                 await fetchSuppliers();
                 handleCloseAddModal();
-                toast('Thêm nhà cung cấp thành công!');
+                toast('🦄Thêm nhà cung cấp thành công!');
             } catch (error) {
                 console.error('Error adding supplier:', error);
                 toast('Xảy ra lỗi khi thêm nhà cung cấp!');
@@ -206,7 +191,6 @@ export const Supplier = () => {
             toast('Vui lòng nhập đúng thông tin!');
         }
     };
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setNewSupplierData(prevState => ({
@@ -217,8 +201,8 @@ export const Supplier = () => {
 
     const handleCloseAddModal = () => {
         setShowAddModal(false);
+        resetErrors(); // Xóa các lỗi khi đóng modal
     };
-
     const handleDeleteButtonClick = () => {
         if (selectedRow) {
             const deleteItem = selectedRow.querySelector('.row-name').textContent;
@@ -227,18 +211,16 @@ export const Supplier = () => {
             deleteModal.style.display = 'block';
         }
     };
-
     const handleConfirmDelete = async () => {
         await SupplierService.deleteSupplier(idSupplierDelete);
         await fetchSuppliers();
         const deleteModal = document.getElementById('deleteModal');
         deleteModal.classList.remove('show');
         deleteModal.style.display = 'none';
-        toast('Xóa nhà cung cấp thành công!');
+        toast('🦄Xóa nhà cung cấp thành công!');
 
         removeHighlight();
     };
-
     const handleCancelDelete = () => {
         const deleteModal = document.getElementById('deleteModal');
         deleteModal.classList.remove('show');
@@ -246,6 +228,7 @@ export const Supplier = () => {
         setSelectedRow(null);
         removeHighlight();
     };
+
     const handleEditChange = (event) => {
         const { name, value } = event.target;
         setEditSupplierData(prevState => ({
@@ -253,11 +236,10 @@ export const Supplier = () => {
             [name]: value
         }));
     };
-
     const handleCloseEditModal = () => {
         setShowEditModal(false);
+        resetErrors(); // Xóa các lỗi khi đóng modal
         removeHighlight();
-
     };
     const handleShowEditModal = () => {
         if (selectedRow) {
@@ -272,8 +254,6 @@ export const Supplier = () => {
             console.error('No row selected.');
         }
     };
-
-// Trong phương thức handleEditSupplier
     const handleEditSupplier = async () => {
         const errors = await validateSupplierData(editSupplierData);
         if (Object.keys(errors).length === 0) {
@@ -281,7 +261,7 @@ export const Supplier = () => {
                 await SupplierService.updateSupplier(selectedSupplierId, editSupplierData);
                 await fetchSuppliers();
                 handleCloseEditModal();
-                toast('Cập nhật nhà cung cấp thành công!');
+                toast('🦄Cập nhật nhà cung cấp thành công!');
             } catch (error) {
                 console.error('Error updating supplier:', error);
                 toast('Xảy ra lỗi khi cập nhật nhà cung cấp!');
@@ -293,7 +273,6 @@ export const Supplier = () => {
         }
         removeHighlight();
     };
-
 
     return (
         <div className="container">
@@ -322,7 +301,7 @@ export const Supplier = () => {
                                             onChange={handleSearchInputChange}
                                         />
                                         <button className="myButton" onClick={handleSearch}>
-                                            <i className="bi bi-search"></i> Tìm kiếm
+                                            <i className="bi bi-search"></i>Lọc kết quả
                                         </button>
                                     </a>
                                 </div>
@@ -412,6 +391,7 @@ export const Supplier = () => {
                 </div>
                 <div className="col-1"></div>
             </div>
+            {/* Modal xoá */}
             <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -433,6 +413,7 @@ export const Supplier = () => {
                     </div>
                 </div>
             </div>
+            {/* Modal thêm */}
             {showAddModal && (
                 <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
                     <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -484,6 +465,7 @@ export const Supplier = () => {
                     </div>
                 </div>
             )}
+            {/* Modal sửa */}
             {showEditModal && (
                 <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
                     <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -535,6 +517,5 @@ export const Supplier = () => {
                 </div>
             )}
         </div>
-
     );
 };

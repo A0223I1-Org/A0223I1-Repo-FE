@@ -71,191 +71,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2bf2e803-508b-479f-bbd6-9bff2d97ca23" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/.bin/loose-envify" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/.bin/loose-envify.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/.bin/loose-envify.ps1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/.package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/clsx.d.mts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/clsx.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/dist/clsx.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/dist/clsx.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/dist/clsx.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/dist/lite.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/dist/lite.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/license" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/clsx/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/js-tokens/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/js-tokens/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/js-tokens/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/js-tokens/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/js-tokens/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/cli.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/custom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/loose-envify.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/loose-envify/replace.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.browser.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.browser.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.node.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.browser.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.browser.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.node.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.node.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-test-utils.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-test-utils.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom.profiling.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/client.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/profiling.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/server.browser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/server.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/server.node.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/test-utils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server-legacy.browser.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server-legacy.browser.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server.browser.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server.browser.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-test-utils.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-test-utils.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom.profiling.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.esm.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.esm.mjs.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/useNotificationCenter.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.minimal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.minimal.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/CloseButton.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/Icons.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/ProgressBar.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/Toast.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/ToastContainer.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/Transitions.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/containerObserver.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/genToastId.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/store.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/toast.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/useIsomorphicLayoutEffect.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/useToast.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/useToastContainer.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/inject-style.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/inject-style.esm.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/inject-style.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.esm.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.esm.mjs.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.umd.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.umd.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/types.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/collapseToast.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/constant.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/cssTransition.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/mapper.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/propValidator.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_closeButton.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_icons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_progressBar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_theme.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_toast.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_toastContainer.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_variables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_bounce.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_flip.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_slide.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_spin.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_zoom.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/main.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react-toastify/scss/minimal.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react-jsx-dev-runtime.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react-jsx-dev-runtime.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react-jsx-dev-runtime.profiling.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react-jsx-runtime.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react-jsx-runtime.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react-jsx-runtime.profiling.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react.shared-subset.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/cjs/react.shared-subset.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/jsx-dev-runtime.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/jsx-runtime.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/react.shared-subset.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/umd/react.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/umd/react.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/react/umd/react.profiling.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_mock.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_post_task.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_post_task.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler-unstable_mock.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler-unstable_mock.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler.development.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler.profiling.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/unstable_mock.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../node_modules/scheduler/unstable_post_task.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/CreateUpdateCustomer/ListCustomer.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/CreateUpdateCustomer/ListCustomer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/MedicineGroup/MedicineGroupList.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/MedicineGroup/MedicineGroupList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/MedicineInformation/MedicineInfoList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/prescriptionmanagement/AddPrescriptionModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/prescriptionmanagement/DeletePrescriptionModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/prescriptionmanagement/ListPrescription.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/prescriptionmanagement/UpdatePrescription.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/prescriptionmanagement/prescription.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/MedicineGroupManagementService/MedicineGroupService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/MedicineGroupManagementService/MedicineService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/MedicineInformationManagementService/MedicineInformationService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/MedicineInformationManagementService/MedicineService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/SymptomManagementService/SymptomService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/A0223I1-Repo-FE.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/A0223I1-Repo-FE.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/supplier/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/supplier/Supplier.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/supplier/supplier.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/supplier/supplier.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/CustomerManagementService/CustomerService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/CustomerManagementService/CustomerService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/text.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/InformationService/SupplierManagementService/SupplierService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/SupplierManagementService/SupplierService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -279,11 +97,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager" selected="npm.start">
-    <configuration name="Unnamed" type="JavascriptDebugType" nameIsGenerated="true" uri="http://localhost:3000">
+    <configuration name="Debug" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
     <configuration default="true" type="js.build_tools.npm">
@@ -307,7 +125,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JavaScript Debug.Unnamed" />
+      <item itemvalue="JavaScript Debug.Debug" />
       <item itemvalue="npm.start" />
     </list>
   </component>
@@ -325,6 +143,11 @@
       <workItem from="1708953077035" duration="30000" />
       <workItem from="1710249090303" duration="3747000" />
       <workItem from="1710258541639" duration="168000" />
+      <workItem from="1710258813372" duration="132000" />
+      <workItem from="1710259707156" duration="16000" />
+      <workItem from="1710259725036" duration="2300000" />
+      <workItem from="1710312599020" duration="2284000" />
+      <workItem from="1710319006767" duration="3504000" />
     </task>
     <servers />
   </component>
@@ -335,29 +158,29 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="223" y="63" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1710249784901">
+    <state x="223" y="63" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1710259764630">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="223" y="63" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.816@0.0.1536.816" timestamp="1710249784901" />
-    <state x="548" y="149" key="FileChooserDialogImpl" timestamp="1710258704690">
+    <state x="223" y="63" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.816@0.0.1536.816" timestamp="1710259764630" />
+    <state x="548" y="149" key="FileChooserDialogImpl" timestamp="1710259719805">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="548" y="149" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1710258704690" />
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1710258538911">
+    <state x="548" y="149" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1710259719805" />
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1710262524090">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1710258538911" />
-    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1710258538910">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
+    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1710262524090">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1710258538910" />
-    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1710258538910">
+    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
+    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1710262524090">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1710258538910" />
-    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1710258538910">
+    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1710262524090">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1710258538910" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
   </component>
 </project>

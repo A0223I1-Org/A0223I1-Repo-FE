@@ -35,6 +35,27 @@ fieldset{
     margin-top: 25px;
     margin-bottom: 15px;
 }
+.boloc fieldset {
+    flex: 1;
+    margin-right: 15px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .boloc fieldset {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}
+legend b{
+    font-size: 20px;
+}
+@media (max-width: 576px) {
+    .boloc fieldset {
+        flex: 100%;
+    }
+}
+
 legend {
     all: revert;
 }
@@ -57,6 +78,18 @@ b{
 }
 .sort{
     margin-left: 150px;
+}
+@media (max-width: 768px) {
+    .sort {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sort {
+        flex: 100%;
+    }
 }
 .modal-label {
     height: 37px;

@@ -59,6 +59,11 @@
     z-index: 1000;
 }
 
+nav {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    justify-content: center;
+}
 .group2 {
     display: flex;
     padding: 7px;
@@ -86,44 +91,42 @@
 
 .main-left {
     flex: 1;
-    width: 250px;
-    /* Điều chỉnh chiều rộng của thanh điều hướng */
-    height: 750px;
+    width: 200px; /* Điều chỉnh chiều rộng của thanh điều hướng */
+    height: 720px;
     background: var(--blue);
-    border-radius: 7px;
+    border-radius: 7px;    
 }
-
 img {
-    width: 35px;
-    height: 35px;
+    width: 32px; 
+    height: 32px; 
 }
-
 .sidebar ul {
-    list-style-type: none;
-    /* Loại bỏ dấu đầu dòng mặc định */
+    list-style-type: none; /* Loại bỏ dấu đầu dòng mặc định */
+    margin-top: 10px;
+    
 }
 
 .sidebar ul li a {
-    display: flex;
-    /* Sắp xếp biểu tượng và văn bản theo hàng ngang */
-    align-items: center;
-    /* Căn giữa biểu tượng và văn bản theo chiều dọc */
-    padding: 10px;
-    /* Thêm đệm xung quanh mỗi mục */
-    text-decoration: none;
-    /* Loại bỏ gạch chân của liên kết */
-    color: rgb(255, 255, 255);
-    /* Đặt màu văn bản */
+    display: flex; /* Sắp xếp biểu tượng và văn bản theo hàng ngang */
+    align-items: center; /* Căn giữa biểu tượng và văn bản theo chiều dọc */
+    padding: 7.5px; /* Thêm đệm xung quanh mỗi mục */
+    text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+    color: rgb(255, 255, 255); /* Đặt màu văn bản */
 }
 
-.sidebar ul li a:hover img {
-    margin-right: 10px;
-    /* Thêm khoảng cách giữa biểu tượng và văn bản */
+.sidebar ul li img  {
+    margin-right: 5px; 
+   
+}
+.sidebar ul li a:hover img  {
+    margin-right: 10px; /* Thêm khoảng cách giữa biểu tượng và văn bản */
     background: var(--dark-blue);
-    border-radius: 10px;
-
+    border-radius: 4px; 
 }
 
+ol,ul{
+    padding-left: 0;
+}
 
 /* main-right*/
 

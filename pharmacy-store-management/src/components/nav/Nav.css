@@ -1,10 +1,4 @@
 
-.main {
-    display: flex;
-    padding-left: 3px;
-    padding-top: 10px;
-     /* Sử dụng Flexbox để xếp các div trên cùng một hàng */
-}
 .main-left {
     flex: 1;
     width: 200px; /* Điều chỉnh chiều rộng của thanh điều hướng */
@@ -38,5 +32,9 @@ img {
     margin-right: 10px; /* Thêm khoảng cách giữa biểu tượng và văn bản */
     background: var(--dark-blue);
     border-radius: 4px; 
+}
+
+ol,ul{
+    padding-left: 0;
 }
 

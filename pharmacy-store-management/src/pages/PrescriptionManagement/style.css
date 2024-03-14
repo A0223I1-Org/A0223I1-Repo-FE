@@ -12,7 +12,8 @@
 }
 
 body {
-    font-family: Poppins, serif;;
+    font-family: Poppins, serif;
+    padding: 0;
 }
 .row-scope{
     text-align: center;
@@ -279,9 +280,6 @@ p {
     display: flex;
 }
 
-.main-left {
-    flex: 2;
-}
 
 label {
     font-size: 15px;

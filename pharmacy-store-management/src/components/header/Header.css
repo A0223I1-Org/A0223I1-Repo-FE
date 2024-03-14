@@ -58,3 +58,9 @@
     right: 0;
     z-index: 1000;
 }
+
+nav {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    justify-content: center;
+}

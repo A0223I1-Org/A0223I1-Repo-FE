@@ -4,11 +4,46 @@ import {toast} from "react-toastify";
 import axios from "axios";
 
 const attributes = [
-    "medicineId", "medicineGroup", "medicineName", "activeIngredient", "importPrice", "retailPrice", "wholesalePrice"
+    {
+        id: "medicineId",
+        name: "Mã Thuốc"
+    },
+    {
+        id: "medicineGroup.medicineGroupName",
+        name: "Nhóm Thuốc"
+    },
+    {
+        id: "medicineName",
+        name: "Tên Thuốc"
+    },
+    {
+        id: "activeIngredient",
+        name: "Hoạt chất"
+    },
+    {
+        id: "importPrice",
+        name: "Giá nhập"
+    },
+    {
+        id: "retailPrice",
+        name: "Giá bán lẻ"
+    },
+    {
+        id: "wholesalePrice",
+        name: "Giá bán sỉ"
+    }
 ]
 
 const conditions = [
-    "Bằng", "Lớn hơn", "Nhỏ hơn", "Lớn hơn bằng", "Nhỏ hơn bằng", "Khác", "Tất cả"
+    "Bằng", "Gần bằng", "Lớn hơn", "Nhỏ hơn", "Lớn hơn bằng", "Nhỏ hơn bằng", "Khác", "Tất cả"
+]
+
+const conditionString = [
+    "Bằng", "Gần bằng"
+]
+
+const conditionInt = [
+    "Lớn hơn", "Nhỏ hơn", "Lớn hơn bằng", "Nhỏ hơn bằng", "Khác"
 ]
 
 export function MedicineInfoList() {
@@ -20,11 +55,13 @@ export function MedicineInfoList() {
     const [attributeSearchField, setAttributeSearchField] = useState("");
     const [conditionSearchField, setConditionSearchField] = useState("");
     const [textSearchField, setTextSearchField] = useState("");
+
     const [errorMessage, setErrorMessage] = useState("");
+    const [disabledCondition, setDisabledCondition] = useState(true);
 
 
-    // const [searchAttributes, setSearchAttributes] = useState(attributes);
-    // const [searchConditions, setSearchConditions] = useState(conditions);
+    const [attributeState, setAttributeState] = useState(attributes);
+    const [conditionState, setConditionState] = useState(conditions);
 
 
 
@@ -37,8 +74,27 @@ export function MedicineInfoList() {
         }
     }
 
+    const checkConditionField = () => {
+        if (attributeSearchField === "medicineGroup.medicineGroupName" ||
+            attributeSearchField === "medicineName" || attributeSearchField === "activeIngredient" || attributeSearchField === "medicineId") {
+            setConditionState(conditionString);
+            return;
+        }
+        setConditionState(conditionInt);
+    }
+
     useEffect(() => {
         getAllMedicine();
+    }, []);
+
+    // useEffect to enable/disable condition select based on attribute selection
+    useEffect(() => {
+        checkConditionField();
+        setDisabledCondition(!attributeSearchField); // Disable if no attribute selected
+    }, [attributeSearchField]);
+
+    useEffect(() => {
+
     }, []);
     const confirmDelete = () => {
         if (medicine == null || medicine === "") {
@@ -52,15 +108,16 @@ export function MedicineInfoList() {
         console.log(item);
     };
     const deleteMedicineById = async () => {
+        console.log(medicine.medicineId)
         try {
-            await medicineService.deleteMedicine(medicine.id);
+            await medicineService.deleteMedicine(medicine.medicineId);
         } catch (e) {
             console.log(e)
         }
         setShowDeleteModal(false);
         setMedicine("");
         getAllMedicine();
-        toast("Delete successfully!")
+        toast("Xóa thành công!")
     };
 
     const getMedicineByCondition = async () => {
@@ -100,29 +157,22 @@ export function MedicineInfoList() {
                         {errorMessage && <div className="text-danger"><h4>{errorMessage}</h4></div>}
                         <h3 className="col-lg-2">Lọc theo</h3>
 
-                        <select name="" id="medicineId" className="col-lg-2"
+                        <select name="" id="attributes" className="col-lg-2"
                                 value={attributeSearchField} onChange={e => setAttributeSearchField(e.target.value)}>
                             <option value=""> - Thuộc tính - </option>
-                            <option value="medicineId"> Mã Thuốc </option>
-                            <option value="medicineGroup"> Nhóm Thuốc </option>
-                            <option value="medicineName"> Tên Thuốc </option>
-                            <option value="activeIngredient"> Hoạt chất </option>
-                            <option value="importPrice"> Giá nhập </option>
-                            <option value="retailPrice"> Giá bán lẻ </option>
-                            <option value="wholesalePrice"> Giá bán sỉ </option>
+                            {attributeState.map((attribute) => (
+                                <option value={attribute.id}>{attribute.name}</option>
+                            ))}
+
 
                         </select>
 
-                        <select name="" id="condition" className="col-lg-2 mx-3"
+                        <select name="" id="condition" className="col-lg-2 mx-3" disabled={disabledCondition}
                         value={conditionSearchField} onChange={e => setConditionSearchField(e.target.value)}>
                             <option value=""> - Điều kiện - </option>
-                            <option value="Bằng"> Bằng </option>
-                            <option value="Lớn hơn"> Lớn hơn </option>
-                            <option value="Nhỏ hơn"> Nhỏ hơn </option>
-                            <option value="Lớn hơn bằng"> Lớn hơn bằng </option>
-                            <option value="Nhỏ hơn bằng"> Nhỏ hơn bằng </option>
-                            <option value="Khác"> Khác </option>
-                            <option value="Tất cả"> Tất cả </option>
+                            {conditionState.map((condition) => (
+                                <option value={condition}>{condition}</option>
+                            ))}
                         </select>
 
                         <input type="text" className="col-lg-3 mx-3" onChange={e => setTextSearchField(e.target.value)}/>
@@ -162,13 +212,13 @@ export function MedicineInfoList() {
                                     <td>{item.unit}</td>
                                     <td>{item.conversionUnit}</td>
                                     <td>{item.quantity}</td>
-                                    <td>{item.importPrice}</td>
-                                    <td>{item.wholesalePrice}</td>
-                                    <td>{item.retailPrice}</td>
-                                    <td>{item.supplierDiscount}</td>
-                                    <td>{item.profitMarginWholesale}</td>
-                                    <td>{item.profitMarginRetail}</td>
-                                    <td>{item.origin}</td>
+                                    <td>{item.importPrice}$</td>
+                                    <td>{item.wholesalePrice}$</td>
+                                    <td>{item.retailPrice}$</td>
+                                    <td>{item.supplierDiscount}%</td>
+                                    <td>{item.profitMarginWholesale}%</td>
+                                    <td>{item.profitMarginRetail}%</td>
+                                    <td>{item.origin}%</td>
                                 </tr>
                             ))
                         }

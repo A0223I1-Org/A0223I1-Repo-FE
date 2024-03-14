@@ -25,12 +25,16 @@ export function MedicineGroupList() {
 
     function checkMedicineGroup(value){
         return value == null || value === "";
+    }
 
+    // Kiểm tra độ dài tên nhóm thuốc
+    function checkMedicineGroupNameLength(value) {
+        return value.length <= 25;
     }
 
     const createNewMedicineGroup = async () => {
         if (!isAdding) {
-            toast("Please fill in {Tên Nhóm Thuốc} to add new medicineGroup");
+            toast("Phải điền vào {Tên Nhóm Thuốc} để thêm mới một nhóm thuốc");
             setMedicineGroupName("");
             setMedicineGroupId("");
             setIsAdding(true);
@@ -39,6 +43,10 @@ export function MedicineGroupList() {
         if (isAdding) {
             if (checkMedicineGroup(medicineGroupName)) {
                 setErrorMessage("Tên nhóm thuốc không được để trống");
+                return;
+            }
+            if (!checkMedicineGroupNameLength(medicineGroupName)) {
+                setErrorMessage("Tên nhóm thuốc không được quá 25 ký tự");
                 return;
             }
             const newMedicineGroup = {
@@ -53,6 +61,7 @@ export function MedicineGroupList() {
             setIsAdding(false);
             setErrorMessage("");
             setMedicineGroupName("");
+            setMedicineGroupId("");
         }
     }
 
@@ -67,6 +76,11 @@ export function MedicineGroupList() {
             return;
         }
 
+        if (!checkMedicineGroupNameLength(medicineGroupName)) {
+            setErrorMessage("Tên nhóm thuốc không được quá 25 ký tự");
+            return;
+        }
+
         const updateMedicineGroup = {
             id : medicineGroupId,
             medicineGroupName: medicineGroupName
@@ -77,7 +91,7 @@ export function MedicineGroupList() {
 
         // Refresh the medicine group list
         getAllMedicineGroup();
-        toast("Update successfully");
+        toast("Cập nhật thành công");
         setMedicineGroupId("");
         setMedicineGroupName("");
         setErrorMessage("");
@@ -105,9 +119,12 @@ export function MedicineGroupList() {
         getAllMedicineGroup();
         setMedicineGroupId("");
         setMedicineGroupName("");
-        toast("Delete successfully!")
+        toast("Xóa thành công!")
     };
     const backButton = () => {
+        setMedicineGroupId("");
+        setMedicineGroupName("");
+        setErrorMessage("");
         if (isAdding) {
             setIsAdding(false);
         }
@@ -141,13 +158,12 @@ export function MedicineGroupList() {
                 </fieldset>
 
 
-
                 <fieldset className="border border-dark border-3 rounded-3 p-3 mt-4">
                     <legend><h2>Thông tin nhóm thuốc</h2></legend>
                     <form>
                         <div className="mb-3">
                             <label htmlFor="groupId" className="form-label">Mã nhóm thuốc</label>
-                            <input type="text" className="form-control" id="groupId" value={medicineGroupId} onChange={(e) => setMedicineGroupId(e.target.value)} readOnly/>
+                            <input type="text" className="form-control" id="groupId" value={medicineGroupId} onChange={(e) => setMedicineGroupId(e.target.value)} disabled/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="groupName" className="form-label">Tên nhóm thuốc</label>

@@ -1,30 +1,16 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
-export const searchCustomer = async (searchType, searchValue) => {
+
+export const getAllphones = async ()=>{
     try{
-        if(searchType === 'customerName'){
-            const result = await axios.get('http://localhost:8080/api/customer/list/searchByName?customerName='+searchValue)
-            console.log(result.data.content);
-            return result.data.content;
-        }
-        else if (searchType === 'customerType'){
-            const result = await axios.get('http://localhost:8080/api/customer/list/searchByType?customerType='+searchValue)
-            console.log(result.data.content);
-            return result.data.content;
-        }
-        else if (searchType === 'customerAge'){
-            const result = await axios.get('http://localhost:8080/api/customer/list/searchByAge?age='+searchValue)
-            console.log(result.data.content);
-            return result.data.content;
-        }
-    }
-    catch (e){
+        const result = await axios.get('http://localhost:8080/api/customer/listPhone')
+        return result.data
+    }catch (e){
         console.log(e)
         throw e
     }
-};
-
-
+}
 export const getCustomerById = async (idCustomerEdit) =>{
     try{
         const result = await axios.get('http://localhost:8080/api/customer/getCustomerById/'+idCustomerEdit)
@@ -54,24 +40,82 @@ export const updateCustomer = async (newCustomer) => {
         console.log(e)
     }
 }
-export const findAllCustomer = async () => {
+export const getAllCustomer = async () =>{
     try {
-        const result = await axios.get(`http://localhost:8080/api/customer/list`);
-        console.log(result.data.content);
+        const result = await axios.get(`http://localhost:8080/api/customer/lists`)
+        return result.data.content;
+    }catch (e){
+        console.log(e)
+    }
+}
+export const findAllCustomer = async (sortOption, searchType, searchValue, page, size) => {
+    try {
+        // debugger
+        const result = await axios.get(`http://localhost:8080/api/customer/list`, {
+            params: {
+                sortOption,
+                searchType,
+                searchValue,
+                page,
+                size
+            }
+        });
         return result.data.content;
     } catch (e) {
-        console.error(e);
-        throw e;
+        // throw e;
+        console.log(e)
     }
 };
+
 export const deleteCustomer = async (id) => {
-    // debugger;
     try {
-        const result = await axios.delete(`http://localhost:8080/api/customer/`+id);
-        console.log(result.data.content);
+        const result = await axios.delete(`http://localhost:8080/api/customer/` + id);
+        toast.success("Đã xóa khách hàng thành công")
+        return result.data.content;
+
+    } catch (e) {
+        toast.error(e.response.data)
+        console.log(e)
+        // throw e;
+    }
+};
+export const detailCustomer = async (id) => {
+    try {
+        const result = await axios.get(`http://localhost:8080/api/customer/getCustomerById/` + id);
+        return result.data;
+    } catch (e) {
+        toast.error(e.response.data)
+        // throw e;
+    }
+};
+
+export const seeInvoiceCustomer = async (customerId, startDate, endDate, startTime, endTime, page, size) => {
+    try {
+        const params = {
+            id: customerId,
+            startDay: startDate,
+            endDay: endDate,
+            startHour: startTime,
+            endHour: endTime,
+            page,
+            size
+        };
+
+        const result = await axios.get(`http://localhost:8080/api/customer/getAllInvoiceCustomer`, { params });
+        // console.log(result.data);
         return result.data.content;
     } catch (e) {
         console.error(e);
         throw e;
     }
 };
+export const findAllCustomerIncludeDeleted = async () =>{
+    try {
+        const result2 = await axios.get(`http://localhost:8080/api/customer/lists`);
+        console.log(result2.data);
+        return result2.data;
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
+}

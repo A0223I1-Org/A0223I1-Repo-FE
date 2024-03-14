@@ -24,7 +24,15 @@ export const searchCustomer = async (searchType, searchValue) => {
     }
 };
 
-
+export const getAllphones = async ()=>{
+    try{
+        const result = await axios.get('http://localhost:8080/api/customer/listPhone')
+        return result.data
+    }catch (e){
+        console.log(e)
+        throw e
+    }
+}
 export const getCustomerById = async (idCustomerEdit) =>{
     try{
         const result = await axios.get('http://localhost:8080/api/customer/getCustomerById/'+idCustomerEdit)
@@ -64,6 +72,16 @@ export const findAllCustomer = async () => {
         throw e;
     }
 };
+export const findAllCustomerIncludeDeleted = async () =>{
+    try {
+        const result2 = await axios.get(`http://localhost:8080/api/customer/lists`);
+        console.log(result2.data);
+        return result2.data;
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
+}
 export const deleteCustomer = async (id) => {
     // debugger;
     try {

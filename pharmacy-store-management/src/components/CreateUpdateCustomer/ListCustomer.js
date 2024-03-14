@@ -1,12 +1,19 @@
 import React, {useEffect, useRef, useState} from "react";
-import './ListCustomer.css';
+import './ListCustomer.css'
+
 import * as CustomerService from "../../utils/InformationService/CustomerManagementService/CustomerService";
-import {toast} from "react-toastify";
+// import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
 
 export const ListCustomer = () => {
     const navigate = useNavigate()
     const [customers, setCustomers] = useState([]);
+    const [phonesValid,setPhonesValid] = useState([])
+    const [duplicatePhone,setDuplicatePhone] = useState({})
     const [showAddModal, setShowAddModal] = useState(false); // State để điều khiển hiển thị modal thêm nhà cung cấp
     const [newCustomer, setNewCustomer] = useState({
         customerId: '',
@@ -30,28 +37,39 @@ export const ListCustomer = () => {
             accountId: 0
         }
     );
-    const [idCustomerDelete, setIdCustomerDelete] = useState([]);
+    const [idCustomerDelete,  setIdCustomerDelete] = useState([]);
     const [searchType, setSearchType] = useState('customerName');
     const [searchValue, setSearchValue] = useState("");
     const [searchInput, setSearchInput] = useState(""); // Thêm state mới để lưu trữ giá trị tìm kiếm mới
     const [selectedRow, setSelectedRow] = useState(null);
     const highlightedRowRef = useRef(null);
-    const [lastestCustomerId,setLastestCustomerId] = useState("")
+    const [lastestCustomerId, setLastestCustomerId] = useState("")
 
-    const generateCustomerId = () =>{
-        const currentNumber = parseInt(lastestCustomerId.slice(2),10)
+    const generateCustomerId = () => {
+        const currentNumber = parseInt(lastestCustomerId.slice(2), 10)
         const nextNumber = currentNumber + 1;
         const nextCustomerId = `KH${nextNumber.toString().padStart(2, "0")}`
         console.log(nextCustomerId)
         return nextCustomerId
     }
 
+    const validPhone = async () =>{
+        try{
+            const result = await CustomerService.getAllphones();
+            setPhonesValid(result)
+            console.log(result)
+        }
+        catch (e){
+            console.log(e)
+        }
+    }
     const fetchApi = async () => {
         try {
             const result = await CustomerService.findAllCustomer();
+            // const result2 = await CustomerService.findAllCustomerIncludeDeleted();
             if (result.length > 0) {
                 // Find the customer with the highest ID
-                const latestCustomer = result.reduce((prev, current) => (parseInt(prev.customerId.slice(2),10) > parseInt(current.customerId.slice(2),10)) ? prev : current);
+                const latestCustomer = result.reduce((prev, current) => (parseInt(prev.customerId.slice(2), 10) > parseInt(current.customerId.slice(2), 10)) ? prev : current);
                 setLastestCustomerId(latestCustomer.customerId);
             }
             console.log(lastestCustomerId)
@@ -71,7 +89,7 @@ export const ListCustomer = () => {
     }
     const fetchCustomersBySearch = async () => {
         try {
-            const result = await CustomerService.searchCustomer(searchType,searchValue);
+            const result = await CustomerService.searchCustomer(searchType, searchValue);
             setCustomers(result);
             console.log(result)
         } catch (error) {
@@ -79,9 +97,11 @@ export const ListCustomer = () => {
         }
     };
 
+
     useEffect(() => {
+        validPhone()
         fetchApi()
-    }, [searchValue,searchType])
+    }, [searchValue, searchType])
 
     const handleSearchTypeChange = (event) => {
         setSearchType(event.target.value);
@@ -172,45 +192,177 @@ export const ListCustomer = () => {
                 console.error('Error fetching customer data:', error);
             }
         } else {
-            alert('Chọn nhân viên cần chỉnh sửa');
+            alert('Chọn khách hàng cần chỉnh sửa');
         }
     };
     const saveChanges = async () => {
+        resetErrorMessages()
+        let isValid = true
         const newCustomer = selectedCustomer
-        newCustomer.customerId = document.getElementById('customerId').value
-        newCustomer.customerName = document.getElementById('customerName').value
-        newCustomer.address = document.getElementById('address').value
-        newCustomer.age = document.getElementById('age').value
-        newCustomer.phoneNumber =document.getElementById('phoneNumber').value
-        newCustomer.customerType =document.getElementById('customerType').value
-        newCustomer.note = document.getElementById('note').value
-        console.log(selectedCustomer)
-        await CustomerService.updateCustomer(newCustomer)
-        closeModal()
-        fetchApi()
-        removeHighlight()
+        const customerId = document.getElementById('customerId').value
+        const customerName = document.getElementById('customerName').value
+        const customerAddress = document.getElementById('address').value
+        const customerAge = document.getElementById('age').value
+        const customerPhone = document.getElementById('phoneNumber').value
+        const customerType = document.getElementById('customerType').value
+        const customerNote = document.getElementById('note').value
+
+
+        const nameRegex = /^[a-zA-Z\sàáạãảâầấậẫẩăằắặẵẳèéẹẽẻêềếệễểđìíịĩỉòóọõỏôồốộỗổơờớợỡởùúụũủưừứựữửỳýỵỹỷ]+$/
+        const ageRegex = /^(1[8-9]|[2-6][0-9]|70)$/
+        const addressRegex = /^[a-zA-Z0-9\sàáạãảâầấậẫẩăằắặẵẳèéẹẽẻêềếệễểđìíịĩỉòóọõỏôồốộỗổơờớợỡởùúụũủưừứựữửỳýỵỹỷ]+$/
+        const phoneRegex = /^0\d{9}$/
+
+        if (customerName.trim() === ""){
+            displayErrorMessage("updateCustomerNameError", "Tên khách hàng không được để trống.");
+            isValid = false
+        }
+        else if (!nameRegex.test(customerName.trim())) {
+            displayErrorMessage("updateCustomerNameError", "Tên khách hàng không đúng định dạng.");
+            isValid = false;
+        }
+        if(customerAge.trim() === ""){
+            displayErrorMessage("updateCustomerAgeError", "Tuổi không được để trống.");
+            isValid = false
+        }
+        else if(!ageRegex.test(customerAge)){
+            displayErrorMessage("updateCustomerAgeError", "Tuổi phải là số từ 18 đến 70.");
+            isValid = false
+        }
+        if(customerAddress.trim() === ""){
+            displayErrorMessage("updateCustomerAddressError", "Địa chỉ không được để trống .");
+            isValid = false
+        }
+        else if(!addressRegex.test(customerAddress)){
+            displayErrorMessage("updateCustomerAddressError", "Địa chỉ không chứa ký tự đặc biệt .");
+            isValid = false
+        }
+        if(customerPhone.trim() === ""){
+            displayErrorMessage("updateCustomerPhoneNumberError", "Số điện thoại không được để trống.");
+            isValid = false
+        }
+        else if(!phoneRegex.test(customerPhone)){
+            displayErrorMessage("updateCustomerPhoneNumberError", "Số điện thoại gồm 10 chữ số, bắt đầu từ số 0.");
+            isValid = false
+        }
+        if(customerType === ""){
+            displayErrorMessage("updateCustomerTypeError", "Bắt buộc chọn loại khách hàng.");
+            isValid = false
+        }
+        if(isValid) {
+            newCustomer.customerId = customerId
+            newCustomer.customerName = customerName
+            newCustomer.address = customerAddress
+            newCustomer.age = customerAge
+            newCustomer.phoneNumber = customerPhone
+            newCustomer.customerType = customerType
+            newCustomer.note = customerNote
+            await CustomerService.updateCustomer(newCustomer)
+            closeModal()
+            alert('🦄 Sửa thành công')
+            fetchApi()
+            removeHighlight()
+        }
     };
-    const saveCreate = async () =>{
+    const saveCreate = async () => {
+        resetErrorMessages()
+        let isValid = true
         const newCreateCustomer = newCustomer
-        newCreateCustomer.customerId = document.getElementById('createCustomerId').value
-        newCreateCustomer.customerName = document.getElementById('createCustomerName').value
-        newCreateCustomer.address = document.getElementById('createCustomerAddress').value
-        newCreateCustomer.age =document.getElementById('createCustomerAge').value
-        newCreateCustomer.phoneNumber =document.getElementById('createCustomerPhoneNumber').value
-        newCreateCustomer.customerType =document.getElementById('createCustomerType').value
-        newCreateCustomer.note = document.getElementById('createCustomerNote').value
-        console.log(newCreateCustomer)
-        await CustomerService.createCustomer(newCreateCustomer)
-        toast('🦄 New customer was added')
-        closeModal()
-        fetchApi()
-        setLastestCustomerId(newCreateCustomer.customerId)
-        handleCloseAddModal();
+        const customerId = document.getElementById('createCustomerId').value
+        const customerName = document.getElementById('createCustomerName').value
+        const customerAddress = document.getElementById('createCustomerAddress').value
+        const customerAge = document.getElementById('createCustomerAge').value
+        const customerPhone = document.getElementById('createCustomerPhoneNumber').value
+        const customerType = document.getElementById('createCustomerType').value
+        const customerNote = document.getElementById('createCustomerNote').value
+
+        const nameRegex = /^[a-zA-Z\sàáạãảâầấậẫẩăằắặẵẳèéẹẽẻêềếệễểđìíịĩỉòóọõỏôồốộỗổơờớợỡởùúụũủưừứựữửỳýỵỹỷ]+$/
+        const ageRegex = /^(1[8-9]|[2-6][0-9]|70)$/
+        const addressRegex = /^[a-zA-Z0-9\sàáạãảâầấậẫẩăằắặẵẳèéẹẽẻêềếệễểđìíịĩỉòóọõỏôồốộỗổơờớợỡởùúụũủưừứựữửỳýỵỹỷ]+$/
+        const phoneRegex = /^0\d{9}$/
+
+        for (let i of phonesValid){
+            if(customerPhone === i){
+                setDuplicatePhone(customerPhone)
+                break
+            }
+        }
+        if (customerName.trim() === ""){
+            displayErrorMessage("createCustomerNameError", "Tên khách hàng không được để trống.");
+            isValid = false
+        }
+        else if (!nameRegex.test(customerName.trim())) {
+            displayErrorMessage("createCustomerNameError", "Tên khách hàng không đúng định dạng.");
+            isValid = false;
+        }
+        if(customerAge.trim() === ""){
+            displayErrorMessage("createCustomerAgeError", "Tuổi không được để trống.");
+            isValid = false
+        }
+        else if(!ageRegex.test(customerAge)){
+            displayErrorMessage("createCustomerAgeError", "Tuổi phải là số từ 18 đến 70.");
+            isValid = false
+        }
+        if(customerAddress.trim() === ""){
+            displayErrorMessage("createCustomerAddressError", "Địa chỉ không được để trống .");
+            isValid = false
+        }
+        else if(!addressRegex.test(customerAddress)){
+            displayErrorMessage("createCustomerAddressError", "Địa chỉ không chứa ký tự đặc biệt .");
+            isValid = false
+        }
+        if(customerPhone.trim() === ""){
+            displayErrorMessage("createCustomerPhoneNumberError", "Số điện thoại không được để trống.");
+            isValid = false
+        }
+        else if(!phoneRegex.test(customerPhone)){
+            displayErrorMessage("createCustomerPhoneNumberError", "Số điện thoại gồm 10 chữ số, bắt đầu từ số 0.");
+            isValid = false
+        }
+        else if(customerPhone === duplicatePhone){
+            displayErrorMessage("createCustomerPhoneNumberError", "Số điện thoại đã tồn tại.");
+            isValid = false
+        }
+        if(customerType === ""){
+            displayErrorMessage("createCustomerTypeError", "Bắt buộc chọn loại khách hàng.");
+            isValid = false
+        }
+
+        if(isValid) {
+            newCreateCustomer.customerId = customerId
+            newCreateCustomer.customerName = customerName
+            newCreateCustomer.address = customerAddress
+            newCreateCustomer.age = customerAge
+            newCreateCustomer.phoneNumber = customerPhone
+            newCreateCustomer.customerType = customerType
+            newCreateCustomer.note = customerNote
+            await CustomerService.createCustomer(newCreateCustomer)
+            alert("Thêm mới khách hàng thành công ");
+            isValid = true
+            closeModal()
+            fetchApi()
+            setLastestCustomerId(newCreateCustomer.customerId)
+            handleCloseAddModal();
+        }
+
+    }
+    function displayErrorMessage(fieldId, message) {
+        const errorSpan = document.getElementById(fieldId);
+        if (errorSpan) {
+            errorSpan.innerText = message;
+        }
+    }
+
+    function resetErrorMessages() {
+        const errorSpans = document.querySelectorAll(".error-message");
+        errorSpans.forEach((span) => {
+            span.innerText = "";
+        });
     }
 
     const closeModal = () => {
         const modal = document.getElementById('editModal');
-        modal.style.display= 'none'
+        modal.style.display = 'none'
     }
     return (
         <div className="container">
@@ -224,8 +376,9 @@ export const ListCustomer = () => {
                                 <div className="search-selected">
                                     <span>Lọc theo</span>
                                     <a style={{display: "flex", alignItems: "center"}}>
-                                        <select className="form-select" value={searchType} onChange={handleSearchTypeChange}>
-                                            <option value="customerType" >Nhóm khách hàng</option>
+                                        <select className="form-select" value={searchType}
+                                                onChange={handleSearchTypeChange}>
+                                            <option value="customerType">Nhóm khách hàng</option>
                                             <option value="customerName">Tên khách hàng</option>
                                             <option value="customerAge">Tuổi khách hàng</option>
                                         </select>
@@ -300,7 +453,7 @@ export const ListCustomer = () => {
                         <button type="button" className="btn btn-secondary" style={{width: "auto"}}><i
                             className="bi bi-info-square"></i> Thông tin chi tiết
                         </button>
-                        <button type="button" className="btn btn-success" onClick={handleShowAddModal} >
+                        <button type="button" className="btn btn-success" onClick={handleShowAddModal}>
                             <i className="bi bi-plus-circle"></i> Thêm
                         </button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#editModal"
@@ -353,93 +506,72 @@ export const ListCustomer = () => {
                                     aria-label="Close" onClick={closeModal}></button>
                         </div>
                         <div className="modal-body">
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <form>
-                                        <div className="mb-3">
-                                            <label htmlFor="customerId" className="form-label">Mã khách hàng:</label>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="customerName" className="form-label">Tên khách hàng:</label>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="address" className="form-label">Địa chỉ:</label>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="age" className="form-label">Tuổi:</label>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="phoneNumber" className="form-label">SĐT:</label>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="customerType" className="form-label">Nhóm khách hàng:</label>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="note" className="form-label">Ghi chú: </label>
-                                        </div>
-                                    </form>
+                            <form>
+                                <div className="mb-3">
+                                    <label htmlFor="customerId" className="form-label modal-label">Mã khách
+                                        hàng</label>
+                                    <input type="text" className="form-control" id="customerId"
+                                           name="customerId"
+                                           style={{background: "gray", color: "blue"}}
+                                           readOnly/>
                                 </div>
-                                <div className="col-md-8">
-                                    <form>
-                                        <div className="mb-3">
-                                            <input type="text" readOnly id="customerId" name="customerId"
-                                                   className="form-control " style={{color:"blue",background:"gray"}}/>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <input type="text" id="customerName" name="customerName"
-                                                   pattern="[a-zA-Z ]+"
-                                                   title="Tên chỉ được chứa ký tự và khoảng trắng" required
-                                                   className="form-control"/>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <input type="text" id="address" name="address" required
-                                                   className="form-control"/>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <input type="text" id="age" name="age" pattern="\d{1,3}"
-                                                   title="Tuổi chỉ được nhập là số và tối đa 3 chữ số" required
-                                                   className="form-control"/>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <input type="text" id="phoneNumber" name="phoneNumber" required
-                                                   className="form-control"/>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <select required id="customerType" name="customerType"
-                                                    className="form-control">
-                                                <option value="">--Chọn--</option>
-                                                <option value="Khách lẻ">Khách lẻ</option>
-                                                <option value="Khách sỉ">Khách sỉ</option>
-                                                <option value="Khách theo đơn">Khách theo đơn</option>
-                                            </select>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <input type="text" id="note" name="note" required
-                                                   className="form-control"/>
-                                        </div>
-                                    </form>
+                                <div className="mb-3">
+                                    <label htmlFor="customerName" className="form-label modal-label">Tên khách
+                                        hàng</label>
+                                    <input type="text" className="form-control" id="customerName"
+                                           name="customerName" />
+                                    <span className="error-message" style={{color: "#dc3545"}} id="updateCustomerNameError"></span>
                                 </div>
-                            </div>
+                                <div className="mb-3">
+                                    <label htmlFor="age"
+                                           className="form-label modal-label">Tuổi </label>
+                                    <input type="text" className="form-control" id="age"
+                                           name="age" />
+                                    <span className="error-message" style={{color: "#dc3545"}} id="updateCustomerAgeError"></span>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="address" className="form-label modal-label">Địa
+                                        chỉ</label>
+                                    <input type="text" className="form-control" id="address"
+                                           name="address" />
+                                    <span className="error-message" style={{color: "#dc3545"}} id="updateCustomerAddressError"></span>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="phoneNumber" className="form-label modal-label">Điện
+                                        thoại</label>
+                                    <input type="tel" className="form-control" id="phoneNumber"
+                                           name="phoneNumber"  placeholder="ex: 0972346898"/>
+                                    <span className="error-message" style={{color: "#dc3545"}} id="updateCustomerPhoneNumberError"></span>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="customerType" className="form-label modal-label">Nhóm
+                                        khách hàng: </label>
+                                    <select  id="customerType" name="customerType"
+                                             className="form-control">
+                                        <option value="">--Chọn--</option>
+                                        <option value="Khách lẻ">Khách lẻ</option>
+                                        <option value="Khách sỉ">Khách sỉ</option>
+                                        <option value="Khách theo đơn">Khách theo đơn</option>
+                                    </select>
+                                    <span className="error-message" style={{color: "#dc3545"}} id="updateCustomerTypeError"></span>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="note" className="form-label modal-label">Ghi
+                                        chú</label>
+                                    <textarea className="form-control" id="note"
+                                              name="note" rows="3"></textarea>
+                                </div>
+                            </form>
                             <div className="modal-footer">
-                                <button type="submit" onClick={saveChanges} className="btn btn-success" id="btnSaveEdit">
+                                <button type="submit" onClick={saveChanges} className="btn btn-success"
+                                        id="btnSaveEdit">
                                     <i className="bi bi-plus-circle"></i> Chấp nhận
                                 </button>
                                 <button type="reset" className="btn btn-secondary"><i
                                     className="bi bi-arrow-clockwise"></i> Đặt lại
                                 </button>
-                                <button type="button" data-dismiss="modal" onClick={closeModal} className="btn btn-primary"><i
+                                <button type="button" data-dismiss="modal" onClick={closeModal}
+                                        className="btn btn-primary"><i
                                     className="bi bi-arrow-return-left"></i> Trở về
                                 </button>
                             </div>
@@ -449,39 +581,56 @@ export const ListCustomer = () => {
             </div>
             {/* Modal create*/}
             {showAddModal && (
-                <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
+                <div className="modal fade show" tabIndex="-1" style={{display: "block"}}>
                     <div className="modal-dialog modal-dialog-centered modal-lg">
                         <div className="modal-content">
                             <div className="modal-header text-center">
                                 <h5 className="modal-title w-100" id="addCustomerModalLabel">Thêm mới khách hàng</h5>
-                                <button type="button" className="btn-close" onClick={handleCloseAddModal} aria-label="Close"></button>
+                                <button type="button" className="btn-close" onClick={handleCloseAddModal}
+                                        aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <form>
                                     <div className="mb-3">
-                                        <label htmlFor="createCustomerId" className="form-label modal-label">Mã khách hàng</label>
-                                        <input type="text" className="form-control" id="createCustomerId" name="createCustomerId"
-                                               style={{background:"gray",color:"blue"}}
-                                               value={generateCustomerId()}  readOnly />
+                                        <label htmlFor="createCustomerId" className="form-label modal-label">Mã khách
+                                            hàng</label>
+                                        <input type="text" className="form-control" id="createCustomerId"
+                                               name="createCustomerId"
+                                               style={{background: "gray", color: "blue"}}
+                                               value={generateCustomerId()} readOnly/>
+
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="createCustomerName" className="form-label modal-label">Tên khách hàng</label>
-                                        <input type="text" className="form-control" id="createCustomerName" name="createCustomerName" required />
+                                        <label htmlFor="createCustomerName" className="form-label modal-label">Tên khách
+                                            hàng</label>
+                                        <input type="text" className="form-control" id="createCustomerName"
+                                               name="createCustomerName" />
+                                        <span className="error-message" style={{color: "#dc3545"}} id="createCustomerNameError"></span>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="createCustomerAge" className="form-label modal-label">Tuổi: </label>
-                                        <input type="text" className="form-control" id="createCustomerAge" name="createCustomerAge" required />
+                                        <label htmlFor="createCustomerAge"
+                                               className="form-label modal-label">Tuổi: </label>
+                                        <input type="text" className="form-control" id="createCustomerAge"
+                                               name="createCustomerAge"/>
+                                        <span className="error-message" style={{color: "#dc3545"}} id="createCustomerAgeError"></span>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="createCustomerAddress" className="form-label modal-label">Địa chỉ</label>
-                                        <input type="text" className="form-control" id="createCustomerAddress" name="createCustomerAddress"  />
+                                        <label htmlFor="createCustomerAddress" className="form-label modal-label">Địa
+                                            chỉ</label>
+                                        <input type="text" className="form-control" id="createCustomerAddress"
+                                               name="createCustomerAddress"/>
+                                        <span className="error-message" style={{color: "#dc3545"}} id="createCustomerAddressError"></span>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="createCustomerPhoneNumber" className="form-label modal-label">Điện thoại</label>
-                                        <input type="tel" className="form-control" id="createCustomerPhoneNumber" name="createCustomerPhoneNumber" placeholder="ex: 0972346898" />
+                                        <label htmlFor="createCustomerPhoneNumber" className="form-label modal-label">Điện
+                                            thoại</label>
+                                        <input type="tel" className="form-control" id="createCustomerPhoneNumber"
+                                               name="createCustomerPhoneNumber" placeholder="ex: 0972346898" />
+                                        <span className="error-message" style={{color: "#dc3545"}} id="createCustomerPhoneNumberError"></span>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="createCustomerType" className="form-label modal-label">Nhóm khách hàng: </label>
+                                        <label htmlFor="createCustomerType" className="form-label modal-label">Nhóm
+                                            khách hàng: </label>
                                         <select required id="createCustomerType" name="createCustomerType"
                                                 className="form-control">
                                             <option value="">--Chọn--</option>
@@ -489,19 +638,26 @@ export const ListCustomer = () => {
                                             <option value="Khách sỉ">Khách sỉ</option>
                                             <option value="Khách theo đơn">Khách theo đơn</option>
                                         </select>
+                                        <span className="error-message" style={{color: "#dc3545"}} id="createCustomerTypeError"></span>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="createCustomerNote" className="form-label modal-label">Ghi chú</label>
-                                        <textarea className="form-control" id="createCustomerNote" name="createCustomerNote" rows="3" ></textarea>
+                                        <label htmlFor="createCustomerNote" className="form-label modal-label">Ghi
+                                            chú</label>
+                                        <textarea className="form-control" id="createCustomerNote"
+                                                  name="createCustomerNote" rows="3"></textarea>
                                     </div>
                                 </form>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-success" onClick={saveCreate}><i className="bi bi-plus-circle"></i> Thêm</button>
-                                <button type="reset" className="btn btn-secondary"><i
-                                    className="bi bi-arrow-clockwise"></i> Đặt lại
-                                </button>
-                                <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i className="bi bi-arrow-return-left"></i> Trở về</button>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-success" onClick={saveCreate}><i
+                                        className="bi bi-plus-circle"></i> Thêm
+                                    </button>
+                                    <button type="reset" className="btn btn-secondary"><i
+                                        className="bi bi-arrow-clockwise"></i> Đặt lại
+                                    </button>
+                                    <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i
+                                        className="bi bi-arrow-return-left"></i> Trở về
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

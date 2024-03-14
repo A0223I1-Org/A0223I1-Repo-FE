@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+:root {
+    --blue: #0072BC;
+    --light-blue:#3794d2;
+    --dark-blue:  #0b68a6;
+    --black: #444;
+    --light-color: #666;
+    --border: .1rem solid rgba(0, 0, 0, .1);
+    --border-hover: .1rem solid var(--black);
+    --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-transform: capitalize;
+    transition: all .2s linear;
+}
+.header .header-2 {
+    background: var(--blue);
+    display: flex;
+    flex-direction: row;
+}
+
+.header .header-2 .navbar {
+    text-align: left;
+}
+
+.dropdown-menu{
+    background: var(--light-blue) !important;
+
+}
+
+.header .header-2 .navbar a {
+    color: #fff;
+    display: inline-block;
+    margin: 2px 2px; 
+    padding: .65rem; 
+    text-decoration: none; 
+    transition: all .2s linear;
+    font-size: 14.5px;
+}
+
+.header .header-2 .navbar a:hover {
+    background: var(--dark-blue);
+    border-radius: 10px;
+}
+
+.header .header-2.active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+nav {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    justify-content: center;
+}
+.main {
+    display: flex;
+    padding-left: 2px;
+    padding-top: 10px;
+     /* Sử dụng Flexbox để xếp các div trên cùng một hàng */
+}
+.main-left {
+    flex: 1;
+    width: 200px; /* Điều chỉnh chiều rộng của thanh điều hướng */
+    height: 720px;
+    background: var(--blue);
+    border-radius: 7px;    
+}
+img {
+    width: 32px; 
+    height: 32px; 
+}
+.sidebar ul {
+    list-style-type: none; /* Loại bỏ dấu đầu dòng mặc định */
+    margin-top: 10px;
+    
+}
+
+.sidebar ul li a {
+    display: flex; /* Sắp xếp biểu tượng và văn bản theo hàng ngang */
+    align-items: center; /* Căn giữa biểu tượng và văn bản theo chiều dọc */
+    padding: 7.5px; /* Thêm đệm xung quanh mỗi mục */
+    text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+    color: rgb(255, 255, 255); /* Đặt màu văn bản */
+}
+
+.sidebar ul li img  {
+    margin-right: 5px; 
+   
+}
+.sidebar ul li a:hover img  {
+    margin-right: 10px; /* Thêm khoảng cách giữa biểu tượng và văn bản */
+    background: var(--dark-blue);
+    border-radius: 4px; 
+}
+
+ol,ul{
+    padding-left: 0;
+}
+
+
+.checkbox-header {
+    align-items: center;
+    width: max-content;
+  }
+
+  th.checkbox-header {
+    width: 20px !important; 
+    text-align: center;/* Đặt chiều rộng tùy ý */
+}
+
+  .checkbox-container input[type="checkbox"] {
+    transform: scale(0.4); 
+  }
+
+
+
+/* main-right */
+legend{
+    all: revert !important;
+    font-weight: bold !important;
+}
+
+.alo {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-time-inputs,
+.show-sort-button {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 10px;
+    padding: 13px 0px;
+}
+
+.date-time-inputs .form-control,
+.show-sort-button .form-control
+{
+    border: 1px solid;
+}
+.date-time-inputs div,
+.show-sort-button .show,
+.show-sort-button .sort {
+    display: flex;
+    align-items: center;
+}
+
+.date-time-inputs .input-date-time label{
+    max-width: 100px;
+    min-width: 78px;
+}
+
+.date-time-inputs .input-date-time label,
+.date-time-inputs .form-control,
+.show-sort-button .show label,
+.show-sort-button .show select,
+.show-sort-button .sort label,  
+.show-sort-button .sort select {
+    font-size: 13px;
+    margin-right: 5px;
+    padding: 0 5px;
+    border-radius: 5px;
+    
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.date-time-inputs .input-date-time {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.error-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.show-sort-button .demo {
+   position: absolute;
+   right: 50px;
+}
+
+
+.main-right {
+    flex: 5; 
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+}
+
+.action1 {
+    
+    padding: 10px 10px;
+    display: flex; /* Sử dụng flexbox để xếp các button cùng một hàng */
+}
+
+/* .action1 a  {
+    margin-right: 3px; 
+} */
+
+.btn i {
+    margin-right: 3px; 
+} 

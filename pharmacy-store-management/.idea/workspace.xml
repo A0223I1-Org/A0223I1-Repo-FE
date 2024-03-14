@@ -1,7 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bf2e803-508b-479f-bbd6-9bff2d97ca23" name="Changes" comment="" />
+    <list default="true" id="2bf2e803-508b-479f-bbd6-9bff2d97ca23" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/clsx.d.mts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/clsx.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/dist/clsx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/dist/clsx.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/dist/clsx.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/dist/lite.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/dist/lite.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/license" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/clsx/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.browser.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.browser.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server-legacy.node.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.browser.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.browser.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.node.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-server.node.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-test-utils.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom-test-utils.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/cjs/react-dom.profiling.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/client.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/profiling.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/server.browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/server.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/server.node.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/test-utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server-legacy.browser.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server-legacy.browser.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server.browser.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-server.browser.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-test-utils.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom-test-utils.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-dom/umd/react-dom.profiling.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.esm.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.esm.mjs.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/addons/use-notification-center/useNotificationCenter.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.minimal.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/ReactToastify.minimal.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/CloseButton.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/Icons.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/ProgressBar.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/Toast.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/ToastContainer.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/Transitions.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/components/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/containerObserver.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/genToastId.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/store.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/core/toast.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/useIsomorphicLayoutEffect.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/useToast.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/hooks/useToastContainer.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/inject-style.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/inject-style.esm.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/inject-style.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.esm.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.esm.mjs.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.umd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/react-toastify.umd.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/types.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/collapseToast.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/constant.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/cssTransition.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/mapper.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/dist/utils/propValidator.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_closeButton.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_icons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_progressBar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_theme.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_toast.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_toastContainer.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_bounce.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_flip.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_slide.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_spin.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/animations/_zoom.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/main.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/react-toastify/scss/minimal.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_mock.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_mock.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_post_task.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler-unstable_post_task.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/cjs/scheduler.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler-unstable_mock.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler-unstable_mock.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler.development.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/umd/scheduler.profiling.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/unstable_mock.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/scheduler/unstable_post_task.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,12 +136,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2cuEU6lZqgaY1q73KUfLArZrW1F" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,11 +156,23 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "develop",
-    "last_opened_file_path": "D:/STUDY/CODEGYM/module_6/project_pharmacity_fe/A0223I1-Repo-FE",
+    "last_opened_file_path": "/Users/thanhviet/Documents/CodeGym/module6/A0223I1-Phamacity-FE/A0223I1-Repo-FE/pharmacy-store-management",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -41,6 +182,7 @@
       <option name="presentableId" value="Default" />
       <updated>1708953075970</updated>
       <workItem from="1708953077035" duration="30000" />
+      <workItem from="1710411244332" duration="1294000" />
     </task>
     <servers />
   </component>

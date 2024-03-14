@@ -244,7 +244,6 @@ export const ListPrescription = () => {
                     <div className="col-10">
                         <div className="boloc">
 
-
                             <fieldset className="border p-2">
                                 <legend ><b>Bộ lọc</b></legend>
 

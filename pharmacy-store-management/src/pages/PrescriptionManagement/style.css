@@ -8,6 +8,16 @@
     --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
 }
 
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    transition: all .2s linear;
+}
+
 body {
     font-family: Poppins, serif;;
 }
@@ -165,14 +175,6 @@ i{
 
 }
 
-
-.form-group div {
-    /*margin-right: 85px;*/
-}
-
-.form-group div:last-child {
-    margin-right: 0;
-}
 .report{
     display: flex;
 }
@@ -245,15 +247,7 @@ i{
     outline: none;
 }
 
-* {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    outline: none;
-    border: none;
-    transition: all .2s linear;
-}
+
 
 a {
     text-decoration: none;

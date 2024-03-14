@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+:root {
+    --blue: #0072BC;
+    --light-blue: #3794d2;
+    --dark-blue: #0b68a6;
+    --black: #444;
+    --light-color: #666;
+    --border: .1rem solid rgba(0, 0, 0, .1);
+    --border-hover: .1rem solid var(--black);
+    --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    transition: all .2s linear;
+}
+
+.header .header-2 {
+    background: var(--blue);
+    display: flex;
+    flex-direction: row;
+}
+
+.header .header-2 .navbar {
+    text-align: left;
+}
+
+.dropdown-menu {
+    background: var(--light-blue);
+
+}
+
+.header .header-2 .navbar a {
+    color: #fff;
+    display: inline-block;
+    margin: 3px 3px;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all .2s linear;
+    font-size: 17px;
+}
+
+.header .header-2 .navbar a:hover {
+    background: var(--dark-blue);
+    border-radius: 10px;
+}
+
+.header .header-2.active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+nav {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    justify-content: center;
+}
+.group2 {
+    display: flex;
+    padding: 7px;
+    font-size: 18px;
+}
+
+.g2-1 {
+    /* flex:2px; */
+    text-align: left;
+    margin-left: 20px;
+    ;
+}
+
+.g2-1 a img {
+    width: 35px;
+    height: 35px;
+}
+
+
+.main {
+    display: flex;
+    padding-left: 1px;
+    /* Sử dụng Flexbox để xếp các div trên cùng một hàng */
+}
+
+.main-left {
+    flex: 1;
+    width: 200px; /* Điều chỉnh chiều rộng của thanh điều hướng */
+    height: 720px;
+    background: var(--blue);
+    border-radius: 7px;    
+}
+img {
+    width: 32px; 
+    height: 32px; 
+}
+.sidebar ul {
+    list-style-type: none; /* Loại bỏ dấu đầu dòng mặc định */
+    margin-top: 10px;
+    
+}
+
+.sidebar ul li a {
+    display: flex; /* Sắp xếp biểu tượng và văn bản theo hàng ngang */
+    align-items: center; /* Căn giữa biểu tượng và văn bản theo chiều dọc */
+    padding: 7.5px; /* Thêm đệm xung quanh mỗi mục */
+    text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+    color: rgb(255, 255, 255); /* Đặt màu văn bản */
+}
+
+.sidebar ul li img  {
+    margin-right: 5px; 
+   
+}
+.sidebar ul li a:hover img  {
+    margin-right: 10px; /* Thêm khoảng cách giữa biểu tượng và văn bản */
+    background: var(--dark-blue);
+    border-radius: 4px; 
+}
+
+ol,ul{
+    padding-left: 0;
+}
+
+/* main-right*/
+
+legend {
+    all: revert;
+    font-weight: bold;
+}
+
+.form {
+    display: flex;
+
+}
+
+.secondary-infomation-1,
+.secondary-infomation-2,
+.main-infomation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-left: 5px;
+    padding: 15px 30px;
+}
+
+
+
+
+.secondary-infomation-1 label,
+.secondary-infomation-1 input[type="text"],
+.secondary-infomation-1 input[type="date"],
+.secondary-infomation-1 textarea,
+.secondary-infomation-2 .employee label,
+.secondary-infomation-2 .employee select,
+.secondary-infomation-2 .employee input,
+.secondary-infomation-2 .customer label,
+.secondary-infomation-2 .customer select,
+.secondary-infomation-2 .customer input,
+.secondary-infomation-2 .disease-symptoms label,
+.secondary-infomation-2 .disease-symptoms select,
+.secondary-infomation-2 .disease-symptoms input,
+.main-infomation .disease-symptoms label,
+.main-infomation .disease-symptoms select,
+.main-infomation .disease-symptoms input,
+.main-infomation label,
+.main-infomation input[type="number"] {
+    font-size: 15px;
+    margin: 0 5px;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
+
+.secondary-infomation-2 .employee input,
+.secondary-infomation-2 .employee datalist {
+    width: 170px; /* Đặt chiều rộng của input và datalist tương ứng */
+    margin-right: 30px; /* Đặt khoảng cách giữa input và các phần tử khác */
+}
+
+.secondary-infomation-2 .employee datalist option {
+    font-size: 15px; /* Đặt kích thước chữ cho các mục trong datalist */
+    padding: 5px; /* Đặt khoảng cách bên trong mỗi mục trong datalist */
+}
+
+.secondary-infomation-2 .customer button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size:15px;
+    color: green;
+    cursor: pointer;
+}
+
+.secondary-infomation-2 .customer button:hover {
+    color: darkgreen;
+}
+
+.error-message {
+    color: red;
+    font-size: 11px;
+    margin-top: 1px;
+}
+.secondary-infomation-1 .erros-mess,
+.secondary-infomation-2 .erros-mess {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-right {
+    flex: 5;
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+}
+
+.action {
+    margin-left: 58%;
+    padding: 2px 2px;
+    margin-top: 8px;
+    display: flex;
+    font-size: 15px;
+}
+
+.action button  {
+    margin-right: 4px; /* Khoảng cách giữa các button */
+}
+
+
+.total {
+    font-size: 15px;
+    margin-left: 75%;
+}
+
+
+.table .table-row{
+    cursor: pointer;
+}
+.table .selected-row{
+    background-color: #082b34;
+    color: white;
+}
+
+
+
+
+
+

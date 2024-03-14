@@ -1,0 +1,12 @@
+body {
+    padding: 20px
+}
+
+.btn-custom {
+    background-color: #123456!important;
+    color: #ffffff!important;
+}
+
+legend {
+    all: revert!important;
+}

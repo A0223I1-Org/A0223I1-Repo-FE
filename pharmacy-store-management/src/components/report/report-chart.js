@@ -276,8 +276,8 @@ export const ReportChart = () => {
                                             <LineChart width={600} height={300} data={data}
                                                        margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                                                 <XAxis dataKey="date"/>
-                                                <YAxis/>
-                                                <CartesianGrid strokeDasharray="3 3"/>
+                                                {/*<YAxis/>*/}
+                                                <YAxis tickFormatter={(value) => `${value}\u00A0₫`}/>                                                <CartesianGrid strokeDasharray="3 3"/>
                                                 <Tooltip/>
                                                 <Legend/>
                                                 <Line type="monotone" dataKey="revenue" stroke="#8884d8"
@@ -299,8 +299,6 @@ export const ReportChart = () => {
                                 className="bi bi-arrow-return-left"></i> Trở về
                             </button>
                         </Link>
-
-
                     </div>
                     <div className="col-1"></div>
                 </div>
@@ -309,21 +307,3 @@ export const ReportChart = () => {
         </>
     );
 }
-// const warnings = {
-//     'month': { message: 'Vui lòng chọn tháng và năm.', selections: ['selectedMonth', 'selectedYear'] },
-//     'year': { message: 'Vui lòng chọn năm.', selections: ['selectedYear'] },
-//     'week': { message: 'Vui lòng chọn tuần và năm.', selections: ['selectedWeek', 'selectedYear'] }
-// };
-//
-// if (!selectedTimeOption) {
-//     toast.warning('Vui lòng chọn đầy đủ thời gian.');
-//     return;
-// }
-//
-// const { message, selections } = warnings[selectedTimeOption.value];
-// for (let i = 0; i < selections.length; i++) {
-//     if (!window[selections[i]]) {
-//         toast.warning(message);
-//         return;
-//     }
-// }

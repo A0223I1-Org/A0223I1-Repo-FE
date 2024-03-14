@@ -242,11 +242,9 @@ export const ListPrescription = () => {
                 <div className="row">
                     <div className="col-1"></div>
                     <div className="col-10">
-                        <div className="boloc">
 
                             <fieldset className="border p-2">
                                 <legend ><b>Bộ lọc</b></legend>
-
                                 <div className="alo">
                                     <div className="select-filter form-group">
                                         <label>Lọc theo</label>
@@ -258,8 +256,8 @@ export const ListPrescription = () => {
                                         </select>
                                     </div>
 
-                                    <div className="search-button">
-                                        <form action="">
+                                    <div className="search-group">
+
                                             <input
                                                 style={{
                                                     border: '1px solid',
@@ -274,7 +272,7 @@ export const ListPrescription = () => {
                                                     type="submit"
                                                     className="myButton">Lọc kết quả
                                             </button>
-                                        </form>
+
                                     </div>
 
                                     <div className="sort">
@@ -289,10 +287,10 @@ export const ListPrescription = () => {
                                 </div>
 
                             </fieldset>
-                        </div>
+
                         <div>
                             <fieldset className="border rounded-3 p-3">
-                                <legend><b>Danh sách toa thuoc</b></legend>
+                                <legend><b>Danh sách toa thuốc</b></legend>
                                 <table className="myTable">
                                     <thead>
                                     <tr className="row-scope">

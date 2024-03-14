@@ -12,7 +12,7 @@ class NotificationModal extends React.Component {
                 overlayClassName="custom-modal-overlay"
             >
                 <div className="modal-content2">
-                    <p>Vui lòng chọn đơn thuốc cần sửa thông tin!!</p>
+                    <p>Vui lòng chọn đơn thuốc!!</p>
                 </div>
                 <div className="modal-buttons2">
                     <button className="cancel-button" onClick={this.props.onRequestClose}>

@@ -384,118 +384,7 @@ export default function AddPrescriptionModalComponent(props) {
                 ]
 
             }}
-                    // validationSchema={ Yup.object().shape({
-                    //     name: Yup.string()
-                    //         .required('Tên không được để trống'),
-                    //     symptom: Yup.string()
-                    //         .required('Triệu chứng không được để trống'),
-                    //     treatmentPeriod: Yup.number()
-                    //         .required('Số ngày uống phải là một số nguyên')
-                    //         .positive()
-                    //         .integer(),
-                    //     quantity: Yup.number()
-                    //         .required('Số lượng phải là một số nguyên')
-                    //         .positive()
-                    //         .integer(),
-                    //     times: Yup.number()
-                    //         .required('Số lần phải là một số nguyên')
-                    //         .positive()
-                    //         .integer(),
-                    //     quantityPerTimes: Yup.number()
-                    //         .required('Phải là một số nguyên')
-                    //         .positive()
-                    //         .integer()
-                    // })}
 
-
-                    // onSubmit={(values, {setSubmitting}) => {
-                    //     const createPrescription = async () => {
-                    //         try {
-                    //
-                    //             const detailPrescription = {
-                    //                 prescription: {
-                    //                     name: formData.name,
-                    //                     target: formData.target,
-                    //                     treatmentPeriod: formData.treatmentPeriod,
-                    //                     note: formData.note,
-                    //                     symptom: {
-                    //                         name: formData.symptom
-                    //                     }
-                    //                 },
-                    //                 medicineId: formData.medicineId,
-                    //
-                    //                 detailPrescription: [
-                    //                     {
-                    //                         medicineId: formData.medicineId,
-                    //                         times: formData.times,
-                    //                         quantity: formData.quantity,
-                    //                         quantityPerTimes: formData.quantityPerTimes
-                    //                     },
-                    //                     {
-                    //                         medicineId2: formData.medicineId2,
-                    //                         times2: formData.times2,
-                    //                         quantity2: formData.quantity2,
-                    //                         quantityPerTimes2: formData.quantityPerTimes2
-                    //                     },
-                    //                     {
-                    //                         medicineId3: formData.medicineId3,
-                    //                         times3: formData.times3,
-                    //                         quantity3: formData.quantity3,
-                    //                         quantityPerTimes3: formData.quantityPerTimes3
-                    //                     },
-                    //                     {
-                    //                         medicineId4: formData.medicineId4,
-                    //                         times4: formData.times4,
-                    //                         quantity4: formData.quantity4,
-                    //                         quantityPerTimes4: formData.quantityPerTimes4
-                    //                     },
-                    //                     {
-                    //                         medicineId5: formData.medicineId5,
-                    //                         times5: formData.times5,
-                    //                         quantity5: formData.quantity5,
-                    //                         quantityPerTimes5: formData.quantityPerTimes5
-                    //                     },
-                    //                     {
-                    //                         medicineId6: formData.medicineId6,
-                    //                         times6: formData.times6,
-                    //                         quantity6: formData.quantity6,
-                    //                         quantityPerTimes6: formData.quantityPerTimes6
-                    //                     },
-                    //                     {
-                    //                         medicineId7: formData.medicineId7,
-                    //                         times7: formData.times7,
-                    //                         quantity7: formData.quantity7,
-                    //                         quantityPerTimes7: formData.quantityPerTimes7
-                    //                     }
-                    //                 ]
-                    //
-                    //             };
-                    //
-                    //             console.log(detailPrescription)
-                    //
-                    //             const detail = await detailPrescriptionService.createDetailPrescription(detailPrescription);
-                    //
-                    //             if (typeof detail === 'string') {
-                    //                 setErrors(detail);
-                    //             } else if (typeof detail === 'object') {
-                    //                 setErrors(" ");
-                    //                 props.onLoad();
-                    //                 props.onHide();
-                    //                 handleClearForm();
-                    //                 toast.success('Create prescription successful!');
-                    //             } else {
-                    //                 console.log('The result is neither a string nor an object');
-                    //             }
-                    //
-                    //         } catch (e) {
-                    //                 toast.error('Error creating prescription');
-                    //         } finally {
-                    //             setSubmitting(false);
-                    //
-                    //         }
-                    //     };
-                    //     createPrescription();
-                    // }}
 
             >
 
@@ -539,7 +428,7 @@ export default function AddPrescriptionModalComponent(props) {
                                     value={formData.target}
                                     onChange={(e) => setFormData({...formData, target: e.target.value})}
                                 >
-                                    <option value="">Select an option</option>
+                                    <option value="">Chọn đối tượng</option>
                                     <option value="1">Người lớn</option>
                                     <option value="2">Trẻ em</option>
                                     <option value="3">Phụ nữ mang thai</option>
@@ -596,9 +485,7 @@ export default function AddPrescriptionModalComponent(props) {
                                 {formData.medicineId ? (
                                     <>
                                         <div className="form-group slay">
-                                            <div className="slay3">
-                                                <label htmlFor="applicable-object" className="form-label">1.</label>
-                                            </div>
+                                                <label>1.</label>
                                             <div className="slay4">
                                                 <Field name="medicineId" as="select" className="form-select"
                                                        value={formData.medicineId}
@@ -744,7 +631,6 @@ export default function AddPrescriptionModalComponent(props) {
                                     </>
                                 )
 
-
                                 }
 
                                 {/*2*/}
@@ -752,7 +638,7 @@ export default function AddPrescriptionModalComponent(props) {
                                 {
                                     formData.medicineId2 ? (
                                         <>
-                                            <div className="form-group slay">
+                                            <div className=" slay">
                                                 <div className="slay3">
                                                     <label htmlFor="applicable-object" className="form-label">2.</label>
                                                 </div>
@@ -1641,7 +1527,6 @@ export default function AddPrescriptionModalComponent(props) {
                                     </Button>
                                 </div>
 
-                                {/* Add margin or padding to create space */}
                                 <div className="mb-3 d-flex justify-content-center gr2 btn2">
                                     <button type="submit" className="btn btn-primary">
                                         Lưu

@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2bf2e803-508b-479f-bbd6-9bff2d97ca23" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/AddPrescriptionModal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/DeletePrescriptionModal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/ListPrescription.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/ListPrescription.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/UpdatePrescription.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/prescription.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,21 +32,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "VietLT/#6.11.6/CRUDPrescription",
-    "last_opened_file_path": "/Users/thanhviet/Documents/CodeGym/module6/A0223I1-Phamacity-FE/A0223I1-Repo-FE/pharmacy-store-management/src/pages/prescriptionmanagement",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;VietLT/#6.11.6/CRUDPrescription&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/thanhviet/Documents/CodeGym/module6/A0223I1-Phamacity-FE/A0223I1-Repo-FE/pharmacy-store-management/src/pages/prescriptionmanagement&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -81,6 +73,7 @@
       <workItem from="1710411244332" duration="1294000" />
       <workItem from="1710413391715" duration="94000" />
       <workItem from="1710413496185" duration="851000" />
+      <workItem from="1710414638199" duration="95000" />
     </task>
     <servers />
   </component>

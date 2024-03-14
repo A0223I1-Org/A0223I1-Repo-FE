@@ -182,48 +182,51 @@ export function MedicineInfoList() {
 
                 <fieldset className="border border-dark border-3 rounded-3 p-3 mt-4">
                     <legend><h2>Danh sách nhóm thuốc</h2></legend>
-                    <table className="table table-bordered"  style={{ border: '4px solid black' }}>
-                        <thead>
-                        <tr>
-                            <th className="bg-primary text-light">Mã thuốc</th>
-                            <th className="bg-primary text-light">Nhóm thuốc</th>
-                            <th className="bg-primary text-light">Tên thuốc</th>
-                            <th className="bg-primary text-light">Hoạt chất</th>
-                            <th className="bg-primary text-light">ĐVT</th>
-                            <th className="bg-primary text-light">ĐV QĐ</th>
-                            <th className="bg-primary text-light">Số lượng</th>
-                            <th className="bg-primary text-light">Giá nhập</th>
-                            <th className="bg-primary text-light">Giá sĩ</th>
-                            <th className="bg-primary text-light">Giá lẻ</th>
-                            <th className="bg-primary text-light">% CK</th>
-                            <th className="bg-primary text-light">% LN XC</th>
-                            <th className="bg-primary text-light">% LN XL</th>
-                            <th className="bg-primary text-light">VAT</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            medicines?.map((item) => (
-                                <tr key={item.medicineId} onClick={() => selectRow(item)} className={medicine.medicineId === item.medicineId ? 'table-primary' : ''}>
-                                    <td>{item.medicineId}</td>
-                                    <td>{item.medicineGroup?.medicineGroupName}</td>
-                                    <td>{item.medicineName}</td>
-                                    <td>{item.activeIngredient}</td>
-                                    <td>{item.unit}</td>
-                                    <td>{item.conversionUnit}</td>
-                                    <td>{item.quantity}</td>
-                                    <td>{item.importPrice}$</td>
-                                    <td>{item.wholesalePrice}$</td>
-                                    <td>{item.retailPrice}$</td>
-                                    <td>{item.supplierDiscount}%</td>
-                                    <td>{item.profitMarginWholesale}%</td>
-                                    <td>{item.profitMarginRetail}%</td>
-                                    <td>{item.origin}%</td>
-                                </tr>
-                            ))
-                        }
-                        </tbody>
-                    </table>
+                    <div className="table-responsive">
+                        <table className="table table-bordered"  style={{ border: '4px solid black' }}>
+                            <thead>
+                            <tr>
+                                <th className="bg-primary text-light">Mã thuốc</th>
+                                <th className="bg-primary text-light">Nhóm thuốc</th>
+                                <th className="bg-primary text-light">Tên thuốc</th>
+                                <th className="bg-primary text-light">Hoạt chất</th>
+                                <th className="bg-primary text-light">ĐVT</th>
+                                <th className="bg-primary text-light">ĐV QĐ</th>
+                                <th className="bg-primary text-light">Số lượng</th>
+                                <th className="bg-primary text-light">Giá nhập</th>
+                                <th className="bg-primary text-light">Giá sĩ</th>
+                                <th className="bg-primary text-light">Giá lẻ</th>
+                                <th className="bg-primary text-light">% CK</th>
+                                <th className="bg-primary text-light">% LN XC</th>
+                                <th className="bg-primary text-light">% LN XL</th>
+                                <th className="bg-primary text-light">VAT</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                medicines?.map((item) => (
+                                    <tr key={item.medicineId} onClick={() => selectRow(item)} className={medicine.medicineId === item.medicineId ? 'table-primary' : ''}>
+                                        <td>{item.medicineId}</td>
+                                        <td>{item.medicineGroup?.medicineGroupName}</td>
+                                        <td>{item.medicineName}</td>
+                                        <td>{item.activeIngredient}</td>
+                                        <td>{item.unit}</td>
+                                        <td>{item.conversionUnit}</td>
+                                        <td>{item.quantity}</td>
+                                        <td>{item.importPrice}$</td>
+                                        <td>{item.wholesalePrice}$</td>
+                                        <td>{item.retailPrice}$</td>
+                                        <td>{item.supplierDiscount}%</td>
+                                        <td>{item.profitMarginWholesale}%</td>
+                                        <td>{item.profitMarginRetail}%</td>
+                                        <td>{item.origin}%</td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
+                        </table>
+
+                    </div>
                 </fieldset>
 
                 <div className="my-3" style={{textAlign: 'right'}}>

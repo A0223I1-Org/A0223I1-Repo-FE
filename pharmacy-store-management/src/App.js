@@ -8,7 +8,8 @@ import {MedicineInfoList} from "./pages/MedicineInformation/MedicineInfoList";
 import {ListPrescription} from "./pages/PrescriptionManagement/ListPrescription";
 import {RetailSalesManagement} from "./pages/SalesManagement/RetailSalesManagement";
 import RetailInvoice from "./pages/SalesManagement/RetailInvoice";
-
+import {ReportChart} from "./components/report/report-chart";
+import {Report} from "./components/report/report";
 function App() {
   return (
     <>
@@ -19,6 +20,8 @@ function App() {
               <Route path="/medicineGroup" element={<MedicineGroupList/>}></Route>
               <Route path="/medicineInfo" element={<MedicineInfoList/>}></Route>
               <Route path="/listPrescription" element={<ListPrescription/>}></Route>
+              <Route path="/report" element={<Report/>}></Route>
+               <Route path="/chart" element={<ReportChart/>}></Route>
           </Routes>
     </>
   );

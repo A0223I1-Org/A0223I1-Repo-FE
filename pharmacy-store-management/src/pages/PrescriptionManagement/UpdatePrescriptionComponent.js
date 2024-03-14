@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import React, {useEffect, useState} from "react";
 import * as prescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
 
-import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineService";
+import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineInformationService";
 import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
 import {toast} from "react-toastify";
 import {ErrorMessage, Field, Form, Formik, useFormikContext} from "formik";
@@ -218,7 +218,7 @@ export function UpdatePrescriptionComponent(props) {
         try {
             const [detailPrescriptionResult, medicineResult, prescriptionResult] = await Promise.all([
                 detailPrescriptionService.findDetailPrescriptionById(uid),
-                medicineService.findAllMedicine(),
+                medicineService.getAllMedicine(),
                 prescriptionService.findAll()
             ]);
             setData(detailPrescriptionResult);

@@ -42,8 +42,9 @@ export const ListPrescription = () => {
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = prescriptions?.slice(firstIndex, lastIndex);
-    const npage = Math.ceil(prescriptions?.length / recordsPerPage);
-    const numbers = [...Array(npage + 1).keys()].slice(1);
+    const npage = Math.ceil((prescriptions?.length || 0) / recordsPerPage); // Ensuring prescriptions?.length is not undefined
+    const numbers = npage > 0 ? [...Array(npage).keys()].map(i => i + 1) : [];
+
 
 
     const [selectedRow, setSelectedRow] = useState(null);

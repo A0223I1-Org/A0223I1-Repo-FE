@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React, {useEffect, useRef, useState} from "react";
 
-import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineService";
+import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineInformationService";
 import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
 
 import {toast} from "react-toastify";
@@ -17,7 +17,7 @@ export default function AddPrescriptionModalComponent(props) {
 
 
     const findAll = async () => {
-        const result = await medicineService.findAllMedicine();
+        const result = await medicineService.getAllMedicine();
         setMedicines(result);
     }
 

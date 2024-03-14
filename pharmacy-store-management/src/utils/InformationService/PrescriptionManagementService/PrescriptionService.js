@@ -13,7 +13,7 @@ export const createDetailPrescription = async (detailPrescription) => {
 
 export const updateDetailPrescription = async (id, detailPrescription) => {
     try {
-        const result = await axios.put("http://localhost:8080/details/" + id, detailPrescription)
+        const result = await axios.put("http://localhost:8080/api/v1/details/" + id, detailPrescription)
         return result.data
     } catch (e) {
         console.log(e)
@@ -22,7 +22,7 @@ export const updateDetailPrescription = async (id, detailPrescription) => {
 
 export const findDetailPrescriptionById = async (id) => {
     try {
-        const result = await axios.get("http://localhost:8080/details/" + id)
+        const result = await axios.get("http://localhost:8080/api/v1/details/" + id)
         return result.data
         console.log(result.data)
     } catch (e) {
@@ -32,7 +32,7 @@ export const findDetailPrescriptionById = async (id) => {
 
 export const findAll = async () => {
     try {
-        const result = await axios.get("http://localhost:8080/prescriptions")
+        const result = await axios.get("http://localhost:8080/api/v1/details")
         return result.data
     } catch (e) {
         console.log(e)
@@ -41,7 +41,7 @@ export const findAll = async () => {
 
 export const deletePrescription = async (id) => {
     try {
-        const result = await axios.delete("http://localhost:8080/prescriptions/" + id)
+        const result = await axios.delete("http://localhost:8080/api/v1/details/" + id)
         return result.data
     } catch (e) {
         console.log(e)

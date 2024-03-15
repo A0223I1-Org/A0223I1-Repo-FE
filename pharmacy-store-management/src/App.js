@@ -5,6 +5,9 @@ import {ToastContainer} from "react-toastify";
 import {MedicineGroupList} from "./pages/MedicineGroup/MedicineGroupList";
 import 'react-toastify/dist/ReactToastify.css';
 
+import {EmployeeList} from "./utils/InformationService/EmployeeManagementService/EmployeeList";
+import {EmployeeCreate} from "./utils/InformationService/EmployeeManagementService/EmployeeCreate";
+import {EmployeeUpdate} from "./utils/InformationService/EmployeeManagementService/EmployeeUpdate";
 import {DetailCustomer} from "./components/customer/DetailCustomer";
 import {MedicineInfoList} from "./pages/MedicineInformation/MedicineInfoList";
 import {ListPrescription} from "./pages/PrescriptionManagement/ListPrescription";
@@ -26,8 +29,10 @@ function App() {
               <Route path="/listPrescription" element={<ListPrescription/>}></Route>
               <Route path="/report" element={<Report/>}></Route>
                <Route path="/chart" element={<ReportChart/>}></Route>
+                 <Route path={"/employee/list"} element={<EmployeeList/>}></Route>
+                  <Route path={"/employee/create"} element={<EmployeeCreate/>}></Route>
+                  <Route path={"/employee/update/:id"} element={<EmployeeUpdate/>}></Route>
           </Routes>
-
     </>
   );
 }

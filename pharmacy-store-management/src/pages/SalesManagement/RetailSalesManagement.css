@@ -39,9 +39,9 @@
 .header .header-2 .navbar a {
     color: #fff;
     display: inline-block;
-    margin: 2px 2px;
-    padding: .65rem;
-    text-decoration: none;
+    margin: 2px 2px; 
+    padding: .65rem; 
+    text-decoration: none; 
     transition: all .2s linear;
     font-size: 14.5px;
 }
@@ -58,27 +58,32 @@
     right: 0;
     z-index: 1000;
 }
-
+nav {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    justify-content: center;
+}
 .main {
     display: flex;
-    padding-left: 3px;
+    padding-left: 2px;
     padding-top: 10px;
+     /* Sử dụng Flexbox để xếp các div trên cùng một hàng */
 }
 .main-left {
     flex: 1;
-    width: 200px;
+    width: 200px; /* Điều chỉnh chiều rộng của thanh điều hướng */
     height: 720px;
     background: var(--blue);
-    border-radius: 7px;
+    border-radius: 7px;    
 }
 img {
-    width: 32px;
-    height: 32px;
+    width: 32px; 
+    height: 32px; 
 }
 .sidebar ul {
-    list-style-type: none;
+    list-style-type: none; /* Loại bỏ dấu đầu dòng mặc định */
     margin-top: 10px;
-
+    
 }
 
 .sidebar ul li a {
@@ -90,15 +95,18 @@ img {
 }
 
 .sidebar ul li img  {
-    margin-right: 5px;
-
+    margin-right: 5px; 
+   
 }
 .sidebar ul li a:hover img  {
     margin-right: 10px; /* Thêm khoảng cách giữa biểu tượng và văn bản */
     background: var(--dark-blue);
-    border-radius: 4px;
+    border-radius: 4px; 
 }
 
+ol,ul{
+    padding-left: 0;
+}
 
 
 .checkbox-header {
@@ -107,20 +115,26 @@ img {
   }
 
   th.checkbox-header {
-    width: 20px !important;
+    width: 20px !important; 
     text-align: center;/* Đặt chiều rộng tùy ý */
 }
 
   .checkbox-container input[type="checkbox"] {
-    transform: scale(0.4);
+    transform: scale(0.4); 
   }
 
+
+
+/* main-right */
 legend{
     all: revert !important;
     font-weight: bold !important;
 }
 
-
+.alo {
+    display: flex;
+    flex-direction: column;
+}
 
 .date-time-inputs,
 .show-sort-button {
@@ -130,21 +144,17 @@ legend{
     padding: 13px 0px;
 }
 
-
+.date-time-inputs .form-control,
+.show-sort-button .form-control
+{
+    border: 1px solid;
+}
 .date-time-inputs div,
 .show-sort-button .show,
 .show-sort-button .sort {
     display: flex;
-    /* flex-direction: row; */
     align-items: center;
 }
-
-/*select, input, .form-control {*/
-/*    border: 1px solid;*/
-/*    height: 40px;*/
-/*    min-width: 200px;*/
-/*    max-width: 55px;*/
-/*}*/
 
 .date-time-inputs .input-date-time label{
     max-width: 100px;
@@ -155,12 +165,13 @@ legend{
 .date-time-inputs .form-control,
 .show-sort-button .show label,
 .show-sort-button .show select,
-.show-sort-button .sort label,
+.show-sort-button .sort label,  
 .show-sort-button .sort select {
     font-size: 13px;
     margin-right: 5px;
     padding: 0 5px;
     border-radius: 5px;
+    
 }
 
 .error-message {
@@ -192,25 +203,23 @@ legend{
 }
 
 
-
-
 .main-right {
-    flex: 5;
+    flex: 5; 
     display: flex;
     flex-direction: row;
     border-radius: 7px;
 }
 
 .action1 {
-
+    
     padding: 10px 10px;
-    display: flex;
+    display: flex; /* Sử dụng flexbox để xếp các button cùng một hàng */
 }
 
-.action1 a  {
-    margin-right: 3px;
-}
+/* .action1 a  {
+    margin-right: 3px; 
+} */
 
 .btn i {
-    margin-right: 3px; /* Khoảng cách giữa biểu tượng và chữ */
-}
+    margin-right: 3px; 
+} 

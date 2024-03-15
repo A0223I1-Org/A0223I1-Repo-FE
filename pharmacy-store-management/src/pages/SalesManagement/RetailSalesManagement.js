@@ -39,11 +39,7 @@ export function RetailSalesManagement() {
 
     const validationSchema = Yup.object({
         fromDate: Yup.date().required("Từ ngày là bắt buộc"),
-        toDate: Yup.date()
-          .required("Đến ngày là bắt buộc")
-          .when("fromDate", (fromDate, schema) => {
-            return schema.min(fromDate, "Đến ngày phải bằng hoặc sau Từ ngày");
-          }),
+        toDate: Yup.date().required("Đến ngày là bắt buộc"),
         fromTime: Yup.string().required("Từ giờ là bắt buộc"),
         toTime: Yup.string().required("Đến giờ là bắt buộc")
           
@@ -117,10 +113,10 @@ export function RetailSalesManagement() {
                             <div className='input-date-time'>
                             <div >
                             <label htmlFor="fromDate">Từ ngày: </label>
-                            <Field type="date" name="fromDate" as="input" className="form-control"/>
+                            <Field type="date" name="fromDate" as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                             </div>
                             <div>
-                                <ErrorMessage name="fromDate" component="div" className="error-message"/>
+                            <ErrorMessage name="fromDate" component="div" className="error-message"/>                 
                             </div>
                            
                             </div>
@@ -128,7 +124,7 @@ export function RetailSalesManagement() {
                             <div className='input-date-time'>
                             <div>
                             <label htmlFor="toDate">Đến Ngày: </label>
-                            <Field type="date" name="toDate" as="input" className="form-control"/>
+                            <Field type="date" name="toDate" as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                             </div>
                            <div>
                            <ErrorMessage name="toDate" component="div" className="error-message"/>
@@ -138,7 +134,7 @@ export function RetailSalesManagement() {
                             <div className='input-date-time'>
                             <div>
                             <label htmlFor="fromTime">Từ giờ: </label>
-                            <Field type="time" name="fromTime"as="input" className="form-control"/>
+                            <Field type="time" name="fromTime"as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                             </div>
                             
                             <div>
@@ -149,7 +145,7 @@ export function RetailSalesManagement() {
                             <div className='input-date-time'>
                                 <div>
                                 <label htmlFor="toTime">Đến giờ: </label>
-                                 <Field type="time" name="toTime" as="input" className="form-control"/>
+                                 <Field type="time" name="toTime" as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                                 </div>
                            
                             <div>
@@ -160,7 +156,7 @@ export function RetailSalesManagement() {
                         <div className="show-sort-button">
                             <div className="show">
                                 <label htmlFor="displayField">Hiển thị: </label>
-                                <Field name="displayField" as="select" style={{ marginLeft: "13px" }} onChange={handleChange}>
+                                <Field name="displayField" as="select"  onChange={handleChange} style={{ height: "40px", minWidth: "200px", maxWidth: "55px", marginLeft: "13px" }} className="form-control">
                                  <option value="">Chọn hiển thị</option>
                                  <option value="Bán lẻ">Bán lẻ</option>
                                  <option value="Bán sỉ">Bán sỉ</option>
@@ -168,9 +164,9 @@ export function RetailSalesManagement() {
                                  <option value="Khách hoàn trả">Khách hoàn trả</option>
                                 </Field>
                             </div>
-                            <div className="sort">
+                            <div className="sort" style={{marginLeft: '15px'}}>
                                 <label htmlFor="sortField">Sắp xếp: </label>
-                                <Field name="sortField" as="select" style={{ marginLeft: "16px" }} onChange={handleChange}>
+                                <Field name="sortField" as="select"  onChange={handleChange} style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"> 
                                     <option value="">Chọn sắp xếp</option>
                                     <option value="customer_name">Tên khách hàng</option>
                                     <option value="date_create">Ngày lập - Giờ lập</option>
@@ -249,7 +245,7 @@ export function RetailSalesManagement() {
                 </table>
             </fieldset>
 
-            <div className="action1" style= {{ marginLeft: '68%' }}> 
+            <div className="action1" style= {{ marginLeft: '56%' }}> 
                 <NavLink to={`/retail`} className="btn btn-primary">
                     <span className="em-1">
                         <i className="bi bi-plus-circle"></i>

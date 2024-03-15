@@ -177,40 +177,48 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
   };
 
   const totalAmount = useMemo(() => calculateTotal(), [formData.medicineListF]);
-
   const handlePayment = async () => {
     if (isProcessingPayment) {
-      // Nếu đang xử lý thanh toán, không làm gì cả
       return;
     }
   
     try {
       setIsProcessingPayment(true);
-      console.log(formData);
+
+      const newTotal = formData.medicineListF.reduce((acc, medicine) => {
+        const subtotal = medicine.quantityF * medicine.retailPriceF;
+        return acc + subtotal;
+      }, 0);
+  
+      const updatedFormData = {
+        ...formData,
+        totalF: newTotal,
+      };
+  
+      await retailInvoice.createInvoice(updatedFormData);
+  
       setFormData({
         dateCreateF: '',
         noteF: '',
         employeeIdF: '',
         customerIdF: '',
         symptomIdF: '',
-        medicineListF: [],
+        totalF: '',
+        medicineListF: [{ medicineIdF: '', medicineNameF: '', unitF: '', quantityF: '', retailPriceF: '' }],
       });
-      setIsFirstTime(true);
   
-      // Gọi API để thực hiện thanh toán
-      // ...
+      setIsFirstTime(true);
   
       toast.success('Thanh toán thành công');
   
-      // // Reset form
-      // resetForm();
     } catch (error) {
       console.error('Error in handlePayment:', error);
-      // toast.error('Thanh toán thất bại');
+      toast.error('Thanh toán thất bại');
     } finally {
       setIsProcessingPayment(false);
     }
   };
+  
 
   const highlightRow = (event, medicineId) => {
     const row = event.currentTarget;
@@ -501,127 +509,6 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
     </div> 
         </section>
            
-  
-
-    {/* <!-- MODAL CHI TIẾT DANH SÁCH TOA THUỐC KÊ SẴN --> */}
-    {/* <div
-        className={`modal fade ${showDetailModal ? 'show' : ''}`}
-        id="detail"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        aria-labelledby="staticBackdropLabel1"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered modal-custom">
-          <div className="modal-content rounded-3">
-            <div className="modal-header bg-info text-white">
-              <h1 className="modal-title fs-5" id="staticBackdropLabel1">
-                Thông tin toa thuốc
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={handleCloseDetailModal}
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div className="text-center">
-                <h2>ĐƠN THUỐC</h2>
-            </div>
-            <form className="form-detail" action="">
-              <fieldset className="detail-header">
-                <div className="ten">
-                  <label htmlFor="name1">Tên đơn thuốc:</label>
-                  <input id="name1" type="text" value="VIÊM HỌNG TE (1-2T)" style={{ width: '470px' }} />
-                </div>
-
-                <div className="trieu-chung">
-                  <label htmlFor="symptom1">Triệu chứng:</label>
-                  <input id="symptom1" type="text" value="Đau họng, rát họng, ho" style={{ marginLeft: '24px', width: '470px' }} />
-                </div>
-
-                <div className="doi-tuong">
-                  <label htmlFor="applicable-object1">Đối tượng:</label>
-                  <select id="applicable-object1" style={{ marginLeft: '39.8px' }}>
-                    <option value=" saab">Trẻ em</option>
-                    <option value="code">Người lớn</option>
-                    <option value="opel">Phụ nữ mang thai</option>
-                  </select>
-                  <label htmlFor="date1">Số ngày uống:</label>
-                  <input id="date1" type="number" value="0" />
-                </div>
-              </fieldset>
-
-              <br />
-            <fieldset className="detail-body">
-      <legend className="w-auto" style={{ fontWeight: 'bold' }}>Chỉ định</legend>
-
-      {medicineData.map((medicine, index) => (
-        <div className="type-of-medicine" key={index}>
-          <div className="group-slay">
-            <div className="slay3">
-              <label htmlFor={`applicable-object-${index + 1}`} className="form-label">{index + 1}.</label>
-              <select className="form-select" id={`applicable-object-${index + 1}`}>
-                <option value="code">{medicine.label}</option>
-              </select>
-              <input
-                style={{ height: `${medicine.height}px`, width: `${medicine.width}px`, textAlign: 'center' }}
-                id={`quantity${index + 1}`}
-                type="text"
-                value={medicine.defaultValue}
-              />
-              <label className="form-label" htmlFor={`quantity${index + 1}`} style={{ marginLeft: '2px' }}>viên</label>
-              <button><i className="bi bi-trash3-fill"></i></button>
-            </div>
-            <br />
-            <div className="slay7">
-              <p>
-                Ngày uống
-                <span>
-                  <input
-                    style={{ height: `${medicine.height}px`, width: `${medicine.width}px`, textAlign: 'center' }}
-                    type="text"
-                    value="2"
-                  />
-                  <label className="form-label" htmlFor={`quantity1`} style={{ marginLeft: '2px' }}>lần</label>
-                </span>,
-                mỗi lần
-                <span>
-                  <input
-                    style={{ height: `${medicine.height}px`, width: `${medicine.width}px`, textAlign: 'center' }}
-                    type="text"
-                    value="1"
-                  />
-                  <label className="form-label" htmlFor={`quantity2`} style={{ marginLeft: '2px' }}>viên</label>
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      ))}
-             </fieldset>
-
-              <div className="modal-footer">
-                <button type="button" className="btn btn-primary">
-                  <span className="me-1"><i className="bi bi-check-lg"></i></span>
-                  Thêm vào hóa đơn
-                </button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#detail" className="btn btn-info">
-                  <span className="me-1"><i className="bi bi-printer"></i></span>
-                  In toa
-                </button>
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                  <span className="me-1"><i className="bi bi-x-circle"></i></span>
-                  Huỷ
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> */}
 
     {/* <!-- MODAL XÁC NHẬN XÓA --> */}
     <Modal show={isDeleteModalVisible} onHide={handleCancelDelete} ref={deleteModalRef}>

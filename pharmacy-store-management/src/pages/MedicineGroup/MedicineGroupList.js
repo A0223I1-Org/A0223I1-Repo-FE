@@ -1,9 +1,24 @@
 
-import "../MedicineGroup/MedicineGroupList.css"
 import {useEffect, useState} from "react";
 import * as medicineGroupService from "../../utils/InformationService/MedicineGroupManagementService/MedicineGroupService"
 import {toast} from "react-toastify";
+import styled from 'styled-components';
 
+const StyledContainer = styled.div`
+    body {
+    padding: 20px
+}
+
+.btn-custom {
+    background-color: #123456!important;
+    color: #ffffff!important;
+}
+
+legend {
+    all: revert!important;
+}
+
+`;
 export function MedicineGroupList() {
     const [medicineGroup, setMedicineGroup] = useState([]);
 
@@ -114,7 +129,7 @@ export function MedicineGroupList() {
         // ...
     };
     return (
-        <>
+        <StyledContainer>
             <div className="container">
                 <h1 className="text-center bg-primary">Nhóm thuốc</h1>
 
@@ -186,6 +201,6 @@ export function MedicineGroupList() {
                     </div>
                 </div>
             </div>
-        </>
+        </StyledContainer>
     )
 }

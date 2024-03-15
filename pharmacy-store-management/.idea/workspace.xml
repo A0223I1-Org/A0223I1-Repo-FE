@@ -72,9 +72,15 @@
   <component name="ChangeListManager">
     <list default="true" id="2bf2e803-508b-479f-bbd6-9bff2d97ca23" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreateUpdateCustomer/ListCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CreateUpdateCustomer/ListCustomer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/customer/ListCustomer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/customer/ListCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/customer/ListCustomer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/supplier/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/supplier/Supplier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/supplier/supplier.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/supplier/supplier.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/SupplierManagementService/SupplierService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/SupplierManagementService/SupplierService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/supplier/supplier.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MedicineGroup/MedicineGroupList.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MedicineGroup/MedicineGroupList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MedicineGroup/MedicineGroupList.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +153,10 @@
       <workItem from="1710259707156" duration="16000" />
       <workItem from="1710259725036" duration="2300000" />
       <workItem from="1710312599020" duration="2284000" />
-      <workItem from="1710319006767" duration="3504000" />
+      <workItem from="1710319006767" duration="3783000" />
+      <workItem from="1710326746853" duration="5657000" />
+      <workItem from="1710413013137" duration="5000000" />
+      <workItem from="1710475281810" duration="477000" />
     </task>
     <servers />
   </component>
@@ -155,6 +164,15 @@
     <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -162,25 +180,29 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="223" y="63" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.816@0.0.1536.816" timestamp="1710259764630" />
+    <state x="499" y="155" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1710417524164">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="499" y="155" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.816@0.0.1536.816" timestamp="1710417524164" />
     <state x="548" y="149" key="FileChooserDialogImpl" timestamp="1710259719805">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="548" y="149" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1710259719805" />
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1710262524090">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1710435701266">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
-    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1710262524090">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1710435701266" />
+    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1710435701266">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
-    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1710262524090">
+    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1710435701266" />
+    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1710435701266">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
-    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1710262524090">
+    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1710435701266" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1710435701266">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1710262524090" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1710435701266" />
   </component>
 </project>

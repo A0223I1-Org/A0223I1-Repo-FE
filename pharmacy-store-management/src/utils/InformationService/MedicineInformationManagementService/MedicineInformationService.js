@@ -3,6 +3,7 @@ import axios from "axios";
 export const getAllMedicine = async () => {
     try {
         const data = await axios.get(`http://localhost:8080/api/v1/medicine`);
+        console.log(data.data);
         return data.data;
     } catch (e) {
         console.log(e)

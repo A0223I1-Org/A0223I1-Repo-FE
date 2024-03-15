@@ -5,12 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2bf2e803-508b-479f-bbd6-9bff2d97ca23" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PrescriptionManagement/AddPrescriptionModalComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/AddPrescriptionModalComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PrescriptionManagement/DeletePrescriptionModalComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/DeletePrescriptionModalComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PrescriptionManagement/ListPrescription.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/ListPrescription.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PrescriptionManagement/UpdatePrescriptionComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/UpdatePrescriptionComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PrescriptionManagement/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/MedicineInformationManagementService/MedicineInformationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/MedicineInformationManagementService/MedicineInformationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/MedicineInformationManagementService/MedicineService.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -38,12 +53,13 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;VietLT/#6.11.6/CRUDPrescription&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/thanhviet/Documents/CodeGym/module6/A0223I1-Phamacity-FE/A0223I1-Repo-FE/pharmacy-store-management/src/pages/prescriptionmanagement&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/thanhviet/Documents/CodeGym/module6/A0223I1-Phamacity-FE/A0223I1-Repo-FE/pharmacy-store-management/src/pages&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -58,6 +74,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages" />
+      <recent name="$PROJECT_DIR$/src/components" />
+      <recent name="$PROJECT_DIR$/src/utils/SaleManagementService" />
       <recent name="$PROJECT_DIR$/src/pages/prescriptionmanagement" />
     </key>
   </component>
@@ -74,6 +93,9 @@
       <workItem from="1710413391715" duration="94000" />
       <workItem from="1710413496185" duration="851000" />
       <workItem from="1710414638199" duration="95000" />
+      <workItem from="1710414804528" duration="13900000" />
+      <workItem from="1710435268355" duration="1701000" />
+      <workItem from="1710462694334" duration="15091000" />
     </task>
     <servers />
   </component>

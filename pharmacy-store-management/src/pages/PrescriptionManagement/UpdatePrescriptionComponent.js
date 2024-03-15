@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import * as prescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
 
 import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineInformationService";
-import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
+import * as prescriptionDetailservice from "../../utils/InformationService/PrescriptionManagementService/PrescriptionDetailService";
 import {toast} from "react-toastify";
 import {ErrorMessage, Field, Form, Formik, useFormikContext} from "formik";
 
@@ -19,7 +19,7 @@ export function UpdatePrescriptionComponent(props) {
 
     const clearMedicineData = () => {
         const newData = { ...data };
-        const firstDetailPrescription = newData.prescriptions?.[0]?.detailPrescriptions?.[0];
+        const firstDetailPrescription = newData.prescriptions?.[0]?.prescriptionDetails?.[0];
 
         // Split the values to an array
         const quantityArray = firstDetailPrescription.quantity?.split(",");
@@ -43,7 +43,7 @@ export function UpdatePrescriptionComponent(props) {
 
     const clearMedicineData2 = () => {
         const newData = { ...data };
-        const firstDetailPrescription = newData.prescriptions?.[0]?.detailPrescriptions?.[0];
+        const firstDetailPrescription = newData.prescriptions?.[0]?.prescriptionDetails?.[0];
 
         // Split the values to an array
         const quantityArray = firstDetailPrescription.quantity?.split(",");
@@ -67,7 +67,7 @@ export function UpdatePrescriptionComponent(props) {
 
     const clearMedicineData3 = () => {
         const newData = { ...data };
-        const firstDetailPrescription = newData.prescriptions?.[0]?.detailPrescriptions?.[0];
+        const firstDetailPrescription = newData.prescriptions?.[0]?.prescriptionDetails?.[0];
 
         // Split the values to an array
         const quantityArray = firstDetailPrescription.quantity?.split(",");
@@ -91,7 +91,7 @@ export function UpdatePrescriptionComponent(props) {
 
     const clearMedicineData4 = () => {
         const newData = { ...data };
-        const firstDetailPrescription = newData.prescriptions?.[0]?.detailPrescriptions?.[0];
+        const firstDetailPrescription = newData.prescriptions?.[0]?.prescriptionDetails?.[0];
 
         // Split the values to an array
         const quantityArray = firstDetailPrescription.quantity?.split(",");
@@ -115,7 +115,7 @@ export function UpdatePrescriptionComponent(props) {
 
     const clearMedicineData5 = () => {
         const newData = { ...data };
-        const firstDetailPrescription = newData.prescriptions?.[0]?.detailPrescriptions?.[0];
+        const firstDetailPrescription = newData.prescriptions?.[0]?.prescriptionDetails?.[0];
 
         // Split the values to an array
         const quantityArray = firstDetailPrescription.quantity?.split(",");
@@ -138,7 +138,7 @@ export function UpdatePrescriptionComponent(props) {
     };
     const clearMedicineData6 = () => {
         const newData = { ...data };
-        const firstDetailPrescription = newData.prescriptions?.[0]?.detailPrescriptions?.[0];
+        const firstDetailPrescription = newData.prescriptions?.[0]?.prescriptionDetails?.[0];
 
         // Split the values to an array
         const quantityArray = firstDetailPrescription.quantity?.split(",");
@@ -162,7 +162,7 @@ export function UpdatePrescriptionComponent(props) {
 
     const clearMedicineData7 = () => {
         const newData = { ...data };
-        const firstDetailPrescription = newData.prescriptions?.[0]?.detailPrescriptions?.[0];
+        const firstDetailPrescription = newData.prescriptions?.[0]?.prescriptionDetails?.[0];
 
         // Split the values to an array
         const quantityArray = firstDetailPrescription.quantity?.split(",");
@@ -188,14 +188,14 @@ export function UpdatePrescriptionComponent(props) {
 
     const [data, setData] = useState({
         prescription: {
-            id: '' ,
-            name: '',
+            prescriptionId: '' ,
+            prescriptionName: '',
             target: 1,
             treatmentPeriod:'',
             exName:'',
             note:'',
             symptom: {
-                name:''
+                symptomName:''
             }
         },
         detailPrescription: [
@@ -217,12 +217,13 @@ export function UpdatePrescriptionComponent(props) {
     const fetchData = async () => {
         try {
             const [detailPrescriptionResult, medicineResult, prescriptionResult] = await Promise.all([
-                detailPrescriptionService.findDetailPrescriptionById(uid),
+                prescriptionDetailservice.findDetailPrescriptionById(uid),
                 medicineService.getAllMedicine(),
                 prescriptionService.findAll()
             ]);
             setData(detailPrescriptionResult);
             setMedicines(medicineResult);
+            console.log(medicineResult);
             setPrescription(prescriptionResult)
 
         } catch (e) {
@@ -245,146 +246,129 @@ export function UpdatePrescriptionComponent(props) {
 
                 detailPrescription: [
                     {
-
-                        times: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[0] ,
-                        quantity: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[0] ,
-                        quantityPerTimes: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[0] ,
-                        medicineId: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[0]
+                        times: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[0] ,
+                        quantity: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[0] ,
+                        quantityPerTimes: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[0] ,
+                        medicineId: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[0]
                     },
                     {
-                        times2: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[1] ,
-                        quantity2: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[1]  ,
-                        quantityPerTimes2: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split( ",")[1] ,
-                        medicineId2: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[1]
-                    },
-                    {
-
-                        times3: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[2] ,
-                        quantity3: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[2] ,
-                        quantityPerTimes3: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[2],
-                        medicineId3: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[2]
+                        times2: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[1] ,
+                        quantity2: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[1]  ,
+                        quantityPerTimes2: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split( ",")[1] ,
+                        medicineId2: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[1]
                     },
                     {
 
-                        times4: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[3] ,
-                        quantity4: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[3] ,
-                        quantityPerTimes4: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[3],
-                        medicineId4: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[3]
+                        times3: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[2] ,
+                        quantity3: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[2] ,
+                        quantityPerTimes3: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[2],
+                        medicineId3: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[2]
                     },
                     {
 
-                        times5: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[4] ,
-                        quantity5: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[4]  ,
-                        quantityPerTimes5: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[4] ,
-                        medicineId5: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[4]
+                        times4: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[3] ,
+                        quantity4: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[3] ,
+                        quantityPerTimes4: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[3],
+                        medicineId4: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[3]
                     },
                     {
-                        times6: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[5] ,
-                        quantity6: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[5],
-                        quantityPerTimes6: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[5],
-                        medicineId6: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[5]
+
+                        times5: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[4] ,
+                        quantity5: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[4]  ,
+                        quantityPerTimes5: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[4] ,
+                        medicineId5: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[4]
                     },
                     {
-                        times7: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[6],
-                        quantity7: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[6] ,
-                        quantityPerTimes7: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[6] ,
-                        medicineId7: data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[6]
+                        times6: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[5] ,
+                        quantity6: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[5],
+                        quantityPerTimes6: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[5],
+                        medicineId6: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[5]
+                    },
+                    {
+                        times7: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[6],
+                        quantity7: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[6] ,
+                        quantityPerTimes7: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[6] ,
+                        medicineId7: data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[6]
                     },
 
                 ],
                 prescription: {
-                    id: data.prescriptions?.[0]?.id ,
-                    name: data.prescriptions?.[0]?.name,
+                    prescriptionId: data.prescriptions?.[0]?.prescriptionId ,
+                    prescriptionName: data.prescriptions?.[0]?.prescriptionName,
                     target: data.prescriptions?.[0]?.target,
                     treatmentPeriod: data.prescriptions?.[0]?.treatmentPeriod,
                     note: data.prescriptions?.[0]?.note,
                     symptom: {
-                        name: data.name
+                        symptomName: data.symptomName
                     }
                 }
             }
 
             const validationErrors = {}
 
-            if(!data.prescriptions?.[0]?.name?.trim()) {
-                validationErrors.name = "Name is required"
+            if(!data.prescriptions?.[0]?.prescriptionName?.trim()) {
+                validationErrors.name = "Tên đơn thuốc không được bỏ trống!"
             }
 
-
-            if(!data.name?.trim()) {
-                validationErrors.symptom = "Symptom is required"
+            if(!data.symptomName?.trim()) {
+                validationErrors.symptom = "Triệu chứng không được bỏ trống!"
             }
 
             if (!data.prescriptions?.[0]?.treatmentPeriod?.trim()) {
-                validationErrors.treatmentPeriod = "TreatmentPeriod is required";
+                validationErrors.treatmentPeriod = "Số ngày uống không được bỏ trống!";
             } else if (!Number.isInteger(Number(data.prescriptions?.[0]?.treatmentPeriod?.trim()))) {
-                validationErrors.treatmentPeriod = "TreatmentPeriod must be an integer";
+                validationErrors.treatmentPeriod = "Số ngày uống phải là một số nguyên";
             }
 
-            if(!Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[0].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[0].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[0].trim())))){
-                validationErrors.quantity = "Quantity, times and quantity per times must be an integer";
+            if(!Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[0].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[0].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[0].trim())))){
+                validationErrors.quantity = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
             }
 
-            if(!Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[1].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[1].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[1].trim())))){
-                validationErrors.quantity1 = "Quantity, times and quantity per times must be an integer";
+            if(!Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[1].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[1].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[1].trim())))){
+                validationErrors.quantity1 = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
             }
 
-            if(!Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[2].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[2].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[2].trim())))){
-                validationErrors.quantity2 = "Quantity, times and quantity per times must be an integer";
+            if(!Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[2].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[2].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[2].trim())))){
+                validationErrors.quantity2 = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
             }
 
-            if(!Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[3].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[3].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[3].trim())))){
-                validationErrors.quantity3 = "Quantity, times and quantity per times must be an integer";
+            if(!Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[3].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[3].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[3].trim())))){
+                validationErrors.quantity3 = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
             }
-            if(!Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[4].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[4].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[4].trim())))){
-                validationErrors.quantity4 = "Quantity, times and quantity per times must be an integer";
+            if(!Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[4].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[4].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[4].trim())))){
+                validationErrors.quantity4 = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
             }
-            if(!Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[5].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[5].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[5].trim())))){
-                validationErrors.quantity5 = "Quantity, times and quantity per times must be an integer";
-            }
-            if(!Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[6].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[6].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[6].trim())))){
-                validationErrors.quantity6 = "Quantity, times and quantity per times must be an integer";
+            if(!Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[5].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[5].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[5].trim())))){
+                validationErrors.quantity5 = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
             }
 
-
-            console.log(props.exName);
-            console.log(data.prescriptions?.[0]?.name);
-
-
-            if (props.exName === data.prescriptions?.[0]?.name || props.exName !== data.prescriptions?.[0]?.name ) {
-                const detail = await detailPrescriptionService.updateDetailPrescription(uid, detailPrescription);
-                console.log(detail);
-                await fetchData();
-                props.onLoad();
-                toast.success(`🦁 Prescription updated successfully!`, {
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+            if(!Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[6].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[6].trim()))) || !Number.isInteger((Number(data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[6].trim())))){
+                validationErrors.quantity6 = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
             }
 
+            if(!data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[0]?.trim()){
+                validationErrors.medicineId = "Hãy chọn it nhất một loại thuốc"
+            }
 
 
             setErrors(validationErrors);
 
 
             if(Object.keys(validationErrors).length === 0) {
-             if (typeof detail === 'object') {
-                    await fetchData();
-                    props.onLoad();
-                    setErrors(" ");
-                    toast.success(`🦁 Prescription updated successfully!`, {
-                        autoClose: 1000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                    });
-                } else {
-                    console.log('The result is of an unexpected type.');
-                }
+
+                await prescriptionDetailservice.updateDetailPrescription(uid, detailPrescription);
+                await fetchData();
+                props.onLoad();
+                setErrors("");
+                toast.success(`Prescription updated successfully!`, {
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+
+
 
             }
 
@@ -412,7 +396,7 @@ export function UpdatePrescriptionComponent(props) {
 
                             <form onSubmit={handleUpdate}>
 
-                                <Field type="hidden" name="id" id="id" className="form-control"/>
+                                <Field type="hidden" name="prescriptionDetailId" id="id" className="form-control"/>
 
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label">
@@ -421,12 +405,12 @@ export function UpdatePrescriptionComponent(props) {
                                     <input
                                         type="text"
                                         name="name"
-                                        value={data.prescriptions?.[0]?.name || ''}
+                                        value={data.prescriptions?.[0]?.prescriptionName || ''}
                                         onChange={(e) => setData({
                                             ...data,
                                             prescriptions: [{
                                                 ...data.prescriptions?.[0],
-                                                name: e.target.value
+                                                prescriptionName: e.target.value
                                             }, ...data.prescriptions.slice(1)]
                                         })}
                                         id="name"
@@ -468,10 +452,10 @@ export function UpdatePrescriptionComponent(props) {
                                         Triệu chứng
                                     </label>
                                     <input type="text" className="form-control"
-                                           value={data.name || ''}
+                                           value={data.symptomName || ''}
                                            onChange={(e) => setData({
                                                ...data,
-                                               name: e.target.value,
+                                               symptomName: e.target.value,
                                            })}
                                     />
                                     {errors.symptom && <span className="error-message">{errors.symptom}</span>}
@@ -516,23 +500,23 @@ export function UpdatePrescriptionComponent(props) {
                                         Chỉ định
                                     </legend>
 
-                                    {data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[0] ? (
+                                    {data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[0] ? (
                                         <>
                                             <div className="form-group slay">
                                                 <div className="slay3">
                                                     <label htmlFor="applicable-object" className="form-label">1.</label>
                                                 </div>
-                                                <select name="detailPrescription.[0].medicineId"
-                                                        value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[0] || ''}
+                                                <select className="form-select"  name="detailPrescription.[0].medicineId"
+                                                        value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[0] || ''}
                                                         onChange={(e) => {
                                                             const newData = {...data};
-                                                            newData.prescriptions[0].detailPrescriptions[0].medicineList = e.target.value;
+                                                            newData.prescriptions[0].prescriptionDetails[0].medicineList = e.target.value;
                                                             setData(newData);
                                                         }}
                                                         className="form-select slay4">
                                                     <option value=" ">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option value={(medicine.id)}>{medicine.name}</option>
+                                                        <option value={(medicine.medicineId)}>{medicine.medicineName}</option>
                                                     ))}
                                                 </select>
 
@@ -541,10 +525,10 @@ export function UpdatePrescriptionComponent(props) {
                                                            id="quantity3"
                                                            type="text"
                                                            name="quantity"
-                                                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[0] || ''}
+                                                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[0] || ''}
                                                            onChange={(e) => {
                                                                const newData = {...data};
-                                                               newData.prescriptions[0].detailPrescriptions[0].quantity = e.target.value;
+                                                               newData.prescriptions[0].prescriptionDetails[0].quantity = e.target.value;
                                                                setData(newData);
                                                            }}
                                                     />
@@ -566,10 +550,10 @@ export function UpdatePrescriptionComponent(props) {
 
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
                            name="times"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[0] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[0] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               newData.prescriptions[0].detailPrescriptions[0].times = e.target.value;
+                               newData.prescriptions[0].prescriptionDetails[0].times = e.target.value;
                                setData(newData);
                            }}/>
                     <label className="form-label" htmlFor="quantity1" style={{marginLeft: '2px'}}>lần</label>
@@ -578,10 +562,10 @@ export function UpdatePrescriptionComponent(props) {
 
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
                            name="quantityPerTimes"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[0] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[0] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = e.target.value;
+                               newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = e.target.value;
                                setData(newData);
                            }}/>
                     <label className="form-label" htmlFor="quantity2" style={{marginLeft: '2px'}}>viên</label>
@@ -597,17 +581,18 @@ export function UpdatePrescriptionComponent(props) {
                                                 <div className="slay3">
                                                     <label htmlFor="applicable-object" className="form-label">1.</label>
                                                 </div>
-                                                <select name="detailPrescription.[0].medicineId"
-                                                        value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[0] || ''}
+                                                <select className="form-select"
+                                                        name="detailPrescription.[0].medicineId"
+                                                        value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[0] || ''}
                                                         onChange={(e) => {
                                                             const newData = {...data};
-                                                            newData.prescriptions[0].detailPrescriptions[0].medicineList = e.target.value;
+                                                            newData.prescriptions[0].prescriptionDetails[0].medicineList = e.target.value;
                                                             setData(newData);
                                                         }}
                                                         className="form-select slay4">
                                                     <option value=" ">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option value={(medicine.id)}>{medicine.name}</option>
+                                                        <option value={(medicine.medicineId)}>{medicine.medicineName}</option>
                                                     ))}
                                                 </select>
 
@@ -617,10 +602,10 @@ export function UpdatePrescriptionComponent(props) {
                                                            type="text"
                                                            disabled
                                                            name="quantity"
-                                                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[0] || ''}
+                                                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[0] || ''}
                                                            onChange={(e) => {
                                                                const newData = {...data};
-                                                               newData.prescriptions[0].detailPrescriptions[0].quantity = e.target.value;
+                                                               newData.prescriptions[0].prescriptionDetails[0].quantity = e.target.value;
                                                                setData(newData);
                                                            }}
                                                     />
@@ -643,10 +628,10 @@ export function UpdatePrescriptionComponent(props) {
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
                            name="times"
                            disabled
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[0] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[0] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               newData.prescriptions[0].detailPrescriptions[0].times = e.target.value;
+                               newData.prescriptions[0].prescriptionDetails[0].times = e.target.value;
                                setData(newData);
                            }}/>
                     <label className="form-label" htmlFor="quantity1" style={{marginLeft: '2px'}}>lần</label>
@@ -656,10 +641,10 @@ export function UpdatePrescriptionComponent(props) {
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
                            name="quantityPerTimes"
                            disabled
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[0] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[0] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = e.target.value;
+                               newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = e.target.value;
                                setData(newData);
                            }}/>
                     <label className="form-label" htmlFor="quantity2" style={{marginLeft: '2px'}}>viên</label>
@@ -672,10 +657,9 @@ export function UpdatePrescriptionComponent(props) {
                                     )}
 
 
-
                                     {/*2*/}
 
-                                    {data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[1] ? (
+                                    {data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[1] ? (
                                         <>
                                             <div className="form-group slay">
                                                 <div className="slay3">
@@ -683,20 +667,20 @@ export function UpdatePrescriptionComponent(props) {
                                                 </div>
                                                 <select
                                                     name="detailPrescription.[1].medicineId2"
-                                                    value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[1] || ''}
+                                                    value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[1] || ''}
                                                     onChange={(e) => {
                                                         const newData = {...data};
-                                                        const medicineList = newData.prescriptions[0].detailPrescriptions[0].medicineList.split(",");
+                                                        const medicineList = newData.prescriptions[0].prescriptionDetails[0].medicineList.split(",");
                                                         medicineList[1] = e.target.value;
-                                                        newData.prescriptions[0].detailPrescriptions[0].medicineList = medicineList.join(",");
+                                                        newData.prescriptions[0].prescriptionDetails[0].medicineList = medicineList.join(",");
                                                         setData(newData);
                                                     }}
                                                     className="form-select slay4"
                                                 >
                                                     <option value="">Chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id}
-                                                                value={medicine.id}>{medicine.name}</option>
+                                                        <option key={medicine.medicineId}
+                                                                value={medicine.medicineId}>{medicine.medicineName}</option>
                                                     ))}
                                                 </select>
 
@@ -704,12 +688,12 @@ export function UpdatePrescriptionComponent(props) {
                                                     <input style={{height: '38px', width: '38px', textAlign: 'center'}}
                                                            id="quantity2"
                                                            type="text"
-                                                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[1] || ''}
+                                                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[1] || ''}
                                                            onChange={(e) => {
                                                                const newData = {...data};
-                                                               const quantity = newData.prescriptions[0].detailPrescriptions[0].quantity.split(",");
+                                                               const quantity = newData.prescriptions[0].prescriptionDetails[0].quantity.split(",");
                                                                quantity[1] = e.target.value;
-                                                               newData.prescriptions[0].detailPrescriptions[0].quantity = quantity.join(",");
+                                                               newData.prescriptions[0].prescriptionDetails[0].quantity = quantity.join(",");
                                                                setData(newData);
                                                            }}
                                                     />
@@ -728,12 +712,12 @@ export function UpdatePrescriptionComponent(props) {
                                             <div className="slay7">
                                                 <p>Ngày uống <span>
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[1] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[1] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].times.split(",");
+                               const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].times.split(",");
                                quantityPerTimesArray[1] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].times = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].times = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}
 
@@ -744,12 +728,12 @@ export function UpdatePrescriptionComponent(props) {
                         style={{height: '38px', width: '38px', textAlign: 'center'}}
                         type="text"
                         name="quantityPerTimes"
-                        value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[1] || ''}
+                        value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[1] || ''}
                         onChange={(e) => {
                             const newData = {...data};
-                            const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes.split(",");
+                            const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes.split(",");
                             quantityPerTimesArray[1] = e.target.value;
-                            newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = quantityPerTimesArray.join(",");
+                            newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = quantityPerTimesArray.join(",");
                             setData(newData);
                         }}
                     />
@@ -770,20 +754,20 @@ export function UpdatePrescriptionComponent(props) {
                                                 </div>
                                                 <select
                                                     name="detailPrescription.[1].medicineId2"
-                                                    value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[1] || ''}
+                                                    value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[1] || ''}
                                                     onChange={(e) => {
                                                         const newData = {...data};
-                                                        const medicineList = newData.prescriptions[0].detailPrescriptions[0].medicineList.split(",");
+                                                        const medicineList = newData.prescriptions[0].prescriptionDetails[0].medicineList.split(",");
                                                         medicineList[1] = e.target.value;
-                                                        newData.prescriptions[0].detailPrescriptions[0].medicineList = medicineList.join(",");
+                                                        newData.prescriptions[0].prescriptionDetails[0].medicineList = medicineList.join(",");
                                                         setData(newData);
                                                     }}
                                                     className="form-select slay4"
                                                 >
                                                     <option value="">Chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id}
-                                                                value={medicine.id}>{medicine.name}</option>
+                                                        <option key={medicine.medicineId}
+                                                                value={medicine.medicineId}>{medicine.medicineName}</option>
                                                     ))}
                                                 </select>
 
@@ -792,12 +776,12 @@ export function UpdatePrescriptionComponent(props) {
                                                            id="quantity2"
                                                            disabled
                                                            type="text"
-                                                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[1] || ''}
+                                                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[1] || ''}
                                                            onChange={(e) => {
                                                                const newData = {...data};
-                                                               const quantity = newData.prescriptions[0].detailPrescriptions[0].quantity.split(",");
+                                                               const quantity = newData.prescriptions[0].prescriptionDetails[0].quantity.split(",");
                                                                quantity[1] = e.target.value;
-                                                               newData.prescriptions[0].detailPrescriptions[0].quantity = quantity.join(",");
+                                                               newData.prescriptions[0].prescriptionDetails[0].quantity = quantity.join(",");
                                                                setData(newData);
                                                            }}
                                                     />
@@ -817,12 +801,12 @@ export function UpdatePrescriptionComponent(props) {
                                                 <p>Ngày uống <span>
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
                            disabled
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[1] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[1] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].times.split(",");
+                               const quantityPerTimesArray = newData.prescriptionDetails[0].detailPrescription[0].times.split(",");
                                quantityPerTimesArray[1] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].times = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].times = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}
 
@@ -834,12 +818,12 @@ export function UpdatePrescriptionComponent(props) {
                         type="text"
                         disabled
                         name="quantityPerTimes"
-                        value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[1] || ''}
+                        value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[1] || ''}
                         onChange={(e) => {
                             const newData = {...data};
-                            const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes.split(",");
+                            const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes.split(",");
                             quantityPerTimesArray[1] = e.target.value;
-                            newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = quantityPerTimesArray.join(",");
+                            newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = quantityPerTimesArray.join(",");
                             setData(newData);
                         }}
                     />
@@ -863,20 +847,20 @@ export function UpdatePrescriptionComponent(props) {
                                             <label htmlFor="applicable-object" className="form-label">2.</label>
                                         </div>
                                         <select
-                                            name="detailPrescription.[1].medicineId3"
-                                            value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[2] || ''}
+                                            name="prescriptionDetails.[1].medicineId3"
+                                            value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[2] || ''}
                                             onChange={(e) => {
                                                 const newData = {...data};
-                                                const medicineList = newData.prescriptions[0].detailPrescriptions[0].medicineList.split(",");
+                                                const medicineList = newData.prescriptions[0].prescriptionDetails[0].medicineList.split(",");
                                                 medicineList[2] = e.target.value;
-                                                newData.prescriptions[0].detailPrescriptions[0].medicineList = medicineList.join(",");
+                                                newData.prescriptions[0].prescriptionDetails[0].medicineList = medicineList.join(",");
                                                 setData(newData);
                                             }}
                                             className="form-select slay4"
                                         >
                                             <option value="">Chọn thuốc</option>
                                             {medicines?.map((medicine) => (
-                                                <option key={medicine.id} value={medicine.id}>{medicine.name}</option>
+                                                <option key={medicine.medicineId} value={medicine.medicineId}>{medicine.medicineName}</option>
                                             ))}
                                         </select>
 
@@ -884,12 +868,12 @@ export function UpdatePrescriptionComponent(props) {
                                             <input style={{height: '38px', width: '38px', textAlign: 'center'}}
                                                    id="quantity3"
                                                    type="text"
-                                                   value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[2] || ''}
+                                                   value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[2] || ''}
                                                    onChange={(e) => {
                                                        const newData = {...data};
-                                                       const quantity = newData.prescriptions[0].detailPrescriptions[0].quantity.split(",");
+                                                       const quantity = newData.prescriptions[0].prescriptionDetails[0].quantity.split(",");
                                                        quantity[2] = e.target.value;
-                                                       newData.prescriptions[0].detailPrescriptions[0].quantity = quantity.join(",");
+                                                       newData.prescriptions[0].prescriptionDetails[0].quantity = quantity.join(",");
                                                        setData(newData);
                                                    }}
                                             />
@@ -907,12 +891,12 @@ export function UpdatePrescriptionComponent(props) {
                                     <div className="slay7">
                                         <p>Ngày uống <span>
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[2] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[2] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].times.split(",");
+                               const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].times.split(",");
                                quantityPerTimesArray[2] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].times = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].times = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}
 
@@ -923,12 +907,12 @@ export function UpdatePrescriptionComponent(props) {
                         style={{height: '38px', width: '38px', textAlign: 'center'}}
                         type="text"
                         name="quantityPerTimes3"
-                        value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[2] || ''}
+                        value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[2] || ''}
                         onChange={(e) => {
                             const newData = {...data};
-                            const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes.split(",");
+                            const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes.split(",");
                             quantityPerTimesArray[2] = e.target.value;
-                            newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = quantityPerTimesArray.join(",");
+                            newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = quantityPerTimesArray.join(",");
                             setData(newData);
                         }}
                     />
@@ -946,20 +930,20 @@ export function UpdatePrescriptionComponent(props) {
                                             <label htmlFor="applicable-object" className="form-label">4.</label>
                                         </div>
                                         <select
-                                            name="detailPrescription.[1].medicineId2"
-                                            value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[3] || ''}
+                                            name="prescriptionDetails.[1].medicineId2"
+                                            value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[3] || ''}
                                             onChange={(e) => {
                                                 const newData = {...data};
-                                                const medicineList = newData.prescriptions[0].detailPrescriptions[0].medicineList.split(",");
+                                                const medicineList = newData.prescriptions[0].prescriptionDetails[0].medicineList.split(",");
                                                 medicineList[3] = e.target.value;
-                                                newData.prescriptions[0].detailPrescriptions[0].medicineList = medicineList.join(",");
+                                                newData.prescriptions[0].prescriptionDetails[0].medicineList = medicineList.join(",");
                                                 setData(newData);
                                             }}
                                             className="form-select slay4"
                                         >
                                             <option value="">Chọn thuốc</option>
                                             {medicines?.map((medicine) => (
-                                                <option key={medicine.id} value={medicine.id}>{medicine.name}</option>
+                                                <option key={medicine.medicineId} value={medicine.medicineId}>{medicine.medicineName}</option>
                                             ))}
                                         </select>
 
@@ -967,12 +951,12 @@ export function UpdatePrescriptionComponent(props) {
                                             <input style={{height: '38px', width: '38px', textAlign: 'center'}}
                                                    id="quantity4"
                                                    type="text"
-                                                   value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[3] || ''}
+                                                   value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[3] || ''}
                                                    onChange={(e) => {
                                                        const newData = {...data};
-                                                       const quantity = newData.prescriptions[0].detailPrescriptions[0].quantity.split(",");
+                                                       const quantity = newData.prescriptions[0].prescriptionDetails[0].quantity.split(",");
                                                        quantity[3] = e.target.value;
-                                                       newData.prescriptions[0].detailPrescriptions[0].quantity = quantity.join(",");
+                                                       newData.prescriptions[0].prescriptionDetails[0].quantity = quantity.join(",");
                                                        setData(newData);
                                                    }}
                                             />
@@ -990,12 +974,12 @@ export function UpdatePrescriptionComponent(props) {
                                     <div className="slay7">
                                         <p>Ngày uống <span>
                      <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                            value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[3] || ''}
+                            value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[3] || ''}
                             onChange={(e) => {
                                 const newData = {...data};
-                                const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].times.split(",");
+                                const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].times.split(",");
                                 quantityPerTimesArray[3] = e.target.value;
-                                newData.prescriptions[0].detailPrescriptions[0].times = quantityPerTimesArray.join(",");
+                                newData.prescriptions[0].prescriptionDetails[0].times = quantityPerTimesArray.join(",");
                                 setData(newData);
                             }}
 
@@ -1006,12 +990,12 @@ export function UpdatePrescriptionComponent(props) {
                         style={{height: '38px', width: '38px', textAlign: 'center'}}
                         type="text"
                         name="quantityPerTimes"
-                        value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[3] || ''}
+                        value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[3] || ''}
                         onChange={(e) => {
                             const newData = {...data};
-                            const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes.split(",");
+                            const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes.split(",");
                             quantityPerTimesArray[3] = e.target.value;
-                            newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = quantityPerTimesArray.join(",");
+                            newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = quantityPerTimesArray.join(",");
                             setData(newData);
                         }}
                     />
@@ -1030,18 +1014,18 @@ export function UpdatePrescriptionComponent(props) {
                                         </div>
                                         <select
                                             className="form-select slay4"
-                                            value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[4] || ''}
+                                            value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[4] || ''}
                                             onChange={(e) => {
                                                 const newData = {...data};
-                                                const medicineList = newData.prescriptions[0].detailPrescriptions[0].medicineList.split(",");
+                                                const medicineList = newData.prescriptions[0].prescriptionDetails[0].medicineList.split(",");
                                                 medicineList[4] = e.target.value;
-                                                newData.prescriptions[0].detailPrescriptions[0].medicineList = medicineList.join(",");
+                                                newData.prescriptions[0].prescriptionDetails[0].medicineList = medicineList.join(",");
                                                 setData(newData);
                                             }}
                                         >
                                             <option value=" ">chọn thuốc</option>
                                             {medicines?.map((medicine) => (
-                                                <option value={(medicine.id)}>{medicine.name}</option>
+                                                <option value={(medicine.medicineId)}>{medicine.medicineName}</option>
                                             ))}
                                         </select>
 
@@ -1049,12 +1033,12 @@ export function UpdatePrescriptionComponent(props) {
                                             <input style={{height: '38px', width: '38px', textAlign: 'center'}}
                                                    id="quantity2"
                                                    type="text"
-                                                   value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[4] || ''}
+                                                   value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[4] || ''}
                                                    onChange={(e) => {
                                                        const newData = {...data};
-                                                       const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantity?.split(",");
+                                                       const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantity?.split(",");
                                                        quantityPerTimesArray[4] = e.target.value;
-                                                       newData.prescriptions[0].detailPrescriptions[0].quantity = quantityPerTimesArray.join(",");
+                                                       newData.prescriptions[0].prescriptionDetails[0].quantity = quantityPerTimesArray.join(",");
                                                        setData(newData);
                                                    }}/>
                                             <label className="form-label" htmlFor="quantity3"
@@ -1072,12 +1056,12 @@ export function UpdatePrescriptionComponent(props) {
                                     <div className="slay7">
                                         <p>Ngày uống <span>
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[4] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[4] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].times?.split(",");
+                               const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].times?.split(",");
                                quantityPerTimesArray[4] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].times = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].times = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}/>
                     <label className="form-label" htmlFor="quantity1" style={{marginLeft: '2px'}}>lần</label>
@@ -1089,12 +1073,12 @@ export function UpdatePrescriptionComponent(props) {
                         style={{height: '38px', width: '38px', textAlign: 'center'}}
                         type="text"
                         name="quantityPerTimes4"
-                        value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[4] || ''}
+                        value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[4] || ''}
                         onChange={(e) => {
                             const newData = {...data};
-                            const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes?.split(",");
+                            const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes?.split(",");
                             quantityPerTimesArray[4] = e.target.value;
-                            newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = quantityPerTimesArray.join(",");
+                            newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = quantityPerTimesArray.join(",");
                             setData(newData);
                         }}
                     />
@@ -1112,18 +1096,18 @@ export function UpdatePrescriptionComponent(props) {
                                         </div>
                                         <select
                                             className="form-select slay4"
-                                            value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[5] || ''}
+                                            value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[5] || ''}
                                             onChange={(e) => {
                                                 const newData = {...data};
-                                                const medicineList = newData.prescriptions[0].detailPrescriptions[0].medicineList.split(",");
+                                                const medicineList = newData.prescriptions[0].prescriptionDetails[0].medicineList.split(",");
                                                 medicineList[5] = e.target.value;
-                                                newData.prescriptions[0].detailPrescriptions[0].medicineList = medicineList.join(",");
+                                                newData.prescriptions[0].prescriptionDetails[0].medicineList = medicineList.join(",");
                                                 setData(newData);
                                             }}
                                         >
                                             <option value=" ">chọn thuốc</option>
                                             {medicines?.map((medicine) => (
-                                                <option value={(medicine.id)}>{medicine.name}</option>
+                                                <option value={(medicine.medicineId)}>{medicine.medicineName}</option>
                                             ))}
                                         </select>
 
@@ -1131,12 +1115,12 @@ export function UpdatePrescriptionComponent(props) {
                                             <input style={{height: '38px', width: '38px', textAlign: 'center'}}
                                                    id="quantity2"
                                                    type="text"
-                                                   value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[5] || ''}
+                                                   value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[5] || ''}
                                                    onChange={(e) => {
                                                        const newData = {...data};
-                                                       const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantity?.split(",");
+                                                       const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantity?.split(",");
                                                        quantityPerTimesArray[5] = e.target.value;
-                                                       newData.prescriptions[0].detailPrescriptions[0].quantity = quantityPerTimesArray.join(",");
+                                                       newData.prescriptions[0].prescriptionDetails[0].quantity = quantityPerTimesArray.join(",");
                                                        setData(newData);
                                                    }}/>
                                             <label className="form-label" htmlFor="quantity3"
@@ -1153,12 +1137,12 @@ export function UpdatePrescriptionComponent(props) {
                                     <div className="slay7">
                                         <p>Ngày uống <span>
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[5] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[5] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].times?.split(",");
+                               const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].times?.split(",");
                                quantityPerTimesArray[5] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].times = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].times = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}
                     />
@@ -1167,12 +1151,12 @@ export function UpdatePrescriptionComponent(props) {
                 </span>, mỗi lần uống <span>
 
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[5] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[5] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes?.split(",");
+                               const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes?.split(",");
                                quantityPerTimesArray[5] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}
                     />
@@ -1193,18 +1177,18 @@ export function UpdatePrescriptionComponent(props) {
                                         </div>
                                         <select
                                             className="form-select slay4"
-                                            value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.medicineList?.split(",")[6] || ''}
+                                            value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.medicineList?.split(",")[6] || ''}
                                             onChange={(e) => {
                                                 const newData = {...data};
-                                                const medicineList = newData.prescriptions[0].detailPrescriptions[0].medicineList.split(",");
+                                                const medicineList = newData.prescriptions[0].prescriptionDetails[0].medicineList.split(",");
                                                 medicineList[6] = e.target.value;
-                                                newData.prescriptions[0].detailPrescriptions[0].medicineList = medicineList.join(",");
+                                                newData.prescriptions[0].prescriptionDetails[0].medicineList = medicineList.join(",");
                                                 setData(newData);
                                             }}
                                         >
                                             <option value=" ">chọn thuốc</option>
                                             {medicines?.map((medicine) => (
-                                                <option value={(medicine.id)}>{medicine.name}</option>
+                                                <option value={(medicine.medicineId)}>{medicine.medicineName}</option>
                                             ))}
                                         </select>
 
@@ -1212,12 +1196,12 @@ export function UpdatePrescriptionComponent(props) {
                                             <input style={{height: '38px', width: '38px', textAlign: 'center'}}
                                                    id="quantity2"
                                                    type="text"
-                                                   value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantity?.split(",")[6] || ''}
+                                                   value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantity?.split(",")[6] || ''}
                                                    onChange={(e) => {
                                                        const newData = {...data};
-                                                       const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantity?.split(",");
+                                                       const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantity?.split(",");
                                                        quantityPerTimesArray[6] = e.target.value;
-                                                       newData.prescriptions[0].detailPrescriptions[0].quantity = quantityPerTimesArray.join(",");
+                                                       newData.prescriptions[0].prescriptionDetails[0].quantity = quantityPerTimesArray.join(",");
                                                        setData(newData);
                                                    }}/>
                                             <label className="form-label" htmlFor="quantity3"
@@ -1234,24 +1218,24 @@ export function UpdatePrescriptionComponent(props) {
                                     <div className="slay7">
                                         <p>Ngày uống <span>
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.times?.split(",")[6] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.times?.split(",")[6] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].times?.split(",");
+                               const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].times?.split(",");
                                quantityPerTimesArray[6] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].times = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].times = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}/>
 
                     <label className="form-label" htmlFor="quantity1" style={{marginLeft: '2px'}}>lần</label>
                 </span>, mỗi lần uống <span>
                     <input style={{height: '38px', width: '38px', textAlign: 'center'}} type="text"
-                           value={data.prescriptions?.[0]?.detailPrescriptions?.[0]?.quantityPerTimes?.split(",")[6] || ''}
+                           value={data.prescriptions?.[0]?.prescriptionDetails?.[0]?.quantityPerTimes?.split(",")[6] || ''}
                            onChange={(e) => {
                                const newData = {...data};
-                               const quantityPerTimesArray = newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes?.split(",");
+                               const quantityPerTimesArray = newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes?.split(",");
                                quantityPerTimesArray[6] = e.target.value;
-                               newData.prescriptions[0].detailPrescriptions[0].quantityPerTimes = quantityPerTimesArray.join(",");
+                               newData.prescriptions[0].prescriptionDetails[0].quantityPerTimes = quantityPerTimesArray.join(",");
                                setData(newData);
                            }}/>
                     <label className="form-label" htmlFor="quantity2" style={{marginLeft: '2px'}}>viên</label>
@@ -1259,13 +1243,17 @@ export function UpdatePrescriptionComponent(props) {
                                         {errors.quantity6 && <span className="error-message">{errors.quantity6}</span>}
 
                                     </div>
+                                    <span>
+                                    {errors.medicineId &&
+                                        <span className="error-message1">{errors.medicineId}</span>}
+                                </span>
 
 
                                 </fieldset>
 
                                 <Modal.Footer className="bg-light">
                                     <div className="group-button d-flex justify-content-between">
-                                        <div className="mb-3 d-flex justify-content-center gr1 btn1">
+                                    <div className="mb-3 d-flex justify-content-center gr1 btn1">
                                             <Button onClick={props.onHide} className="btn btn-info custom-button">
                                                 Hủy
                                             </Button>

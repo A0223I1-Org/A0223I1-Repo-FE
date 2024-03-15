@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import React, {useEffect, useRef, useState} from "react";
 
 import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineInformationService";
-import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
+import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionDetailService";
 
 import {toast} from "react-toastify";
 import {ErrorMessage, Field, Form, Formik} from "formik";
@@ -25,28 +25,7 @@ export default function AddPrescriptionModalComponent(props) {
         findAll();
     }, []);
 
-    const validationSchema = Yup.object().shape({
-        name: Yup.string()
-            .required('Tên không được để trống'),
-        symptom: Yup.string()
-            .required('Triệu chứng không được để trống'),
-        treatmentPeriod: Yup.number()
-            .required('Số ngày uống không được để trống')
-            .positive('Số ngày uống phải là một số dương')
-            .integer('Số ngày uống phải là một số nguyên')
-    });
 
-
-
-
-
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({
-            ...formData, [name] : value
-        })
-    }
 
     const [formData, setFormData] = useState({
         medicineId: '',
@@ -228,12 +207,12 @@ export default function AddPrescriptionModalComponent(props) {
 
                 const detailPrescription = {
                     prescription: {
-                        name: formData.name,
+                        prescriptionName: formData.prescriptionName,
                         target: formData.target,
                         treatmentPeriod: formData.treatmentPeriod,
                         note: formData.note,
                         symptom: {
-                            name: formData.symptom
+                            symptomName: formData.symptom
                         }
                     },
 
@@ -289,7 +268,7 @@ export default function AddPrescriptionModalComponent(props) {
                 const validationErrors = {}
                 const validationErrors2 = {}
 
-                if(!formData.name?.trim()) {
+                if(!formData.prescriptionName?.trim()) {
                     validationErrors.name = "Tên đơn thuốc không được bỏ trống!"
                 }
 
@@ -373,7 +352,7 @@ export default function AddPrescriptionModalComponent(props) {
                 note: "",
                 symptom: "",
 
-                detailPrescription: [
+                prescriptionDetails: [
                     {medicineId:"",times: "", quantity: "", quantityPerTimes: ""},
                     {medicineId2:"",times2: "", quantity2: "", quantityPerTimes2: ""},
                     {medicineId3:"",times3: "", quantity3: "", quantityPerTimes3: ""},
@@ -409,12 +388,12 @@ export default function AddPrescriptionModalComponent(props) {
                                     Tên Toa Thuốc
                                 </label>
                                 <input type="text" name="name" id="name" className="form-control" autoFocus
-                                    value={formData.name}
-                                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    value={formData.prescriptionName}
+                                       onChange={(e) => setFormData({ ...formData, prescriptionName: e.target.value })}
                                 />
 
-                                {errors.name && <span className="error-message">{errors.name}</span>}
-                                {errors2.same && <span className="error-message">{errors2.same}</span>}
+                                {errors.name && <span className="error-message1">{errors.name}</span>}
+                                {errors2.same && <span className="error-message1">{errors2.same}</span>}
                             </div>
 
 
@@ -433,7 +412,7 @@ export default function AddPrescriptionModalComponent(props) {
                                     <option value="2">Trẻ em</option>
                                     <option value="3">Phụ nữ mang thai</option>
                                 </select>
-                                {errors.target && <span className="error-message">{errors.target}</span>}
+                                {errors.target && <span className="error-message1">{errors.target}</span>}
 
                             </div>
 
@@ -447,7 +426,7 @@ export default function AddPrescriptionModalComponent(props) {
                                 />
 
                                 <span>
-                                    {errors.symptom && <span className="error-message">{errors.symptom}</span>}
+                                    {errors.symptom && <span className="error-message1">{errors.symptom}</span>}
 
                                 </span>
                             </div>
@@ -464,7 +443,7 @@ export default function AddPrescriptionModalComponent(props) {
                                 <span>
 
                                 <span>
-                                    {errors.treatmentPeriod && <span className="error-message">{errors.treatmentPeriod}</span>}
+                                    {errors.treatmentPeriod && <span className="error-message1">{errors.treatmentPeriod}</span>}
                                 </span>
                                 </span>
                             </div>
@@ -496,8 +475,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -547,7 +526,7 @@ export default function AddPrescriptionModalComponent(props) {
                                 </span></p>
                                         </div>
                                         <span>
-                                            {errors.quantity && <span className="error-message">{errors.quantity}</span>}
+                                            {errors.quantity && <span className="error-message1">{errors.quantity}</span>}
 
                                         </span>
                                     </>
@@ -568,8 +547,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -652,8 +631,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                     >
                                                         <option value="">chọn thuốc</option>
                                                         {medicines?.map((medicine) => (
-                                                            <option key={medicine.id} value={medicine.id}>
-                                                                {medicine.name}
+                                                            <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                                {medicine.medicineName}
                                                             </option>
                                                         ))}
                                                     </Field>
@@ -702,7 +681,7 @@ export default function AddPrescriptionModalComponent(props) {
                                             </div>
                                             <span>
                                             {errors.quantity2 &&
-                                                <span className="error-message">{errors.quantity2}</span>}
+                                                <span className="error-message1">{errors.quantity2}</span>}
 
                                         </span>
                                         </>
@@ -722,8 +701,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                     >
                                                         <option value="">chọn thuốc</option>
                                                         {medicines?.map((medicine) => (
-                                                            <option key={medicine.id} value={medicine.id}>
-                                                                {medicine.name}
+                                                            <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                                {medicine.medicineName}
                                                             </option>
                                                         ))}
                                                     </Field>
@@ -802,8 +781,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -851,7 +830,7 @@ export default function AddPrescriptionModalComponent(props) {
                                         </div>
                                         <span>
                                             {errors.quantity3 &&
-                                                <span className="error-message">{errors.quantity3}</span>}
+                                                <span className="error-message1">{errors.quantity3}</span>}
 
                                         </span>
                                     </>
@@ -871,8 +850,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -950,8 +929,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                        })}>
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -995,7 +974,7 @@ export default function AddPrescriptionModalComponent(props) {
                                         </div>
                                         <span>
                                             {errors.quantity4 &&
-                                                <span className="error-message">{errors.quantity4}</span>}
+                                                <span className="error-message1">{errors.quantity4}</span>}
 
                                         </span>
                                     </>
@@ -1014,8 +993,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                        })}>
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -1091,8 +1070,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -1139,7 +1118,7 @@ export default function AddPrescriptionModalComponent(props) {
                                         </div>
                                         <span>
                                             {errors.quantity5 &&
-                                                <span className="error-message">{errors.quantity5}</span>}
+                                                <span className="error-message1">{errors.quantity5}</span>}
 
                                         </span>
                                     </>
@@ -1161,8 +1140,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -1240,8 +1219,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                     >
                                                         <option value="">chọn thuốc</option>
                                                         {medicines?.map((medicine) => (
-                                                            <option key={medicine.id} value={medicine.id}>
-                                                                {medicine.name}
+                                                            <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                                {medicine.medicineName}
                                                             </option>
                                                         ))}
                                                     </Field>
@@ -1288,7 +1267,7 @@ export default function AddPrescriptionModalComponent(props) {
                                             </div>
                                             <span>
                                             {errors.quantity6 &&
-                                                <span className="error-message">{errors.quantity6}</span>}
+                                                <span className="error-message1">{errors.quantity6}</span>}
 
                                         </span>
                                         </>
@@ -1308,8 +1287,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                     >
                                                         <option value="">chọn thuốc</option>
                                                         {medicines?.map((medicine) => (
-                                                            <option key={medicine.id} value={medicine.id}>
-                                                                {medicine.name}
+                                                            <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                                {medicine.medicineName}
                                                             </option>
                                                         ))}
                                                     </Field>
@@ -1385,8 +1364,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -1432,7 +1411,7 @@ export default function AddPrescriptionModalComponent(props) {
                                         </div>
                                         <span>
                                             {errors.quantity7 &&
-                                                <span className="error-message">{errors.quantity7}</span>}
+                                                <span className="error-message1">{errors.quantity7}</span>}
 
                                         </span>
                                     </>
@@ -1452,8 +1431,8 @@ export default function AddPrescriptionModalComponent(props) {
                                                 >
                                                     <option value="">chọn thuốc</option>
                                                     {medicines?.map((medicine) => (
-                                                        <option key={medicine.id} value={medicine.id}>
-                                                            {medicine.name}
+                                                        <option key={medicine.medicineId} value={medicine.medicineId}>
+                                                            {medicine.medicineName}
                                                         </option>
                                                     ))}
                                                 </Field>
@@ -1510,7 +1489,7 @@ export default function AddPrescriptionModalComponent(props) {
                                         </div>
                                         <span>
                                     {errors.medicineId &&
-                                        <span className="error-message">{errors.medicineId}</span>}
+                                        <span className="error-message1">{errors.medicineId}</span>}
                                 </span>
                                     </>
                                 )}

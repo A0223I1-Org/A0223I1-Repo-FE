@@ -4,7 +4,7 @@ body {
 .row-scope{
     text-align: center;
 }
-.row-scope td{
+.row-scope th{
     background-color: #449af8;
     color: white;
 }

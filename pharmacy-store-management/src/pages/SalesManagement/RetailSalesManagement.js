@@ -84,7 +84,7 @@ export function RetailSalesManagement() {
 
     return (
         <>
-    <Header />
+    {/*<Header />*/}
 
     <section className="main">
      <Nav />
@@ -94,7 +94,7 @@ export function RetailSalesManagement() {
             <fieldset className="border p-2" style={{ borderRadius: "5px" }}>
                 <legend className="w-auto">Bộ lọc</legend>
                 <div className="alo">
-                   
+
                 <Formik
                 initialValues={{
                     fromDate: "",
@@ -105,10 +105,10 @@ export function RetailSalesManagement() {
                     displayField: "",
                 }}
                 validationSchema={validationSchema}
-                onSubmit={handleFilterSubmit} 
-              >        
+                onSubmit={handleFilterSubmit}
+              >
                {({ values, handleChange }) => (
-               <Form action=""> 
+               <Form action="">
                         <div className="date-time-inputs">
                             <div className='input-date-time'>
                             <div >
@@ -116,9 +116,9 @@ export function RetailSalesManagement() {
                             <Field type="date" name="fromDate" as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                             </div>
                             <div>
-                            <ErrorMessage name="fromDate" component="div" className="error-message"/>                 
+                            <ErrorMessage name="fromDate" component="div" className="error-message"/>
                             </div>
-                           
+
                             </div>
 
                             <div className='input-date-time'>
@@ -130,13 +130,13 @@ export function RetailSalesManagement() {
                            <ErrorMessage name="toDate" component="div" className="error-message"/>
                            </div>
                             </div>
-                            
+
                             <div className='input-date-time'>
                             <div>
                             <label htmlFor="fromTime">Từ giờ: </label>
                             <Field type="time" name="fromTime"as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                             </div>
-                            
+
                             <div>
                                 <ErrorMessage name="fromTime" component="div" className="error-message"/>
                             </div>
@@ -147,7 +147,7 @@ export function RetailSalesManagement() {
                                 <label htmlFor="toTime">Đến giờ: </label>
                                  <Field type="time" name="toTime" as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                                 </div>
-                           
+
                             <div>
                                 <ErrorMessage name="toTime" component="div" className="error-message"/>
                             </div>
@@ -166,7 +166,7 @@ export function RetailSalesManagement() {
                             </div>
                             <div className="sort" style={{marginLeft: '15px'}}>
                                 <label htmlFor="sortField">Sắp xếp: </label>
-                                <Field name="sortField" as="select"  onChange={handleChange} style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"> 
+                                <Field name="sortField" as="select"  onChange={handleChange} style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control">
                                     <option value="">Chọn sắp xếp</option>
                                     <option value="customer_name">Tên khách hàng</option>
                                     <option value="date_create">Ngày lập - Giờ lập</option>
@@ -180,9 +180,9 @@ export function RetailSalesManagement() {
                                   <i className="bi bi-search"></i> Lọc
                                  </span>
                         </button>
-                        </div> 
                         </div>
-                      
+                        </div>
+
                         </Form>
                         )}
                 </Formik>
@@ -190,14 +190,14 @@ export function RetailSalesManagement() {
             </fieldset>
 
             <br />
-            
+
             <fieldset className="border p-2" style={{ borderRadius: "5px" }}>
                 <legend className="w-auto">Danh sách hóa đơn</legend>
                 <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th className="checkbox-header" style={{innerWidth: "fit-content"}}>
-                                Chọn</th> 
+                                Chọn</th>
                             <th>Mã hóa đơn</th>
                             <th>Tên khách hàng</th>
                             <th>Ngày lập</th>
@@ -231,7 +231,7 @@ export function RetailSalesManagement() {
                                 <td>{displayInvoice.employee_name}</td>
                                  <td>{displayInvoice.total}</td>
                                  <td>{displayInvoice.note}</td>
-                            
+
                                 {/* <td>
                                     <NavLink to={`/edit/${product.id}`} className="btn btn-primary">
                                         Edit
@@ -245,7 +245,7 @@ export function RetailSalesManagement() {
                 </table>
             </fieldset>
 
-            <div className="action1" style= {{ marginLeft: '56%' }}> 
+            <div className="action1" style= {{ marginLeft: '56%' }}>
                 <NavLink to={`/retail`} className="btn btn-primary">
                     <span className="em-1">
                         <i className="bi bi-plus-circle"></i>
@@ -261,7 +261,7 @@ export function RetailSalesManagement() {
             </div>
         </div>
     </div>
-    </section>  
+    </section>
         </>
     )
 }

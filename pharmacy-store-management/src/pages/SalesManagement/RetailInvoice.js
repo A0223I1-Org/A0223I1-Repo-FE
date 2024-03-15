@@ -46,13 +46,13 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
     medicineListF: [{ medicineIdF: '', medicineNameF: '', unitF: '', quantityF: '', retailPriceF: '' }],
   });
 
- 
+
 
   useEffect(() => {
     fetchData();
-  }, []); 
+  }, []);
 
-  
+
   const fetchData = async () => {
     try {
       const employeeData = await retailInvoice.findAllEmployee();
@@ -110,8 +110,8 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
       .min(1, 'Số lượng phải lớn hơn 0')
       .required('Không được bỏ trống'),
   });
-  
-  
+
+
   const findIdByNameInList = (name, list) => {
     const selectedItem = list.find(item => item.employeeName === name || item.customerName === name || item.symptomName === name);
     return selectedItem ? selectedItem.employeeId || selectedItem.customerId || selectedItem.symptomId : null;
@@ -120,18 +120,18 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
   const handleAddInvoiceSubmit = async (values) => {
     try {
       const { dateCreate, note, employeeName, customerName, symptomName, medicineName, quantity } = values;
-  
+
       if (isFirstTime) {
         const formattedFromDate = DateTime.fromISO(dateCreate).toFormat('yyyy-MM-dd');
         const employeeId = findIdByNameInList(employeeName, employees);
         const customerId = findIdByNameInList(customerName, customers);
         const symptomId = findIdByNameInList(symptomName, symptoms);
-        
+
         const selectedMedicine = medicines.find(item => item.medicineName === medicineName);
         const medicineId = selectedMedicine ? selectedMedicine.medicineId : null;
         const retailPrice = selectedMedicine ? selectedMedicine.retailPrice : null;
         const unit = selectedMedicine ? selectedMedicine.unit : null;
-  
+
         setFormData({
           dateCreateF: formattedFromDate,
           noteF: note,
@@ -139,7 +139,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
           customerIdF: customerId,
           symptomIdF: symptomId,
           medicineListF: [{ medicineIdF: medicineId, medicineNameF: medicineName, unitF: unit, quantityF: quantity, retailPriceF: retailPrice }],
-          
+
         });
         console.log(formData);
         setIsFirstTime(false); // Đặt lại giá trị của isFirstTime
@@ -149,7 +149,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
         const medicineId = selectedMedicine ? selectedMedicine.medicineId : null;
         const retailPrice = selectedMedicine ? selectedMedicine.retailPrice : null;
         const unit = selectedMedicine ? selectedMedicine.unit : null;
-  
+
         // Tạo một đối tượng medicine mới và thêm vào danh sách
         const newMedicine = { medicineIdF: medicineId, medicineNameF: medicineName, unitF: unit, quantityF: quantity, retailPriceF: retailPrice };
         setFormData((prevData) => ({
@@ -162,12 +162,12 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
       console.error("Error in handleAddInvoiceSubmit:", error);
     }
   };
-  
+
   const calculateTotal = () => {
     if (formData.medicineListF.length === 0) {
       return 0; // Trả về 0 nếu không có mục nào trong danh sách thuốc
     }
-  
+
     // Sử dụng reduce để tính tổng tiền từ mảng medicineListF
     const total = formData.medicineListF.reduce((acc, medicine) => {
       const subtotal = medicine.quantityF * medicine.retailPriceF;
@@ -183,7 +183,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
       // Nếu đang xử lý thanh toán, không làm gì cả
       return;
     }
-  
+
     try {
       setIsProcessingPayment(true);
       console.log(formData);
@@ -196,12 +196,12 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
         medicineListF: [],
       });
       setIsFirstTime(true);
-  
+
       // Gọi API để thực hiện thanh toán
       // ...
-  
+
       toast.success('Thanh toán thành công');
-  
+
       // // Reset form
       // resetForm();
     } catch (error) {
@@ -239,7 +239,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
       setIdMedicineDelete(null); // Set to null when removing the highlight
     }
   };
-  
+
 
   const handleDeleteButtonClick = () => {
     if (idMedicineDelete !== null) {
@@ -308,7 +308,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleAddInvoiceSubmit}
-              >        
+              >
               {({ values, handleChange, handleSubmit, resetForm }) => (
                 <ResetFormContext.Provider value={resetForm}>
                   <Form onSubmit={handleSubmit} className="form">
@@ -316,14 +316,14 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                       <div>
                       <label htmlFor="invoiceId" style={{ marginTop: '6.75px' }}>Số phiếu: </label>
                       <input type="text" id="invoiceId" name="invoiceId" style={{ marginLeft: '24px', marginRight: '30px' }} placeholder="TT00001" readOnly/>
-                    
+
                       </div>
                       <div>
                       <label htmlFor="dateCreate" style={{ marginTop: '6.75px' }}>Ngày lập: </label>
                       <input type="date" id="dateCreate" name="dateCreate" style={{ marginLeft: '28.5px', marginRight: '30px' }}
                        value={values.dateCreate}
                        onChange={handleChange} />
-                      <div className='erros-mess'> 
+                      <div className='erros-mess'>
                           <ErrorMessage name="dateCreate" component="div" className="error-message"/>
                       </div>
                       </div>
@@ -332,14 +332,14 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                       <textarea id="note" name="note" rows="1.5" cols="30" placeholder="Ghi chú" style={{ border: '.1rem solid rgba(0, 0, 0, .1)', verticalAlign: 'middle', paddingTop: '7px' }}
                        value={values.note}
                        onChange={handleChange}></textarea>
-             
+
                       </div>
 
                         </div>
                 <div className="secondary-infomation-2">
                     <div className="employee">
                       <label htmlFor="employeeName">Nhân viên: </label>
-                      <input type="text" name="employeeName" id="employeeName" list="employeeList" placeholder="Tên nhân viên"  
+                      <input type="text" name="employeeName" id="employeeName" list="employeeList" placeholder="Tên nhân viên"
                       value={values.employeeName}
                        onChange={handleChange}/>
                       <datalist id="employeeList">
@@ -347,13 +347,13 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                           <option key={index} value={employee.employeeName} />
                         ))}
                       </datalist>
-                      <div className='erros-mess'> 
+                      <div className='erros-mess'>
                                 <ErrorMessage name="employeeName" component="div" className="error-message"/>
                       </div>
                     </div>
                     <div className="customer">
                           <label htmlFor="customerName" aria-required="true">Khách hàng: </label>
-                          <input type="text" name="customerName" id="customerName" list="customerList" placeholder="Tên khách hàng" 
+                          <input type="text" name="customerName" id="customerName" list="customerList" placeholder="Tên khách hàng"
                            value={values.customerName}
                            onChange={handleChange}/>
                           <datalist id="customerList">
@@ -362,7 +362,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                             ))}
                           </datalist>
                           <button type="button" style={{ margin: '0%', padding: '0%', marginRight: '15px' }}><i className="bi bi-plus"></i></button>
-                          <div className='erros-mess'> 
+                          <div className='erros-mess'>
                                 <ErrorMessage name="customerName" component="div" className="error-message"/>
                          </div>
                     </div>
@@ -390,17 +390,17 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                           <option key={index} value={medicine.medicineName} />
                         ))}
                       </datalist>
-                      <div className='erros-mess'> 
+                      <div className='erros-mess'>
                                 <ErrorMessage name="medicineName" component="div" className="error-message"/>
                       </div>
                     </div>
-                    <div>                   
+                    <div>
                      <label htmlFor="quantity" style={{ marginTop: '6.75px' }}>Số lượng: </label>
-                    <input type="number" id="quantity" name="quantity" style={{ marginLeft: '32.5px', marginRight: '30px' }} placeholder="0" 
+                    <input type="number" id="quantity" name="quantity" style={{ marginLeft: '32.5px', marginRight: '30px' }} placeholder="0"
                      value={values.quantity}
                      onChange={handleChange}
                     />
-                    <div className='erros-mess'> 
+                    <div className='erros-mess'>
                                 <ErrorMessage name="quantity" component="div" className="error-message"/>
                     </div></div>
                     <div>
@@ -415,11 +415,11 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                         </span>
                       </button>
                     </div>
-                    
-                              
+
+
               </div>
               <button type="submit" className="btn btn-primary" style={{ height: '40px', marginTop: '16px', marginLeft: '34.5px' }}><i className="bi bi-patch-plus"></i>Thêm</button>
-           
+
               </Form>
              </ResetFormContext.Provider>
                         )}
@@ -441,13 +441,13 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
             </thead>
             <tbody>
                 {formData.medicineListF.map((medicine, index) => (
-                      <tr 
+                      <tr
                       className="table-row"
                       key={index}
                       onClick={(event) => {
                           highlightRow(event, medicine.medicineIdF);
                       }}
-                  >              
+                  >
                     <td>{medicine.medicineNameF}</td>
                     <td>{medicine.unitF}</td>
                     <td>{medicine.quantityF}</td>
@@ -477,8 +477,8 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
             </span>
             Thanh toán
           </button>
-        
-        
+
+
         <button
           type="button"
           className="btn btn-danger"
@@ -488,7 +488,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
             <i className="bi bi-x-circle"></i>
           </span>
           Xoá thuốc
-        </button>        
+        </button>
           <button type="button" className="btn btn-info"><span className="em-1"><i className="bi bi-printer"></i></span>In phiếu</button>
           <NavLink to={`/`} type="button" className="btn btn-secondary">
             <span className="em-1">
@@ -498,10 +498,10 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
           </NavLink>
         </div>
       </div>
-    </div> 
+    </div>
         </section>
-           
-  
+
+
 
     {/* <!-- MODAL CHI TIẾT DANH SÁCH TOA THUỐC KÊ SẴN --> */}
     {/* <div
@@ -643,7 +643,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
         </Modal.Footer>
       </Modal>
 
-        </>    
+        </>
     );
 }
 

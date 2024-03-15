@@ -6,6 +6,7 @@ import './report-chart.css';
 import {toast} from "react-toastify";
 import {seeChartRevenueAndProfit} from "../../utils/ReportService/ReportService";
 import {Link} from "react-router-dom";
+import styled from 'styled-components';
 
 const timeOptions = [
     {value: 'year', label: 'Năm'},
@@ -23,6 +24,153 @@ const yearOptions = Array.from({length: new Date().getFullYear() - 1999}, (_, i)
     label: new Date().getFullYear() - i,
 }));
 
+
+const StyleReportChart = styled.div`
+  .LoiTH-chart legend {
+    all: revert;
+  }
+
+  .LoiTH-chart fieldset {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .LoiTH-chart .form-group {
+    display: flex;
+    /*justify-content: space-between;*/
+  }
+
+  .LoiTH-chart .form-group div:last-child {
+    margin-right: 0;
+  }
+
+  .LoiTH-chart .form-group div {
+    margin-right: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .LoiTH-chart .report {
+    display: flex;
+  }
+
+  .LoiTH-chart .report .debt {
+    margin: auto 150px;
+  }
+
+  .LoiTH-chart .report .list {
+    margin: auto 150px;
+  }
+
+  .LoiTH-chart .action {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .LoiTH-chart .action .chart {
+    margin-right: 660px;
+    margin-left: 20px;
+  }
+
+  .LoiTH-chart .detail-report {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .LoiTH-chart .revenue,
+  .LoiTH-chart .profit {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-right: 20px;
+  }
+
+  .LoiTH-chart .revenue input,
+  .LoiTH-chart .profit input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 171px;
+  }
+
+  .LoiTH-chart .revenue label,
+  .LoiTH-chart .profit label {
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  .LoiTH-chart label, .LoiTH-chart select {
+    margin-right: 5px;
+  }
+
+  .LoiTH-chart select {
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .LoiTH-chart #displayTime {
+    margin-top: 10px;
+  }
+
+  .LoiTH-chart .time-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .LoiTH-chart #fieldset-time {
+    height: 170px;
+    display: flex;
+    flex-direction: column;  /* Hiển thị các thành phần theo chiều dọc */
+    align-items: flex-start;  /* Canh trái các thành phần trong #fieldset-time */
+    gap: 10px;
+    position: relative;
+  }
+
+  .LoiTH-chart #fieldset-repot {
+    height: 230px;
+  }
+
+  .LoiTH-chart #fieldset-chart {
+    height: 420px;
+  }
+
+  .LoiTH-chart #timeValue, .LoiTH-chart #yearValue {
+    display: none;
+  }
+
+  .LoiTH-chart .col-4 {
+    margin-top: 25px;
+  }
+
+  .LoiTH-chart .col-6 {
+    margin-top: 25px;
+  }
+
+  .LoiTH-chart .button-view-chart {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: inline-block;
+    padding: 3px 7px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #123456;
+    color: white;
+    background-color: #123456;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    height: 30px;
+    line-height: 24px;
+  }
+
+
+`;
 export const ReportChart = () => {
     const [data, setData] = useState([]);
 
@@ -189,7 +337,7 @@ export const ReportChart = () => {
     }
 
     return (
-        <>
+        <StyleReportChart>
             <div className="LoiTH-chart">
             <div className="container">
                 <div className="row">
@@ -304,6 +452,6 @@ export const ReportChart = () => {
                 </div>
             </div>
             </div>
-        </>
+        </StyleReportChart>
     );
 }

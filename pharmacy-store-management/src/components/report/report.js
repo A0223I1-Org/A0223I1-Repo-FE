@@ -1,13 +1,72 @@
-import './report.css';
+// import './report.css';
 import {generateReport} from "../../utils/ReportService/ReportService";
-import {ErrorMessage, Field, Form, Formik, useFormikContext} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom";
 import {useRef, useState} from "react";
+import styled from 'styled-components';
 
+const StyledReport = styled.div`
+  .LoiTH-report body{
+    font-family: "Poppins";
+  }
+  .LoiTH-report legend{
+    all: revert;
+  }
+  .LoiTH-report fieldset{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .LoiTH-report .form-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .LoiTH-report .form-group div {
+    margin-right: 140px;
+  }
+  .LoiTH-report .form-group div:last-child {
+    margin-right: 0;
+  }
+
+  .LoiTH-report .report {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .LoiTH-report .report .debt, .LoiTH-report .report .list {
+    flex: 1 0 auto;
+    margin: 0px 150px;
+  }
+
+  .LoiTH-report .action {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Cho phép các mục bọc nếu không đủ không gian */
+  }
+
+  .LoiTH-report .action .chart{
+    margin-right: 660px;
+  }
+
+  .LoiTH-report .report .debt{
+    margin-top: 10px;
+  }
+  .LoiTH-report .report .list{
+    margin-top: 10px;
+  }
+  .LoiTH-report .col-10 fieldset {
+    margin-top:15px;
+  }
+  .LoiTH-report .yup-error-message {
+    color: red;
+    font-size: 13px;
+  }
+  
+`;
 export const Report = () => {
 
     const [isTimeRequired, setTimeRequired] = useState(true);
@@ -100,7 +159,7 @@ export const Report = () => {
     }
 
     return (
-        <>
+        <StyledReport>
             <Formik innerRef={formikRef} initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}>
@@ -305,6 +364,6 @@ export const Report = () => {
                     )
                 }}
             </Formik>
-        </>
+        </StyledReport>
     )
 }

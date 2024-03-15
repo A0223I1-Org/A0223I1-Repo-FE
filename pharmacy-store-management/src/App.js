@@ -15,10 +15,12 @@ import {RetailSalesManagement} from "./pages/SalesManagement/RetailSalesManageme
 import RetailInvoice from "./pages/SalesManagement/RetailInvoice";
 import {ReportChart} from "./components/report/report-chart";
 import {Report} from "./components/report/report";
+import Header from "./components/header/Header";
 
 function App() {
   return (
     <>
+        <Header />
           <Routes>
               <Route path={'/'} element={<RetailSalesManagement />} />
               <Route path={'/retail'} element={<RetailInvoice />} />
@@ -33,6 +35,8 @@ function App() {
                   <Route path={"/employee/create"} element={<EmployeeCreate/>}></Route>
                   <Route path={"/employee/update/:id"} element={<EmployeeUpdate/>}></Route>
           </Routes>
+
+
     </>
   );
 }

@@ -194,6 +194,8 @@ export const Supplier = () => {
     const [totalItems, setTotalItems] = useState(0); // Thêm state cho tổng số mục
     const [totalPages, setTotalPages] = useState(0); // Thêm state cho tổng số trang
     const [showAddModal, setShowAddModal] = useState(false);
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
     const [newSupplierData, setNewSupplierData] = useState({
         supplierId: "",
         supplierName: "",
@@ -210,7 +212,7 @@ export const Supplier = () => {
 
     const fetchSuppliers = async (page, size) => {
         try {
-            // Lấy danh sách nhà cung cấp từ API
+            // Lấy danh sách nhà cung cấp từ API với thứ tự sắp xếp được chỉ định
             const result = await SupplierService.findAllSupplier(orderBy, searchType, searchValue, page, size);
 
             // Đếm tổng số phần tử từ API
@@ -234,6 +236,7 @@ export const Supplier = () => {
             console.error('Error fetching data:', error);
         }
     };
+
     useEffect(() => {
         fetchSuppliers(currentPage, itemsPerPage);
     }, [searchType, searchValue, orderBy, currentPage, itemsPerPage, totalPages]);
@@ -296,10 +299,10 @@ export const Supplier = () => {
     const supplierSchema = Yup.object().shape({
         supplierId: Yup.string().required('Vui lòng nhập mã nhà cung cấp').max(50, 'Mã nhà cung cấp không được quá 50 ký tự'),
         supplierName: Yup.string().required('Vui lòng nhập tên nhà cung cấp').max(50, 'Tên nhà cung cấp không được quá 50 ký tự'),
-        address: Yup.string().max(50, 'Địa chỉ không được quá 50 ký tự'),
+        address: Yup.string().max(255, 'Địa chỉ không được quá 255 ký tự'),
         phoneNumber: Yup.string().matches(/^[0-9]+$/, 'Số điện thoại chỉ được chứa các số và bắt đầu bằng số 0').max(11, 'Số điện thoại không được quá 11 ký tự'),
         email: Yup.string().email('Email không hợp lệ').max(50, 'Email không được quá 50 ký tự'),
-        note: Yup.string().max(50, 'Ghi chú không được quá 50 ký tự'),
+        note: Yup.string().max(255, 'Ghi chú không được quá 255 ký tự'),
     });
     const validateSupplierData = async (supplierData) => {
         try {
@@ -349,6 +352,7 @@ export const Supplier = () => {
                 await SupplierService.addSupplier(newSupplierData);
                 await fetchSuppliers();
                 handleCloseAddModal();
+                setIsFormSubmitted(true); // Set isFormSubmitted to true after successful addition
                 toast('🦄Thêm nhà cung cấp thành công!');
             } catch (error) {
                 console.error('Error adding supplier:', error);
@@ -370,6 +374,7 @@ export const Supplier = () => {
 
     const handleCloseAddModal = () => {
         setShowAddModal(false);
+        setIsFormSubmitted(false);
         resetErrors(); // Xóa các lỗi khi đóng modal
     };
     const handleDeleteButtonClick = () => {
@@ -407,6 +412,7 @@ export const Supplier = () => {
     };
     const handleCloseEditModal = () => {
         setShowEditModal(false);
+        setIsFormSubmitted(false);
         resetErrors(); // Xóa các lỗi khi đóng modal
         removeHighlight();
     };
@@ -429,7 +435,10 @@ export const Supplier = () => {
             try {
                 await SupplierService.updateSupplier(selectedSupplierId, editSupplierData);
                 await fetchSuppliers();
+
                 handleCloseEditModal();
+                setIsFormSubmitted(true); // Set isFormSubmitted to true after successful addition
+
                 toast('🦄Cập nhật nhà cung cấp thành công!');
             } catch (error) {
                 console.error('Error updating supplier:', error);
@@ -638,8 +647,8 @@ export const Supplier = () => {
                                     </form>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={handleAddSupplier}><i className="bi bi-plus-circle"></i> Thêm</button>
-                                    <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i className="bi bi-arrow-return-left"></i> Trở về</button>
+                                    <button type="button" className="btn btn-success" onClick={handleAddSupplier} disabled={isFormSubmitted}><i className="bi bi-plus-circle"></i>Thêm</button>
+                                    <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i className="bi bi-arrow-return-left"></i>Trở về</button>
                                 </div>
                             </div>
                         </div>
@@ -690,8 +699,8 @@ export const Supplier = () => {
                                     </form>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={handleEditSupplier}><i className="bi bi-check-circle"></i> Hoàn thành</button>
-                                    <button type="button" className="btn btn-primary" onClick={handleCloseEditModal}><i className="bi bi-arrow-return-left"></i> Trở về</button>
+                                    <button type="button" className="btn btn-success" onClick={handleEditSupplier} disabled={isFormSubmitted}>><i className="bi bi-check-circle"></i>Hoàn thành</button>
+                                    <button type="button" className="btn btn-primary" onClick={handleCloseEditModal}><i className="bi bi-arrow-return-left"></i>Trở về</button>
                                 </div>
                             </div>
                         </div>

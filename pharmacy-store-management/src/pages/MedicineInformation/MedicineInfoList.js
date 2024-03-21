@@ -150,7 +150,7 @@ export function MedicineInfoList() {
     }
     return (
         <>
-            <Header/>
+
             <section className="main">
                 <Nav />
                 <div className="main-right">

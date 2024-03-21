@@ -1,11 +1,163 @@
 import React, {useEffect, useRef, useState} from "react";
-import './ListCustomer.css';
 import * as CustomerService from "../../utils/InformationService/CustomerManagementService/CustomerService";
 import {Navigate, NavLink} from "react-router-dom";
 import {toast} from "react-toastify";
 import {useNavigate} from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Header from "../header/Header";
+import Nav from "../nav/Nav";
+import NavInformation from "../navInformation/NavInformation";
+import styled from 'styled-components';
 
+const StyledListCustomer = styled.div`
+  
+  .NhiNTH-listcustomer body {
+    font-family: Poppins, serif;
+  }
+
+  .NhiNTH-listcustomer .row-scope {
+    text-align: center;
+  }
+
+  .NhiNTH-listcustomer .row-scope td {
+    background-color: #449af8;
+    color: white;
+  }
+
+  .NhiNTH-listcustomer .row-name {
+    text-align: left;
+    width: 200px;
+  }
+
+  .NhiNTH-listcustomer .row-address {
+    text-align: left;
+    width: 200px;
+  }
+
+  .NhiNTH-listcustomer .myTable {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    border-radius: 2px;
+  }
+
+  .NhiNTH-listcustomer .form-select {
+    width: 100%;
+    margin-right: 10px;
+  }
+
+  .NhiNTH-listcustomer .form-control {
+    width: 100%;
+    margin-right: 15px;
+  }
+
+  .NhiNTH-listcustomer .search-selected {
+    margin-right: 16%;
+  }
+
+  .NhiNTH-listcustomer fieldset {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .NhiNTH-listcustomer .boloc {
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+
+  .NhiNTH-listcustomer legend {
+    all: revert;
+  }
+
+  .NhiNTH-listcustomer b {
+    font-size: 16px;
+  }
+
+  .NhiNTH-listcustomer .search-selected button {
+    width: 75%;
+  }
+
+  .NhiNTH-listcustomer .sort {
+    margin-left: 10%;
+  }
+
+  .NhiNTH-listcustomer nav {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+
+  .NhiNTH-listcustomer .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .NhiNTH-listcustomer .myTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .NhiNTH-listcustomer .myTable th,
+  .NhiNTH-listcustomer .myTable td {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    vertical-align: top;
+  }
+
+  .NhiNTH-listcustomer .myTable thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+  .NhiNTH-listcustomer .myTable tbody + tbody {
+    border-top: 2px solid #dee2e6;
+  }
+
+  .NhiNTH-listcustomer .table-row {
+    cursor: pointer;
+  }
+
+  .NhiNTH-listcustomer .selected-row {
+    background-color: #082b34;
+    color: white;
+  }
+
+  .NhiNTH-listcustomer .chucNang {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .NhiNTH-listcustomer .chucNang  {
+    margin-top: 10px;
+    margin-left: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .NhiNTH-listcustomer .chucNang .btn-success {
+    margin-left: 0;
+  }
+  .NhiNTH-listcustomer .chucNang .btn-secondary:first-child {
+    margin-right: auto;
+  }
+  .NhiNTH-listcustomer .chucNang button:not(:first-child) {
+    margin-left: 10px;
+  }
+
+  ol,ul{
+    padding-left: 0;
+  }
+  .main-right {
+    flex: 5;
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+`;
 export const ListCustomer = () => {
     const [customers, setCustomers] = useState([]);
     const [idCustomerDelete, setIdCustomerDelete] = useState([]);
@@ -177,9 +329,11 @@ export const ListCustomer = () => {
         if (highlightedRow) {
             highlightedRow.classList.remove('selected-row');
         }
+        setSelectedCustomer("");
     };
 
     const handleDeleteButtonClick = () => {
+        debugger
         if (selectedRow) {
             const deleteItem = selectedRow.querySelector('.row-name').textContent;
             const deleteModal = document.getElementById('deleteModal');
@@ -198,6 +352,7 @@ export const ListCustomer = () => {
         deleteModal.classList.remove('show');
         deleteModal.style.display = 'none';
         setIdCustomerDelete(null)
+        setSelectedCustomer("")
         removeHighlight();
     };
 
@@ -290,7 +445,7 @@ export const ListCustomer = () => {
             newCustomer.customerType = customerType
             newCustomer.note = customerNote
             await CustomerService.updateCustomer(newCustomer)
-            closeModal()
+            await closeModalCreate()
             alert('🦄 Sửa thành công')
             fetchApi()
             removeHighlight()
@@ -364,11 +519,13 @@ export const ListCustomer = () => {
             newCreateCustomer.customerType = customerType
             newCreateCustomer.note = customerNote
             await CustomerService.createCustomer(newCreateCustomer)
+            await closeModalCreate()
             alert("Thêm mới khách hàng thành công ");
             isValid = true
-            fetchApi()
             setLastestCustomerId(newCreateCustomer.customerId)
-            closeModal()
+            fetchApi()
+
+
         }
 
     }
@@ -387,381 +544,427 @@ export const ListCustomer = () => {
         });
     }
 
-    const closeModal = () => {
+    const closeModalEdit = () => {
         const modal = document.getElementById('editModal');
         modal.style.display = 'none'
     }
+    const closeModalCreate = () => {
+        setShowAddModal(false)
+    }
+    const handleResetUpdate = () => {
+        document.getElementById('customerName').value = ""
+        document.getElementById('address').value = ""
+        document.getElementById('age').value = ""
+        document.getElementById('phoneNumber').value = ""
+        document.getElementById('customerType').value = ""
+        document.getElementById('note').value = ""
+    };
     return (
-        <div className="NhiNTH-listcustomer">
-            <div className="container">
-                <div className="row">
-                    <div className="col-1"></div>
-                    <div className="col-10">
-                        <div className="boloc">
-                            <fieldset className="border rounded-3 p-3">
-                                <legend><b style={{fontSize: "19px"}}>Bộ lọc</b></legend>
-                                <div style={{display: "flex"}}>
-                                    <div className="search-selected">
-                                        <span>Lọc theo</span>
-                                        <a style={{display: "flex", alignItems: "center"}}>
-                                            <select className="form-select" value={searchType}
-                                                    onChange={handleSearchTypeChange}>
-                                                <option value="customerId">Mã khách hàng</option>
-                                                <option value="customerName">Tên khách hàng</option>
-                                                <option value="address">Địa chỉ</option>
-                                                <option value="phoneNumber">Số điện thoại</option>
-                                                <option value="customerType">Nhóm khách hàng</option>
-                                            </select>
-                                            {searchType === 'customerType' ? (
-                                                <select className="form-select" value={searchInput}
-                                                        onChange={handleSearchInputChange}>
-                                                    <option value="">Vui lòng chọn</option>
-                                                    <option value="Khách sỉ">Khách sỉ</option>
-                                                    <option value="Khách lẻ">Khách lẻ</option>
-                                                </select>
-                                            ) : (
-                                                <input type="text" className="form-control"
-                                                       aria-label="Sizing example input"
-                                                       aria-describedby="inputGroup-sizing-sm"
-                                                       value={searchInput}
-                                                       onChange={handleSearchInputChange}/>
-                                            )}
-                                            <button className="btn btn-primary" onClick={handleSearch}><i
-                                                className="bi bi-search"></i> Tìm kiếm
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div className="sort">
-                                        <span>Sắp xếp theo</span>
-                                        <a>
-                                            <select className="form-select" value={sortOption}
-                                                    onChange={(e) => setSortOption(e.target.value)}>
-                                                <option value="customerId">Mã khách hàng</option>
-                                                <option value="customerName">Tên khách hàng</option>
-                                                <option value="address">Địa chỉ</option>
-                                                <option value="phoneNumber">Số điện thoại</option>
-                                                <option value="customerType">Nhóm khách hàng</option>
-                                            </select>
-                                        </a>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div>
-                            <fieldset className="border rounded-3 p-3">
-                                <legend><b style={{fontSize: "19px"}}>Danh sách khách hàng</b></legend>
+        <StyledListCustomer>
 
-                                <div className="table-responsive">
-                                    <table className="myTable">
-                                        <thead>
-                                        <tr className="row-scope">
-                                            <td>Mã khách hàng</td>
-                                            <td>Tên khách hàng</td>
-                                            <td>Tuổi</td>
-                                            <td>Địa chỉ</td>
-                                            <td>SĐT</td>
-                                            <td>Nhóm khách hàng</td>
-                                            <td>Ghi chú</td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {
-                                            customers && customers.length > 0 ? customers.map((customer, index) => (
-                                                <tr className="table-row" key={index} onClick={(event) => {
-                                                    highlightRow(event);
-                                                    setIdCustomerDelete(customer.customerId);
-                                                    fetchSelectedCustomer(customer.customerId)
-                                                }}>
-                                                    <td>{customer.customerId}</td>
-                                                    <td className="row-name">{customer.customerName}</td>
-                                                    <td>{customer.age}</td>
-                                                    <td className="row-address">{customer.address}</td>
-                                                    <td>{customer.phoneNumber}</td>
-                                                    <td>{customer.customerType}</td>
-                                                    <td>{customer.note}</td>
-                                                </tr>
-                                            )) : <td style={{textAlign: "center"}} colSpan="7">Không có dữ liệu</td>
-                                        }
+            <section className="main">
+                <NavInformation/>
+                <div className="main-right">
+                    <div className="NhiNTH-listcustomer">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-1"></div>
+                                <div className="col-10">
+                                    <div className="boloc">
+                                        <fieldset className="border rounded-3 p-3">
+                                            <legend><b style={{fontSize: "19px"}}>Bộ lọc</b></legend>
+                                            <div style={{display: "flex"}}>
+                                                <div className="search-selected">
+                                                    <span>Lọc theo</span>
+                                                    <a style={{display: "flex", alignItems: "center"}}>
+                                                        <select className="form-select" value={searchType}
+                                                                onChange={handleSearchTypeChange}>
+                                                            <option value="customerId">Mã khách hàng</option>
+                                                            <option value="customerName">Tên khách hàng</option>
+                                                            <option value="address">Địa chỉ</option>
+                                                            <option value="phoneNumber">Số điện thoại</option>
+                                                            <option value="customerType">Nhóm khách hàng</option>
+                                                        </select>
+                                                        {searchType === 'customerType' ? (
+                                                            <select className="form-select" value={searchInput}
+                                                                    onChange={handleSearchInputChange}>
+                                                                <option value="">Vui lòng chọn</option>
+                                                                <option value="Khách sỉ">Khách sỉ</option>
+                                                                <option value="Khách lẻ">Khách lẻ</option>
+                                                            </select>
+                                                        ) : (
+                                                            <input type="text" className="form-control"
+                                                                   aria-label="Sizing example input"
+                                                                   aria-describedby="inputGroup-sizing-sm"
+                                                                   value={searchInput}
+                                                                   onChange={handleSearchInputChange}/>
+                                                        )}
+                                                        <button className="btn btn-primary" onClick={handleSearch}><i
+                                                            className="bi bi-search"></i> Tìm kiếm
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div className="sort">
+                                                    <span>Sắp xếp theo</span>
+                                                    <a>
+                                                        <select className="form-select" value={sortOption}
+                                                                onChange={(e) => setSortOption(e.target.value)}>
+                                                            <option value="customerId">Mã khách hàng</option>
+                                                            <option value="customerName">Tên khách hàng</option>
+                                                            <option value="address">Địa chỉ</option>
+                                                            <option value="phoneNumber">Số điện thoại</option>
+                                                            <option value="customerType">Nhóm khách hàng</option>
+                                                        </select>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div>
+                                        <fieldset className="border rounded-3 p-3">
+                                            <legend><b style={{fontSize: "19px"}}>Danh sách khách hàng</b></legend>
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <nav aria-label="Page navigation example">
-                                    <ul className="pagination justify-content-center">
-                                        <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
+                                            <div className="table-responsive">
+                                                <table className="myTable">
+                                                    <thead>
+                                                    <tr className="row-scope">
+                                                        <td>Mã khách hàng</td>
+                                                        <td>Tên khách hàng</td>
+                                                        <td>Tuổi</td>
+                                                        <td>Địa chỉ</td>
+                                                        <td>SĐT</td>
+                                                        <td>Nhóm khách hàng</td>
+                                                        <td>Ghi chú</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {
+                                                        customers && customers.length > 0 ? customers.map((customer, index) => (
+                                                            <tr className="table-row" key={index} onClick={(event) => {
+                                                                highlightRow(event);
+                                                                setIdCustomerDelete(customer.customerId);
+                                                                fetchSelectedCustomer(customer.customerId)
+                                                            }}>
+                                                                <td>{customer.customerId}</td>
+                                                                <td className="row-name">{customer.customerName}</td>
+                                                                <td>{customer.age}</td>
+                                                                <td className="row-address">{customer.address}</td>
+                                                                <td>{customer.phoneNumber}</td>
+                                                                <td>{customer.customerType}</td>
+                                                                <td>{customer.note}</td>
+                                                            </tr>
+                                                        )) : <td style={{textAlign: "center"}} colSpan="7">Không có dữ
+                                                            liệu</td>
+                                                    }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <nav aria-label="Page navigation example">
+                                                <ul className="pagination justify-content-center">
+                                                    <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
                                             <span className="page-link"
                                                   onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
-                                        </li>
-                                        {Array.from({length: totalPages}, (_, index) => (
-                                            <li key={index}
-                                                className={`page-item ${currentPage === index ? 'active' : ''}`}>
+                                                    </li>
+                                                    {Array.from({length: totalPages}, (_, index) => (
+                                                        <li key={index}
+                                                            className={`page-item ${currentPage === index ? 'active' : ''}`}>
                                                 <span className="page-link"
                                                       onClick={() => handlePaginate(index)}>{index + 1}</span>
-                                            </li>
-                                        ))}
-                                        <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
+                                                        </li>
+                                                    ))}
+                                                    <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
                                             <span className="page-link"
                                                   onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </fieldset>
-                        </div>
-                        <div className="chucNang d-flex justify-content-between">
-                            <button
-                                type="button"
-                                className="btn btn-secondary"
-                                style={{width: "auto"}}
-                                // disabled={!selectedCustomer}
-                                onClick={async (event) => {
-                                    if (selectedRow && idCustomerDelete !==null) {
-                                        event.preventDefault();
-                                        const result = await CustomerService.detailCustomer(idCustomerDelete);
-                                        navigate(`/detail-customer/${idCustomerDelete}`);
-                                    } else {
-                                        toast.warning("Vui lòng chọn khách hàng muốn xem chi tiết!")
-                                    }
-                                }}
-                            >
-                                <i className="bi bi-info-square"></i> Thông tin chi tiết
-                            </button>
-                            {/*</NavLink>*/}
-                            <div className="ml-auto">
-                                <button type="button" className="btn btn-success" onClick={handleShowAddModal}><i
-                                    className="bi bi-plus-circle"></i> Thêm
-                                </button>
-                                <button type="button" className="btn btn-secondary" onClick={handleEditButtonClick}><i
-                                    className="bi bi-pencil-square"></i> Sửa
-                                </button>
-                                <button type="button" className="btn btn-danger" onClick={handleDeleteButtonClick}
-                                    // disabled={!selectedCustomer}
-                                >
-                                    <i className="bi bi-x-circle"></i> Xóa
-                                </button>
-                                <Navigate to="/listCustomer">
-                                    <button type="button" className="btn btn-primary"><i
-                                        className="bi bi-arrow-return-left"></i> Trở về
-                                    </button>
-                                </Navigate>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </fieldset>
+                                    </div>
+                                    <div className="chucNang d-flex justify-content-between">
+                                        <button
+                                            type="button"
+                                            className="btn btn-secondary"
+                                            style={{width: "auto"}}
+                                            // disabled={!selectedCustomer}
+                                            onClick={async (event) => {
+                                                if (selectedRow && idCustomerDelete !== null) {
+                                                    event.preventDefault();
+                                                    const result = await CustomerService.detailCustomer(idCustomerDelete);
+                                                    navigate(`/detail-customer/${idCustomerDelete}`);
+                                                } else {
+                                                    toast.warning("Vui lòng chọn khách hàng muốn xem chi tiết!")
+                                                }
+                                            }}
+                                        >
+                                            <i className="bi bi-info-square"></i> Thông tin chi tiết
+                                        </button>
+                                        {/*</NavLink>*/}
+                                        <div className="ml-auto">
+                                            <button type="button" className="btn btn-success"
+                                                    onClick={handleShowAddModal}><i
+                                                className="bi bi-plus-circle"></i> Thêm
+                                            </button>
+                                            <button type="button" className="btn btn-secondary"
+                                                    onClick={handleEditButtonClick}><i
+                                                className="bi bi-pencil-square"></i> Sửa
+                                            </button>
+                                            <button type="button" className="btn btn-danger"
+                                                    onClick={handleDeleteButtonClick}
+                                                // disabled={!selectedCustomer}
+                                            >
+                                                <i className="bi bi-x-circle"></i> Xóa
+                                            </button>
+                                            <Navigate to="/listCustomer">
+                                                <button type="button" className="btn btn-primary"><i
+                                                    className="bi bi-arrow-return-left"></i> Trở về
+                                                </button>
+                                            </Navigate>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-1"></div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-1"></div>
-                </div>
-                {/* Modal */}
-                <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel"
-                     aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
-                                {/*<button type="button" className="btn-close" data-bs-dismiss="modal"*/}
-                                {/*        aria-label="Close"></button>*/}
-                            </div>
-                            <div className="modal-body">
-                                Bạn có chắc chắn muốn xóa khách hàng&nbsp;
-                                <span style={{color: "red"}}>
+                            {/* Modal */}
+                            <div className="modal fade" id="deleteModal" tabIndex="-1"
+                                 aria-labelledby="deleteModalLabel"
+                                 aria-hidden="true">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+                                            {/*<button type="button" className="btn-close" data-bs-dismiss="modal"*/}
+                                            {/*        aria-label="Close"></button>*/}
+                                        </div>
+                                        <div className="modal-body">
+                                            Bạn có chắc chắn muốn xóa khách hàng&nbsp;
+                                            <span style={{color: "red"}}>
                                          <b>{customers.find((x) => x.customerId === idCustomerDelete)?.customerName}</b>
                                     </span>&nbsp;không?
-                                <br/>
-                                <span style={{color: "red"}}>
+                                            <br/>
+                                            <span style={{color: "red"}}>
                                         *Lưu ý: chức năng này không được hoàn tác!!!
                                     </span>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
-                                        onClick={handleCancelDelete}>Hủy
-                                </button>
-                                <button type="button" className="btn btn-danger" onClick={handleConfirmDelete}>Xóa
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Modal update*/}
-                <div className="modal fade" tabIndex="-1" id="editModal" aria-labelledby="editModalLabel"
-                     aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered modal-lg">
-                        <div className="modal-content">
-                            <div className="modal-header text-center">
-                                <h5 className="modal-title w-100" id="editModalLabel">Sửa Thông Tin Khách Hàng</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close" onClick={closeModal}></button>
-                            </div>
-                            <div className="modal-body">
-                                <form>
-                                    <div className="mb-3">
-                                        <label htmlFor="customerId" className="form-label modal-label">Mã khách
-                                            hàng</label>
-                                        <input type="text" className="form-control" id="customerId"
-                                               name="customerId"
-                                               style={{background: "gray", color: "blue"}}
-                                               readOnly/>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
+                                                    onClick={handleCancelDelete}>Hủy
+                                            </button>
+                                            <button type="button" className="btn btn-danger"
+                                                    onClick={handleConfirmDelete}>Xóa
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="customerName" className="form-label modal-label">Tên khách
-                                            hàng</label>
-                                        <input type="text" className="form-control" id="customerName"
-                                               name="customerName"/>
-                                        <span className="error-message" style={{color: "#dc3545"}}
-                                              id="updateCustomerNameError"></span>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="age"
-                                               className="form-label modal-label">Tuổi </label>
-                                        <input type="text" className="form-control" id="age"
-                                               name="age"/>
-                                        <span className="error-message" style={{color: "#dc3545"}}
-                                              id="updateCustomerAgeError"></span>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="address" className="form-label modal-label">Địa
-                                            chỉ</label>
-                                        <input type="text" className="form-control" id="address"
-                                               name="address"/>
-                                        <span className="error-message" style={{color: "#dc3545"}}
-                                              id="updateCustomerAddressError"></span>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="phoneNumber" className="form-label modal-label">Điện
-                                            thoại</label>
-                                        <input type="tel" className="form-control" id="phoneNumber"
-                                               name="phoneNumber" placeholder="ex: 0972346898"/>
-                                        <span className="error-message" style={{color: "#dc3545"}}
-                                              id="updateCustomerPhoneNumberError"></span>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="customerType" className="form-label modal-label">Nhóm
-                                            khách hàng: </label>
-                                        <select id="customerType" name="customerType"
-                                                className="form-control">
-                                            <option value="">--Chọn--</option>
-                                            <option value="Khách lẻ">Khách lẻ</option>
-                                            <option value="Khách sỉ">Khách sỉ</option>
-                                            <option value="Khách theo đơn">Khách theo đơn</option>
-                                        </select>
-                                        <span className="error-message" style={{color: "#dc3545"}}
-                                              id="updateCustomerTypeError"></span>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="note" className="form-label modal-label">Ghi
-                                            chú</label>
-                                        <textarea className="form-control" id="note"
-                                                  name="note" rows="3"></textarea>
-                                    </div>
-                                </form>
-                                <div className="modal-footer">
-                                    <button type="submit" onClick={saveChanges} className="btn btn-success"
-                                            id="btnSaveEdit">
-                                        <i className="bi bi-plus-circle"></i> Chấp nhận
-                                    </button>
-                                    <button type="reset" className="btn btn-secondary"><i
-                                        className="bi bi-arrow-clockwise"></i> Đặt lại
-                                    </button>
-                                    <button type="button" data-dismiss="modal" onClick={closeModal}
-                                            className="btn btn-primary"><i
-                                        className="bi bi-arrow-return-left"></i> Trở về
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Modal create*/}
-                {showAddModal && (
-                    <div className="modal fade show" tabIndex="-1" style={{display: "block"}}>
-                        <div className="modal-dialog modal-dialog-centered modal-lg">
-                            <div className="modal-content">
-                                <div className="modal-header text-center">
-                                    <h5 className="modal-title w-100" id="addCustomerModalLabel">Thêm mới khách
-                                        hàng</h5>
-                                    <button type="button" className="btn-close" onClick={handleCloseAddModal}
-                                            aria-label="Close"></button>
+                            {/* Modal update*/}
+                            <div className="modal fade" tabIndex="-1" id="editModal" aria-labelledby="editModalLabel"
+                                 aria-hidden="true">
+                                <div className="modal-dialog modal-dialog-centered modal-lg">
+                                    <div className="modal-content">
+                                        <div className="modal-header text-center">
+                                            <h5 className="modal-title w-100" id="editModalLabel">Sửa Thông Tin Khách
+                                                Hàng</h5>
+                                            <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close" onClick={closeModalEdit}></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form>
+                                                <div className="mb-3">
+                                                    <label htmlFor="customerId" className="form-label modal-label">Mã
+                                                        khách
+                                                        hàng</label>
+                                                    <input type="text" className="form-control" id="customerId"
+                                                           name="customerId"
+                                                           style={{background: "gray", color: "blue"}}
+                                                           readOnly/>
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="customerName" className="form-label modal-label">Tên
+                                                        khách
+                                                        hàng</label>
+                                                    <input type="text" className="form-control" id="customerName"
+                                                           name="customerName"/>
+                                                    <span className="error-message" style={{color: "#dc3545"}}
+                                                          id="updateCustomerNameError"></span>
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="age"
+                                                           className="form-label modal-label">Tuổi </label>
+                                                    <input type="text" className="form-control" id="age"
+                                                           name="age"/>
+                                                    <span className="error-message" style={{color: "#dc3545"}}
+                                                          id="updateCustomerAgeError"></span>
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="address" className="form-label modal-label">Địa
+                                                        chỉ</label>
+                                                    <input type="text" className="form-control" id="address"
+                                                           name="address"/>
+                                                    <span className="error-message" style={{color: "#dc3545"}}
+                                                          id="updateCustomerAddressError"></span>
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="phoneNumber" className="form-label modal-label">Điện
+                                                        thoại</label>
+                                                    <input type="tel" className="form-control" id="phoneNumber"
+                                                           name="phoneNumber" placeholder="ex: 0972346898"/>
+                                                    <span className="error-message" style={{color: "#dc3545"}}
+                                                          id="updateCustomerPhoneNumberError"></span>
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="customerType" className="form-label modal-label">Nhóm
+                                                        khách hàng: </label>
+                                                    <select id="customerType" name="customerType"
+                                                            className="form-control">
+                                                        <option value="">--Chọn--</option>
+                                                        <option value="Khách lẻ">Khách lẻ</option>
+                                                        <option value="Khách sỉ">Khách sỉ</option>
+                                                        <option value="Khách theo đơn">Khách theo đơn</option>
+                                                    </select>
+                                                    <span className="error-message" style={{color: "#dc3545"}}
+                                                          id="updateCustomerTypeError"></span>
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="note" className="form-label modal-label">Ghi
+                                                        chú</label>
+                                                    <textarea className="form-control" id="note"
+                                                              name="note" rows="3"></textarea>
+                                                </div>
+                                            </form>
+                                            <div className="modal-footer">
+                                                <button type="submit" onClick={saveChanges} className="btn btn-success"
+                                                        id="btnSaveEdit">
+                                                    <i className="bi bi-plus-circle"></i> Chấp nhận
+                                                </button>
+                                                <button type="reset" className="btn btn-secondary"
+                                                        onClick={handleResetUpdate}><i
+                                                    className="bi bi-arrow-clockwise"></i> Đặt lại
+                                                </button>
+                                                <button type="button" data-dismiss="modal" onClick={closeModalEdit}
+                                                        className="btn btn-primary"><i
+                                                    className="bi bi-arrow-return-left"></i> Trở về
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="modal-body">
-                                    <form>
-                                        <div className="mb-3">
-                                            <label htmlFor="createCustomerId" className="form-label modal-label">Mã
-                                                khách
-                                                hàng</label>
-                                            <input type="text" className="form-control" id="createCustomerId"
-                                                   name="createCustomerId"
-                                                   style={{background: "gray", color: "blue"}}
-                                                   value={generateCustomerId()} readOnly/>
+                            </div>
+                            {/* Modal create*/}
+                            {showAddModal && (
+                                <div className="modal fade show" id="createModal" tabIndex="-1" style={{display: "block"}}>
+                                    <div className="modal-dialog modal-dialog-centered modal-lg">
+                                        <div className="modal-content">
+                                            <div className="modal-header text-center">
+                                                <h5 className="modal-title w-100" id="addCustomerModalLabel">Thêm mới
+                                                    khách
+                                                    hàng</h5>
+                                                <button type="button" className="btn-close"
+                                                        onClick={handleCloseAddModal}
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <form>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="createCustomerId"
+                                                               className="form-label modal-label">Mã
+                                                            khách
+                                                            hàng</label>
+                                                        <input type="text" className="form-control"
+                                                               id="createCustomerId"
+                                                               name="createCustomerId"
+                                                               style={{background: "gray", color: "blue"}}
+                                                               value={generateCustomerId()} readOnly/>
 
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="createCustomerName"
+                                                               className="form-label modal-label">Tên
+                                                            khách
+                                                            hàng</label>
+                                                        <input type="text" className="form-control"
+                                                               id="createCustomerName"
+                                                               name="createCustomerName"/>
+                                                        <span className="error-message" style={{color: "#dc3545"}}
+                                                              id="createCustomerNameError"></span>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="createCustomerAge"
+                                                               className="form-label modal-label">Tuổi: </label>
+                                                        <input type="text" className="form-control"
+                                                               id="createCustomerAge"
+                                                               name="createCustomerAge"/>
+                                                        <span className="error-message" style={{color: "#dc3545"}}
+                                                              id="createCustomerAgeError"></span>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="createCustomerAddress"
+                                                               className="form-label modal-label">Địa
+                                                            chỉ</label>
+                                                        <input type="text" className="form-control"
+                                                               id="createCustomerAddress"
+                                                               name="createCustomerAddress"/>
+                                                        <span className="error-message" style={{color: "#dc3545"}}
+                                                              id="createCustomerAddressError"></span>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="createCustomerPhoneNumber"
+                                                               className="form-label modal-label">Điện
+                                                            thoại</label>
+                                                        <input type="tel" className="form-control"
+                                                               id="createCustomerPhoneNumber"
+                                                               name="createCustomerPhoneNumber"
+                                                               placeholder="ex: 0972346898"/>
+                                                        <span className="error-message" style={{color: "#dc3545"}}
+                                                              id="createCustomerPhoneNumberError"></span>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="createCustomerType"
+                                                               className="form-label modal-label">Nhóm
+                                                            khách hàng: </label>
+                                                        <select required id="createCustomerType"
+                                                                name="createCustomerType"
+                                                                className="form-control">
+                                                            <option value="">--Chọn--</option>
+                                                            <option value="Khách lẻ">Khách lẻ</option>
+                                                            <option value="Khách sỉ">Khách sỉ</option>
+                                                            <option value="Khách theo đơn">Khách theo đơn</option>
+                                                        </select>
+                                                        <span className="error-message" style={{color: "#dc3545"}}
+                                                              id="createCustomerTypeError"></span>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="createCustomerNote"
+                                                               className="form-label modal-label">Ghi
+                                                            chú</label>
+                                                        <textarea className="form-control" id="createCustomerNote"
+                                                                  name="createCustomerNote" rows="3"></textarea>
+                                                    </div>
+                                                </form>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-success"
+                                                            onClick={saveCreate}><i
+                                                        className="bi bi-plus-circle"></i> Thêm
+                                                    </button>
+                                                    <button type="reset" className="btn btn-secondary"><i
+                                                        className="bi bi-arrow-clockwise"></i> Đặt lại
+                                                    </button>
+                                                    <button type="button" className="btn btn-primary"
+                                                            onClick={handleCloseAddModal}>
+                                                        <i
+                                                            className="bi bi-arrow-return-left"></i> Trở về
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="createCustomerName" className="form-label modal-label">Tên
-                                                khách
-                                                hàng</label>
-                                            <input type="text" className="form-control" id="createCustomerName"
-                                                   name="createCustomerName"/>
-                                            <span className="error-message" style={{color: "#dc3545"}}
-                                                  id="createCustomerNameError"></span>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="createCustomerAge"
-                                                   className="form-label modal-label">Tuổi: </label>
-                                            <input type="text" className="form-control" id="createCustomerAge"
-                                                   name="createCustomerAge"/>
-                                            <span className="error-message" style={{color: "#dc3545"}}
-                                                  id="createCustomerAgeError"></span>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="createCustomerAddress" className="form-label modal-label">Địa
-                                                chỉ</label>
-                                            <input type="text" className="form-control" id="createCustomerAddress"
-                                                   name="createCustomerAddress"/>
-                                            <span className="error-message" style={{color: "#dc3545"}}
-                                                  id="createCustomerAddressError"></span>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="createCustomerPhoneNumber"
-                                                   className="form-label modal-label">Điện
-                                                thoại</label>
-                                            <input type="tel" className="form-control" id="createCustomerPhoneNumber"
-                                                   name="createCustomerPhoneNumber" placeholder="ex: 0972346898"/>
-                                            <span className="error-message" style={{color: "#dc3545"}}
-                                                  id="createCustomerPhoneNumberError"></span>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="createCustomerType" className="form-label modal-label">Nhóm
-                                                khách hàng: </label>
-                                            <select required id="createCustomerType" name="createCustomerType"
-                                                    className="form-control">
-                                                <option value="">--Chọn--</option>
-                                                <option value="Khách lẻ">Khách lẻ</option>
-                                                <option value="Khách sỉ">Khách sỉ</option>
-                                                <option value="Khách theo đơn">Khách theo đơn</option>
-                                            </select>
-                                            <span className="error-message" style={{color: "#dc3545"}}
-                                                  id="createCustomerTypeError"></span>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="createCustomerNote" className="form-label modal-label">Ghi
-                                                chú</label>
-                                            <textarea className="form-control" id="createCustomerNote"
-                                                      name="createCustomerNote" rows="3"></textarea>
-                                        </div>
-                                    </form>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-success" onClick={saveCreate}><i
-                                            className="bi bi-plus-circle"></i> Thêm
-                                        </button>
-                                        <button type="reset" className="btn btn-secondary"><i
-                                            className="bi bi-arrow-clockwise"></i> Đặt lại
-                                        </button>
-                                        <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}>
-                                            <i
-                                                className="bi bi-arrow-return-left"></i> Trở về
-                                        </button>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
-                )}
-            </div>
-        </div>
+                </div>
+            </section>
+        </StyledListCustomer>
     );
+
 }

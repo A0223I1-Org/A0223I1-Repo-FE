@@ -4,7 +4,181 @@ import {NavLink} from "react-router-dom";
 
 import moment from "moment";
 import {toast} from "react-toastify";
-import './EmployeeList.css'
+
+import styled from 'styled-components';
+
+const StyledListEmployee = styled.div`
+
+body {
+    font-family: Poppins, serif;;
+}
+.row-scope{
+    text-align: center;
+}
+.row-scope th{
+    background-color: #449af8;
+    color: white;
+}
+.row-name{
+    text-align: left;
+    width: 200px;
+}
+.row-address{
+    text-align: left;
+    width: 200px;
+}
+.myTable {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    border-radius: 2px;
+}
+.form-select{
+    width: 100%;
+    margin-right: 10px;
+}
+.form-control{
+    width: 100%;
+    margin-right: 15px;
+}
+.search-selected{
+    margin-right: 16%;
+}
+fieldset{
+    width: 100%;
+    box-sizing: border-box;
+}
+.boloc{
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+legend {
+    all: revert;
+}
+b{
+    font-size: 16px;
+}
+.myButton {
+    background-color:  #449af8; /* Màu nền */
+    border: none; /* Không viền */
+    color: white; /* Màu chữ */
+    padding: 8px 13px; /* Đệm */
+    text-align: center; /* Căn giữa chữ */
+    text-decoration: none; /* Không gạch chân */
+    display: inline-block;
+    font-size: 16px; /* Kích thước chữ */
+    margin: 2px 0px; /* Lề */
+    cursor: pointer; /* Con trỏ chuột */
+    border-radius: 0.375rem;
+    width: 70%;
+}
+.sort{
+    margin-left: 150px;
+}
+.modal-label {
+    height: 37px;
+}
+.modal-input{
+    height: 37px;
+}
+.sort:last-child{
+    margin-right: 0px;
+}
+nav {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+.chucNang{
+    margin-top: 10px;
+}
+.btn-success {
+    margin-left: 44.8%;
+}
+.chucNang button{
+    margin-right: 1.4%;
+
+}
+.chucNang button:last-child{
+    margin-right: 0px;
+}
+.btn-custom {
+    background-color: #123456 !important;
+    color: #ffffff !important;
+}
+.btn-custom:hover{
+    background-color: #0c253f !important;
+    color: #ffffff !important;
+}
+
+
+
+
+.myTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.myTable th, .myTable td {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    vertical-align: top;
+}
+
+.myTable thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.myTable tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+.table-row{
+    cursor: pointer;
+}
+.selected-row{
+    background-color: #082b34;
+    color: white;
+}
+i{
+    margin-right: 5px;
+}
+
+.form-group {
+    display: flex;
+    /*justify-content: space-between;*/
+
+}
+
+
+.form-group div {
+    margin-right: 85px;
+}
+
+.form-group div:last-child {
+    margin-right: 0;
+}
+.report{
+    display: flex;
+}
+
+.report .debt{
+    margin: auto 150px;
+}
+.report .list{
+    margin: auto 150px;
+}
+.action{
+    display: flex;
+    justify-content: space-between;
+}
+.action .chart{
+    margin-right: 660px;
+    margin-left: 20px;
+}
+.right{
+    text-align: right;
+}
+`;
 
 export function EmployeeList() {
     const [type, setType] = useState("employee_id");
@@ -106,7 +280,7 @@ export function EmployeeList() {
     }
 
     return (
-        <>
+        <StyledListEmployee>
             <div className='container'>
                 <div className='row'>
                     <div className='col-1'></div>
@@ -202,8 +376,7 @@ export function EmployeeList() {
                                     </nav>
                                 </fieldset>
 
-                            ) : (<p style={{textAlign: "center", marginTop: "20px", fontSize: '1.5em'}}><b>No result
-                                found</b></p>)}
+                            ) : (<p style={{textAlign: "center", marginTop: "20px", fontSize: '1.5em'}}><b>Không tìm thấy kết quả</b></p>)}
 
 
 
@@ -247,7 +420,7 @@ export function EmployeeList() {
                     <div className='col-1'></div>
                 </div>
             </div>
-        </>
+        </StyledListEmployee>
     )
 
     function prePage() {

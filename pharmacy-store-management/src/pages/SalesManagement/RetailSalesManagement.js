@@ -1,14 +1,146 @@
-import '../SalesManagement/RetailSalesManagement.css';
 import { useEffect, useState } from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import { format, isValid, parse, parseISO } from "date-fns";
 import { DateTime } from 'luxon';
-import Header from '../../components/header/Header';
 import Nav from '../../components/nav/Nav';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import * as salesManagementService from '../../utils/SaleManagementService/RetailSalesManagementService';
+import styled from 'styled-components';
 
+const StyleReportChart = styled.div`
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+:root {
+    --blue: #0072BC;
+    --light-blue:#3794d2;
+    --dark-blue:  #0b68a6;
+    --black: #444;
+    --light-color: #666;
+    --border: .1rem solid rgba(0, 0, 0, .1);
+    --border-hover: .1rem solid var(--black);
+    --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-transform: capitalize;
+    transition: all .2s linear;
+}
+
+
+/* main-right */
+legend{
+    all: revert !important;
+    font-weight: bold !important;
+}
+
+.alo {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-time-inputs,
+.show-sort-button {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 10px;
+    padding: 13px 0px;
+}
+
+.date-time-inputs .form-control,
+.show-sort-button .form-control
+{
+    border: 1px solid;
+}
+.date-time-inputs div,
+.show-sort-button .show,
+.show-sort-button .sort {
+    display: flex;
+    align-items: center;
+}
+
+.date-time-inputs .input-date-time label{
+    max-width: 100px;
+    min-width: 78px;
+}
+
+.date-time-inputs .input-date-time label,
+.date-time-inputs .form-control,
+.show-sort-button .show label,
+.show-sort-button .show select,
+.show-sort-button .sort label,  
+.show-sort-button .sort select {
+    font-size: 13px;
+    margin-right: 5px;
+    padding: 0 5px;
+    border-radius: 5px;
+    
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.date-time-inputs .input-date-time {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.error-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.show-sort-button .demo {
+   position: absolute;
+   right: 55px;
+}
+.show-sort-button .demo .btn {
+    height: 40px;
+    width: 65px
+}
+
+.main-right {
+    flex: 5; 
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+}
+
+.action1 {
+    margin-top: 10px;
+    padding: 5px 5px;
+    display: flex; /* Sử dụng flexbox để xếp các button cùng một hàng */
+}
+
+ .action1 a  {
+    margin-right: 8px;
+    width: 85px;
+    height: 40px ;
+    padding-top: 8px;
+ }
+
+.btn i {
+    margin-right: 3px; 
+} 
+
+
+`;
 
 export function RetailSalesManagement() {
 
@@ -84,7 +216,7 @@ export function RetailSalesManagement() {
 
     return (
         <>
-    {/*<Header />*/}
+    <StyleReportChart>
 
     <section className="main">
      <Nav />
@@ -94,7 +226,7 @@ export function RetailSalesManagement() {
             <fieldset className="border p-2" style={{ borderRadius: "5px" }}>
                 <legend className="w-auto">Bộ lọc</legend>
                 <div className="alo">
-
+                   
                 <Formik
                 initialValues={{
                     fromDate: "",
@@ -105,10 +237,10 @@ export function RetailSalesManagement() {
                     displayField: "",
                 }}
                 validationSchema={validationSchema}
-                onSubmit={handleFilterSubmit}
-              >
+                onSubmit={handleFilterSubmit} 
+              >        
                {({ values, handleChange }) => (
-               <Form action="">
+               <Form action=""> 
                         <div className="date-time-inputs">
                             <div className='input-date-time'>
                             <div >
@@ -116,9 +248,9 @@ export function RetailSalesManagement() {
                             <Field type="date" name="fromDate" as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                             </div>
                             <div>
-                            <ErrorMessage name="fromDate" component="div" className="error-message"/>
+                            <ErrorMessage name="fromDate" component="div" className="error-message"/>                 
                             </div>
-
+                           
                             </div>
 
                             <div className='input-date-time'>
@@ -130,13 +262,13 @@ export function RetailSalesManagement() {
                            <ErrorMessage name="toDate" component="div" className="error-message"/>
                            </div>
                             </div>
-
+                            
                             <div className='input-date-time'>
                             <div>
                             <label htmlFor="fromTime">Từ giờ: </label>
                             <Field type="time" name="fromTime"as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                             </div>
-
+                            
                             <div>
                                 <ErrorMessage name="fromTime" component="div" className="error-message"/>
                             </div>
@@ -147,7 +279,7 @@ export function RetailSalesManagement() {
                                 <label htmlFor="toTime">Đến giờ: </label>
                                  <Field type="time" name="toTime" as="input" style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"/>
                                 </div>
-
+                           
                             <div>
                                 <ErrorMessage name="toTime" component="div" className="error-message"/>
                             </div>
@@ -166,7 +298,7 @@ export function RetailSalesManagement() {
                             </div>
                             <div className="sort" style={{marginLeft: '15px'}}>
                                 <label htmlFor="sortField">Sắp xếp: </label>
-                                <Field name="sortField" as="select"  onChange={handleChange} style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control">
+                                <Field name="sortField" as="select"  onChange={handleChange} style={{ height: "40px", minWidth: "200px", maxWidth: "55px" }} className="form-control"> 
                                     <option value="">Chọn sắp xếp</option>
                                     <option value="customer_name">Tên khách hàng</option>
                                     <option value="date_create">Ngày lập - Giờ lập</option>
@@ -175,14 +307,14 @@ export function RetailSalesManagement() {
                                </Field>
                             </div>
                             <div className='demo'>
-                        <button type="submit" className="btn btn-primary">
-                                <span>
-                                  <i className="bi bi-search"></i> Lọc
-                                 </span>
-                        </button>
+                                    <button type="submit" className="btn btn-primary">
+                                            <span>
+                                            <i className="bi bi-search"></i> Lọc
+                                            </span>
+                                    </button>
+                        </div> 
                         </div>
-                        </div>
-
+                      
                         </Form>
                         )}
                 </Formik>
@@ -190,14 +322,14 @@ export function RetailSalesManagement() {
             </fieldset>
 
             <br />
-
+            
             <fieldset className="border p-2" style={{ borderRadius: "5px" }}>
                 <legend className="w-auto">Danh sách hóa đơn</legend>
-                <table className="table table-bordered">
+                <table className="myTable">
                     <thead>
-                        <tr>
-                            <th className="checkbox-header" style={{innerWidth: "fit-content"}}>
-                                Chọn</th>
+                        <tr className="row-scope">
+                            <th>
+                                STT</th> 
                             <th>Mã hóa đơn</th>
                             <th>Tên khách hàng</th>
                             <th>Ngày lập</th>
@@ -217,8 +349,8 @@ export function RetailSalesManagement() {
                 ) : (
                     invoice?.data.map((displayInvoice, index) => (
                         <tr key={displayInvoice.invoice_id}>
-                                <td className="checkbox-container">
-                                 <input type="checkbox" />
+                                <td >
+                                 {index +1}
                                  </td>
                                 <td>{displayInvoice.invoice_id}</td>
                                 <td>{displayInvoice.customer_name}</td>
@@ -231,12 +363,6 @@ export function RetailSalesManagement() {
                                 <td>{displayInvoice.employee_name}</td>
                                  <td>{displayInvoice.total}</td>
                                  <td>{displayInvoice.note}</td>
-
-                                {/* <td>
-                                    <NavLink to={`/edit/${product.id}`} className="btn btn-primary">
-                                        Edit
-                                    </NavLink>
-                                </td> */}
                             </tr>
                         ))
                         )}
@@ -245,7 +371,7 @@ export function RetailSalesManagement() {
                 </table>
             </fieldset>
 
-            <div className="action1" style= {{ marginLeft: '56%' }}>
+            <div className="action1" style= {{ marginLeft: '65%' }}> 
                 <NavLink to={`/retail`} className="btn btn-primary">
                     <span className="em-1">
                         <i className="bi bi-plus-circle"></i>
@@ -261,7 +387,8 @@ export function RetailSalesManagement() {
             </div>
         </div>
     </div>
-    </section>
+    </section>  
+    </StyleReportChart>
         </>
     )
 }

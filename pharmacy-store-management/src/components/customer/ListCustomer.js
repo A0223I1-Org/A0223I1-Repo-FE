@@ -6,7 +6,6 @@ import {useNavigate} from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from "../header/Header";
 import Nav from "../nav/Nav";
-import NavInformation from "../navInformation/NavInformation";
 import styled from 'styled-components';
 
 const StyledListCustomer = styled.div`
@@ -145,17 +144,6 @@ const StyledListCustomer = styled.div`
     margin-left: 10px;
   }
 
-  ol,ul{
-    padding-left: 0;
-  }
-  .main-right {
-    flex: 5;
-    display: flex;
-    flex-direction: row;
-    border-radius: 7px;
-    justify-content: center;
-    align-items: flex-start;
-  }
   
 `;
 export const ListCustomer = () => {
@@ -446,7 +434,8 @@ export const ListCustomer = () => {
             newCustomer.note = customerNote
             await CustomerService.updateCustomer(newCustomer)
             await closeModalCreate()
-            alert('🦄 Sửa thành công')
+            toast('🦄 Sửa thành công')
+            closeModalEdit()
             fetchApi()
             removeHighlight()
         }
@@ -520,7 +509,7 @@ export const ListCustomer = () => {
             newCreateCustomer.note = customerNote
             await CustomerService.createCustomer(newCreateCustomer)
             await closeModalCreate()
-            alert("Thêm mới khách hàng thành công ");
+            toast("Thêm mới khách hàng thành công ");
             isValid = true
             setLastestCustomerId(newCreateCustomer.customerId)
             fetchApi()
@@ -561,10 +550,6 @@ export const ListCustomer = () => {
     };
     return (
         <StyledListCustomer>
-
-            <section className="main">
-                <NavInformation/>
-                <div className="main-right">
                     <div className="NhiNTH-listcustomer">
                         <div className="container">
                             <div className="row">
@@ -962,8 +947,7 @@ export const ListCustomer = () => {
                             )}
                         </div>
                     </div>
-                </div>
-            </section>
+        
         </StyledListCustomer>
     );
 

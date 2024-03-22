@@ -32,8 +32,13 @@ const StyleReportChart = styled.div`
     text-transform: capitalize;
     transition: all .2s linear;
 }
-
-
+.main {
+    display: flex;
+    padding-left: 3px;
+    padding-top: 10px;
+     /* Sử dụng Flexbox để xếp các div trên cùng một hàng */
+  }
+  
 /* main-right */
 legend{
     all: revert !important;
@@ -108,7 +113,7 @@ legend{
 
 .show-sort-button .demo {
    position: absolute;
-   right: 55px;
+   right: 72px;
 }
 .show-sort-button .demo .btn {
     height: 40px;
@@ -326,8 +331,8 @@ export function RetailSalesManagement() {
             <fieldset className="border p-2" style={{ borderRadius: "5px" }}>
                 <legend className="w-auto">Danh sách hóa đơn</legend>
                 <table className="myTable">
-                    <thead>
-                        <tr className="row-scope">
+                    <thead className="row-scope">
+                        <tr >
                             <th>
                                 STT</th> 
                             <th>Mã hóa đơn</th>

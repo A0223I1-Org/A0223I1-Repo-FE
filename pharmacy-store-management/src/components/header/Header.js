@@ -3,6 +3,8 @@ import '../header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { Dropdown } from 'react-bootstrap'; // Import Dropdown component from react-bootstrap
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+
 
 
 const StyleReportChart = styled.div`
@@ -30,19 +32,23 @@ const StyleReportChart = styled.div`
     transition: all .2s linear;
 }
 .header .header-2 {
-    background: var(--blue);
+    background: #0072BC;
     display: flex;
     flex-direction: row;
     border-radius: 10px;
     height: 60px;
+    margin-left: 1px;
 }
 
+#dropdown-basic{
+  background-color: #0072BC;
+}
 .header .header-2 .navbar {
     text-align: left;
 }
 
 .dropdown-menu{
-    background: var(--light-blue) !important;
+    background: #3794d2 !important;
 
 }
 
@@ -57,7 +63,7 @@ const StyleReportChart = styled.div`
 }
 
 .header .header-2 .navbar a:hover {
-    background: var(--dark-blue);
+    background:  #0b68a6;
     border-radius: 10px;
 }
 
@@ -70,11 +76,18 @@ const StyleReportChart = styled.div`
 }
 `;
 const Header = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State to track dropdown open/close
+  const [isDropdownOpen1, setIsDropdownOpen1] = useState(false); // State to track dropdown open/close
 
   // Function to toggle dropdown state
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const toggleDropdown1 = () => {
+    setIsDropdownOpen1(!isDropdownOpen1);
+  };
+
+  const [isDropdownOpen2, setIsDropdownOpen2] = useState(false); // State to track dropdown open/close
+
+  // Function to toggle dropdown state
+  const toggleDropdown2 = () => {
+    setIsDropdownOpen2(!isDropdownOpen2);
   };
 
   return (
@@ -84,25 +97,39 @@ const Header = () => {
         <nav className="navbar">
           <a href="#home">Hệ thống</a>
           {/* Use Dropdown component from react-bootstrap */}
-          <Dropdown show={isDropdownOpen} onToggle={toggleDropdown}>
+          <Dropdown show={isDropdownOpen1} onToggle={toggleDropdown1}>
             <Dropdown.Toggle variant="primary" id="dropdown-basic">
               Chức năng
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
               {/* Dropdown items */}
-              <Dropdown.Item href="#">Hóa đơn bán hàng</Dropdown.Item>
-              <Dropdown.Item href="#">Bán lẻ</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/">Hóa đơn bán hàng</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/retail">Bán lẻ</Dropdown.Item>
               <Dropdown.Item href="#">Bán sỉ</Dropdown.Item>
               <Dropdown.Item href="#">Bán theo đơn</Dropdown.Item>
               <Dropdown.Item href="#">Khách hoàn trả</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          
 
           {/* Other navigation links */}
-          <a href="#arrivals">Quản lí thông tin</a>
+          <Dropdown show={isDropdownOpen2} onToggle={toggleDropdown2}>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              Quản lý thông tin
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {/* Dropdown items */}
+              <Dropdown.Item as={NavLink} to="/medicineGroup">Quản lý nhóm thuốc</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/listPrescription">Quản lý đơn thuốc</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/supplier">Quản lý nhà cung cấp</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/listCustomer">Quản lý khách hàng</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/employee/list">Quản lý nhân viên</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>          
           <a href="#reviews">Tra cứu</a>
-          <a href="#" blogs="blogs">Báo cáo</a>
+          <NavLink to="/report">Báo cáo</NavLink>
           <a href="#helps">Trợ giúp</a>
         </nav>
       </div>

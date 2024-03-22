@@ -1,4 +1,3 @@
-import '../../pages/SalesManagement/RetailInvoice.css';
 import React from 'react';
 import { useEffect, useState, useMemo, useRef, useContext  } from "react";
 import { format, isValid, parse, parseISO } from "date-fns";
@@ -7,14 +6,203 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useFormikContext } from 'formik';
 import {toast} from "react-toastify";
-import Header from '../../components/header/Header';
-import Nav from '../../components/nav/Nav';
 import {NavLink, useNavigate} from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice';
+import styled from 'styled-components';
+import img1 from '../SalesManagement/image/banthuoc.png';
+import img2 from '../SalesManagement/image/nhapkho.png';
+import img3 from '../SalesManagement/image/xuathoantra.png';
+import img4 from '../SalesManagement/image/xuathuy.png';
+import img5 from '../SalesManagement/image/search.png';
+import img6 from '../SalesManagement/image/baocao.png';
+import img7 from '../SalesManagement/image/nhatky.png';
+import img8 from '../SalesManagement/image/logout.png';
+
+const StyleReportChart = styled.div`
+  
+.main {
+  display: flex;
+  padding-left: 3px;
+  padding-top: 10px;
+   /* Sử dụng Flexbox để xếp các div trên cùng một hàng */
+}
+
+.main-left {
+  flex: 1;
+  width: 220px; /* Điều chỉnh chiều rộng của thanh điều hướng */
+  height: 100%;
+  background: #0072BC;
+  border-radius: 7px;  
+  margin-right: 15px;
+  margin-left: 2px;
+}
+img {
+  width: 32px; 
+  height: 32px; 
+}
+.sidebar ul {
+  list-style-type: none; /* Loại bỏ dấu đầu dòng mặc định */
+  margin-top: 10px;
+  
+}
+
+.sidebar ul li a {
+  display: flex; /* Sắp xếp biểu tượng và văn bản theo hàng ngang */
+  align-items: center; /* Căn giữa biểu tượng và văn bản theo chiều dọc */
+  padding: 7.5px; /* Thêm đệm xung quanh mỗi mục */
+  text-decoration: none; /* Loại bỏ gạch chân của liên kết */
+  color: rgb(255, 255, 255); /* Đặt màu văn bản */
+  margin-top: 8.5px;
+  margin-bottom: 8.5px;
+}
+
+.sidebar ul li img  {
+  margin-right: 5px; 
+ 
+}
+.sidebar ul li a:hover img  {
+  margin-right: 10px; /* Thêm khoảng cách giữa biểu tượng và văn bản */
+  background: #0b68a6;
+  border-radius: 4px; 
+}
 
 
+/* main-right*/
+
+legend {
+    all: revert;
+    font-weight: bold;
+}
+
+.alo {
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.secondary-infomation-1,
+.secondary-infomation-2,
+.main-infomation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-left: 5px;
+    padding: 15px 30px;
+}
+
+select,
+input {
+    border: 1px solid;
+    height: 40px;
+    width: 170px;
+}
+
+
+.secondary-infomation-1 label,
+.secondary-infomation-1 input[type="text"],
+.secondary-infomation-1 input[type="date"],
+.secondary-infomation-1 textarea,
+.secondary-infomation-2 .employee label,
+.secondary-infomation-2 .employee select,
+.secondary-infomation-2 .employee input,
+.secondary-infomation-2 .customer label,
+.secondary-infomation-2 .customer select,
+.secondary-infomation-2 .customer input,
+.secondary-infomation-2 .disease-symptoms label,
+.secondary-infomation-2 .disease-symptoms select,
+.secondary-infomation-2 .disease-symptoms input,
+.main-infomation .disease-symptoms label,
+.main-infomation .disease-symptoms select,
+.main-infomation .disease-symptoms input,
+.main-infomation label,
+.main-infomation input[type="number"] {
+    font-size: 15px;
+    margin: 0 5px;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
+
+.secondary-infomation-2 .employee input,
+.secondary-infomation-2 .employee datalist {
+    width: 170px; /* Đặt chiều rộng của input và datalist tương ứng */
+    margin-right: 30px; /* Đặt khoảng cách giữa input và các phần tử khác */
+}
+
+.secondary-infomation-2 .employee datalist option {
+    font-size: 15px; /* Đặt kích thước chữ cho các mục trong datalist */
+    padding: 5px; /* Đặt khoảng cách bên trong mỗi mục trong datalist */
+}
+
+.secondary-infomation-2 .customer button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size:15px;
+    color: green;
+    cursor: pointer;
+}
+
+.secondary-infomation-2 .customer button:hover {
+    color: darkgreen;
+}
+
+.error-message {
+    color: red;
+    font-size: 11px;
+    margin-top: 1px;
+}
+.secondary-infomation-1 .erros-mess,
+.secondary-infomation-2 .erros-mess {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-right {
+    flex: 5;
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+}
+
+.action2 {
+    margin-left: 55%;
+    padding: 2px 2px;
+    margin-top: 8px;   
+    display: flex;
+    font-size: 15px;
+}
+
+.action2 button  {
+    margin-right: 4px; /* Khoảng cách giữa các button */
+}
+
+.total {
+    font-size: 15px;
+    margin-left: 75%;
+}
+
+
+.table-row{
+    cursor: pointer;
+}
+.selected-row{
+    background-color: #082b34;
+    color: white;
+}
+
+.btn i {
+    margin-right: 4px; /* Khoảng cách giữa biểu tượng và chữ */
+}
+`;
 
  function RetailInvoice() {
 
@@ -294,9 +482,36 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
   ];
 
     return (
-        <>
+        <StyleReportChart>
         <section class="main">
-            <Nav />
+                  <div className="main-left">
+                  <nav className="sidebar">
+                  <ul>
+                      <li style={{ textAlign: "center", fontSize: "22.8px", padding: " 0px 3px"}}>Chọn nhanh</li>
+                      <li>
+                          <hr className="dropdown-divider" />
+                      </li>
+                      <li><a href="#Banhang"><img src={img1} alt="icon" /> Bán hàng</a></li>
+                      <li><a href="#Nhapkho"><img src={img2} alt="icon" /> Nhập kho</a></li>
+                      <li><a href="#Xuathoantra"><img src={img3} alt="icon" /> Xuất hoàn trả </a></li>
+                      <li><a href="#Xuathuy"><img src={img4} alt="icon" /> Xuất hủy</a></li>
+                      <li>
+                          <hr className="dropdown-divider" />
+                      </li>
+                      <li><a href="#Tracuunhanh"><img src={img5} alt="icon" /> Tra cứu nhanh</a></li>
+                      <li>
+                          <hr className="dropdown-divider" />
+                      </li>
+                      <li><a href="#Hethongbaocao"><img src={img6} alt="icon" /> Hệ thống báo cáo</a></li>
+                      <li><a href="#Nhatkybanhang"><img src={img7} alt="icon" /> Nhật ký bán hàng</a></li>
+                      <li>
+                          <hr className="dropdown-divider" />
+                      </li>
+                      <li><a href="#Dangxuat"><img src={img8} alt="icon" /> Đăng xuất</a></li>
+                  </ul>
+              </nav>
+              
+              </div>
             <div className="main-right">
       <div className="container">
         <fieldset className="border p-2" style={{ borderRadius: '5px' }}>
@@ -383,7 +598,6 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
                             <option key={index} value={symptom.symptomName} />
                           ))}
                         </datalist>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#add" className="btn btn-primary" style={{ width: '50px', height: '40px' }}><i className="bi bi-search"></i></button>
                     </div>
               </div>
               <div className="main-infomation">
@@ -477,7 +691,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
             />
           </div>
         </fieldset>
-        <div className="action">
+        <div className="action2">
         <button type="button" className="btn btn-primary" onClick={() => handlePayment(resetForm)}>
             <span className="em-1">
               <i className="bi bi-plus-circle"></i>
@@ -529,7 +743,7 @@ import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice'
         </Modal.Footer>
       </Modal>
 
-        </>    
+        </StyleReportChart>    
     );
 }
 

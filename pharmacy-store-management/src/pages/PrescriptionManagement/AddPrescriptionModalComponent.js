@@ -2,6 +2,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React, {useEffect, useRef, useState} from "react";
 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineInformationService";
 import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionDetailService";
 
@@ -9,7 +12,222 @@ import {toast} from "react-toastify";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 
+import styled from 'styled-components';
 
+const StylePA = styled.div`
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    transition: all .2s linear;
+}
+
+body {
+    font-family: Poppins, serif;
+    padding: 0;
+}
+
+
+.modal-label {
+    height: 37px;
+}
+.modal-input{
+    height: 37px;
+}
+
+
+.custom-modal2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    max-width: 600px; /* Adjust as needed */
+    width: 90%;
+}
+
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content2 {
+    text-align: center;
+}
+.modal-buttons2{
+    display: flex;
+    justify-content: center;
+
+}
+
+.cancel-button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.cancel-button:hover {
+    background-color: #d32f2f;
+}
+
+.cancel-button:focus {
+    outline: none;
+}
+a {
+    text-decoration: none;
+}
+.error-message {
+    color: red;
+}
+
+
+
+
+
+
+input, select {
+    border: 1px solid;
+}
+
+.slay {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.slay1 {
+    flex: 2;
+    padding-right: 10px;
+}
+.form-group div {
+    margin-right: 20px;
+}
+
+.slay2 {
+    flex: 4;
+
+}
+
+.slay4 {
+    flex: 4;
+}
+
+.slay5 {
+    flex: 1;
+    display: flex;
+    margin-top: 12px;
+}
+
+legend {
+    all: revert;
+    font-weight: bold;
+}
+
+.selected-row {
+    background-color: #61dafb;
+    color: white;
+}
+
+.slay6 {
+    flex: 1;
+}
+
+.slay7 {
+    margin-top: -20px;
+}
+
+.end {
+    display: flex;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+
+/*modal*/
+.custom-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.custom-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-buttons button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-buttons button:hover {
+    background-color: #ddd;
+}
+
+.confirm-button {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.cancel-button {
+    background-color: #5bc0de;
+    color: #fff;
+}
+.error-message{
+    color: red;
+}
+
+
+
+}
+
+`;
 export default function AddPrescriptionModalComponent(props) {
     const [medicines, setMedicines] = useState([])
     const [errors, setErrors] = useState('');
@@ -344,7 +562,8 @@ export default function AddPrescriptionModalComponent(props) {
     }
 
     return (
-        <>
+        <StylePA>
+            <div>
             <Formik initialValues={{
                 name: "",
                 target: 1,
@@ -1516,7 +1735,8 @@ export default function AddPrescriptionModalComponent(props) {
                     </form>
                 </Modal>
             </Formik>
-        </>
+            </div>
+        </StylePA>
     );
 
 }

@@ -9,9 +9,11 @@ const StyledContainer = styled.div`
     body {
     font-family: Poppins, serif;
 }
+
 .row-scope{
     text-align: center;
 }
+
 .row-scope th{
     background-color: #449af8;
     color: white;
@@ -108,10 +110,12 @@ b{
 .sort:last-child{
     margin-right: 0px;
 }
-nav {
+
+.nav-wrapper {
     margin-top: 15px;
     margin-bottom: 15px;
     justify-content: center;
+    display: flex;
 }
 .chucNang{
     display: flex;
@@ -531,7 +535,7 @@ export const Supplier = () => {
                                     )}
                                     </tbody>
                                 </table>
-                                <nav aria-label="Page navigation example">
+                                <div aria-label="Page navigation example" className="nav-wrapper" >
                                     <ul className="pagination justify-content-center">
                                         {currentPage !== 0 && (
                                             <li className="page-item">
@@ -559,7 +563,7 @@ export const Supplier = () => {
                                             </li>
                                         )}
                                     </ul>
-                                </nav>
+                                </div>
                             </fieldset>
                         </div>
                         <div className="chucNang">

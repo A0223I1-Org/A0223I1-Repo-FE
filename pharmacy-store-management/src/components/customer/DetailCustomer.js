@@ -5,7 +5,6 @@ import './DetailCustomer.css';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import Header from "../header/Header";
-import NavInformation from "../navInformation/NavInformation";
 
 const initialValues = {
     inputStartDate: '',

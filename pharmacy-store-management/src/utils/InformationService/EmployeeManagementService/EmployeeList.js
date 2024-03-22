@@ -190,7 +190,7 @@ export function EmployeeList() {
     const [employees, setEmployees] = useState([]);
 
     const [currentPage, setCurrenPage] = useState(1);
-    const recordsPerPage = 5;
+    const recordsPerPage = 3;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = employees?.slice(firstIndex, lastIndex);
@@ -321,14 +321,13 @@ export function EmployeeList() {
                                     <legend><b>Danh sách khách hàng</b></legend>
                                     <table className="myTable">
                                         <thead>
-                                        <tr className="row-scope">
+                                        <tr className="row-scope" style={{ fontSize: "0.95em"}}>
                                             <th>Mã nhân viên</th>
                                             <th>Tên</th>
                                             <th>Số điện thoại</th>
                                             <th>Ngày vào làm</th>
                                             <th>Địa chỉ</th>
-                                            <th>Lương</th>
-                                            <th>Ảnh</th>
+                                            <th>Lương</th>                              
                                             <th>Tài khoản</th>
                                             <th>chức vụ</th>
                                             <th>Ghi chú</th>
@@ -345,8 +344,7 @@ export function EmployeeList() {
                                                 <td>{formatPhoneNumber(item.phone_number)}</td>
                                                 <td>{moment(item.date_start).format("DD/MM/yyyy")}</td>
                                                 <td>{item.address}</td>
-                                                <td>{item.salary} VND</td>
-                                                <td><img src={item.image} alt="employee"/></td>
+                                                <td>{item.salary} VND</td> 
                                                 <td>{item.email}</td>
                                                 <td>{item.role_id === 1 ? "nhân viên" : "quản lý"}</td>
                                                 <td>{item.note}</td>

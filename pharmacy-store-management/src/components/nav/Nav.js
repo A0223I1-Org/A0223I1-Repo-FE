@@ -12,21 +12,44 @@ import styled from 'styled-components';
 
 
 const StyleReportChart = styled.div`
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
 
+:root {
+    --blue: #0072BC;
+    --light-blue: #3794d2;
+    --dark-blue: #0b68a6;
+    --black: #444;
+    --light-color: #666;
+    --border: .1rem solid rgba(0, 0, 0, .1);
+    --border-hover: .1rem solid var(--black);
+    --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+}
 
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-transform: capitalize;
+    transition: all .2s linear;
+}
 .main {
     display: flex;
     padding-left: 3px;
     padding-top: 10px;
      /* Sử dụng Flexbox để xếp các div trên cùng một hàng */
-}
+  }
+
 .main-left {
     flex: 1;
     width: 220px; /* Điều chỉnh chiều rộng của thanh điều hướng */
     height: 100%;
-    background: var(--blue);
+    background: #0072BC;
     border-radius: 7px;  
-    margin-right: 15px  
+    margin-right: 15px;
+    margin-left: 2px;
 }
 img {
     width: 32px; 
@@ -54,7 +77,7 @@ img {
 }
 .sidebar ul li a:hover img  {
     margin-right: 10px; /* Thêm khoảng cách giữa biểu tượng và văn bản */
-    background: var(--dark-blue);
+    background: #0b68a6;
     border-radius: 4px; 
 }
 

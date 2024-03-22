@@ -152,7 +152,7 @@ export function MedicineGroupList() {
     };
     return (
         <>
-            <Header/>
+
             <section className="main">
                 <Nav />
                 <div className="main-right">

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import AddPrescriptionModalComponent from "./AddPrescriptionModalComponent";
 import * as symptomService from "../../utils/InformationService/SymptomManagementService/SymptomService";
-import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
+import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionDetailService";
 import * as prescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
 import './style.css';
 
@@ -57,9 +57,12 @@ export const ListPrescription = () => {
         removeHighlight();
         if (highlightedRowRef.current) {
             highlightedRowRef.current.classList.remove('selected-row');
+            setSelectedPrescriptionDeleteId("");
+
         }
         if (row === selectedRow) {
             setSelectedRow(null);
+
         } else {
             row.classList.add('selected-row');
             setSelectedPrescriptionDeleteId(prescriptionId);
@@ -72,7 +75,6 @@ export const ListPrescription = () => {
         if (highlightedRow) {
             highlightedRow.classList.remove('selected-row');
             setSelectedPrescriptionDeleteId("");
-            // setSelectedPrescriptionId(null);
         }
     };
 
@@ -123,7 +125,7 @@ export const ListPrescription = () => {
             setDeleteModal(true);
             const prescription = await detailPrescriptionService.findDetailPrescriptionById(selectedPrescriptionId);
             setPrescription(prescription);
-            setPrescriptionName(prescription?.prescriptions?.[0].name);
+            setPrescriptionName(prescription?.prescriptions?.[0].prescriptionName);
             setSelectedPrescriptionDeleteId(selectedPrescriptionDeleteId)
 
         }
@@ -229,12 +231,6 @@ export const ListPrescription = () => {
         }
     };
 
-    const hideUpdateModal = () =>{
-        setUpdateModal(false);
-        setSelectedPrescriptionId(null);
-    }
-
-
 
     return (
         <>
@@ -245,7 +241,7 @@ export const ListPrescription = () => {
 
                             <fieldset className="border p-2">
                                 <legend ><b>Bộ lọc</b></legend>
-                                <div className="alo">
+                                <div className="alo4">
                                     <div className="select-filter form-group">
                                         <label>Lọc theo</label>
                                         <select style={{border: '1px solid', height: '40px'}} name="cars" id="medicals">
@@ -318,24 +314,25 @@ export const ListPrescription = () => {
                                         ) :
 
                                         (records?.map((prescription, prescriptionIndex) => (
-                                            prescription.detailPrescriptions?.map((detailPrescription, detailPrescriptionIndex) => (
+                                            prescription.prescriptionDetails?.map((detailPrescription, detailPrescriptionIndex) => (
                                                 <tr className="table-row"
-                                                    key={`${prescription.id}-${detailPrescription.id}`}
+                                                    key={`${prescription.prescriptionId}-${detailPrescription.prescriptionDetailId}`}
                                                     onClick={(e) => {
-                                                        handleClick(detailPrescription.id, prescription.id);
-                                                        highlightRow(e, prescription.id);
+                                                        handleClick(detailPrescription.prescriptionDetailId, prescription.prescriptionId);
+                                                        highlightRow(e, prescription.prescriptionId);
 
                                                     }}
 
                                                 >
-                                                    <td>{prescription.id}</td>
-                                                    <td>{prescription.name}</td>
+                                                    <td>{prescription.prescriptionId}</td>
+                                                    <td>{prescription.prescriptionName}</td>
                                                     <td>{display(prescription.target)}</td>
                                                     <td>{prescription.symptomName}</td>
                                                     <td>{prescription.note}</td>
                                                 </tr>
                                             ))
                                         )))
+
                                     }
                                     </tbody>
                                 </table>

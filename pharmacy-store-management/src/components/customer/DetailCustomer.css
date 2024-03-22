@@ -98,3 +98,16 @@
     flex: 1; /* Hiển thị errormessage full width */
     margin-top: 5px; /* Khoảng cách giữa ô input và errormessage */
 }
+
+/*ol,ul{*/
+/*    padding-left: 0;*/
+/*}*/
+
+/*.main-right {*/
+/*    flex: 5;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    border-radius: 7px;*/
+/*    justify-content: center;*/
+/*    align-items: flex-start;*/
+/*}*/

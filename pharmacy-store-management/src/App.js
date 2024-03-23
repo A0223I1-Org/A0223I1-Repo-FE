@@ -16,13 +16,18 @@ import {ReportChart} from "./components/report/report-chart";
 import {Report} from "./components/report/report";
 import Header from "./components/header/Header";
 import { Supplier } from "./components/supplier/Supplier";
+import {CustomerSite} from "./CustomerSite";
+import {Contact} from "./components/customerSite/Contact";
+import {CustomerService} from "./components/customerService/CustomerService";
 
 function App() {
   return (
     <>
-        <Header />
           <Routes>
-              <Route path={'/'} element={<RetailSalesManagement />} />
+              <Route path="/" element={<CustomerSite />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/customerService" element={<CustomerService/>}/>
+              <Route path={'/retailSale'} element={<RetailSalesManagement />} />
               <Route path={'/retail'} element={<RetailInvoice />} />
               <Route path="/listCustomer" element={<ListCustomer/>}></Route>
               <Route path="/detail-customer/:customerId" element={<DetailCustomer/>}></Route>

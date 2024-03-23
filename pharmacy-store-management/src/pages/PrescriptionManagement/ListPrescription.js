@@ -3,8 +3,9 @@ import AddPrescriptionModalComponent from "./AddPrescriptionModalComponent";
 import * as symptomService from "../../utils/InformationService/SymptomManagementService/SymptomService";
 import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionDetailService";
 import * as prescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionService";
+// import './style.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import PropTypes from "prop-types";
@@ -13,532 +14,350 @@ import {toast} from "react-toastify";
 import {UpdatePrescriptionComponent} from "./UpdatePrescriptionComponent";
 import NotficationModal from "./NotficationModal";
 import styled from 'styled-components';
-// import './aloo.css';
-
-const StyleP = styled.div`
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
-
-* {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    outline: none;
-    border: none;
-    transition: all .2s linear;
-}
-
-body {
-    font-family: Poppins, serif;
-    padding: 0;
-}
-.row-scope{
-    text-align: center;
-}
-.row-scope th{
-    background-color: #449af8;
-    color: white;
-}
-.row-name{
-    text-align: left;
-    width: 200px;
-}
-.row-address{
-    text-align: left;
-    width: 200px;
-}
-.myTable {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    border-radius: 2px;
-}
-.form-select{
-    width: 100%;
-}
-.form-control{
-    width: 100%;
-}
-.search-selected{
-    margin-right: 16%;
-    display: flex;
-}
-fieldset{
-    width: 100%;
-    box-sizing: border-box;
-}
-.bg{
-    background-color: #449af8;
-}
-.filter{
-    font-size: 20px;
-}
-
-legend {
-    all: revert;
-}
-.pagination{
-    position: fixed;
-    top: 80%;
-    left: 0;
-}
-.search-button {
-    display: flex;
-    margin-top: -2px;
-}
-b{
-    font-size: 16px;
-}
-.myButton {
-    background-color:  #449af8; /* Màu nền */
-    border: none; /* Không viền */
-    color: white; /* Màu chữ */
-    padding: 8px 13px; /* Đệm */
-    text-align: center; /* Căn giữa chữ */
-    text-decoration: none; /* Không gạch chân */
-    display: inline-block;
-    font-size: 16px; /* Kích thước chữ */
-    margin: 2px 0px; /* Lề */
-    cursor: pointer; /* Con trỏ chuột */
-    border-radius: 0.375rem;
-
-}
-.sort{
-    margin-left: 150px;
-}
-.modal-label {
-    height: 37px;
-}
-.modal-input{
-    height: 37px;
-}
-.sort:last-child{
-    margin-right: 0px;
-}
-nav {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    justify-content: center;
-}
-.chucNang{
-    margin-top: 10px;
-    margin-left: 30%;
-}
-.btn-success {
-    margin-left: 44.8%;
-}
-.chucNang button{
-    margin-right: 1.4%;
-    width: 85px;
-    height: 40px;
-
-}
-.chucNang button:last-child{
-    margin-right: 0px;
-}
-.btn-custom {
-    background-color: #123456 !important;
-    color: #ffffff !important;
-}
-.btn-custom:hover{
-    background-color: #0c253f !important;
-    color: #ffffff !important;
-}
-.myTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.myTable th, .myTable td {
-    border: 1px solid #dee2e6;
-    padding: 0.75rem;
-    vertical-align: top;
-}
-
-.myTable thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-}
-
-.myTable tbody + tbody {
-    border-top: 2px solid #dee2e6;
-}
-.table-row{
-    cursor: pointer;
-}
-.selected-row{
-    background-color: #082b34;
-    color: white;
-}
-i{
-    margin-right: 5px;
-}
-
-.form-group {
-    display: flex;
-}
-
-
-.report{
-    display: flex;
-}
-
-.report .debt{
-    margin: auto 150px;
-}
-.report .list{
-    margin: auto 150px;
-}
-.action{
-    display: flex;
-    justify-content: space-between;
-}
-.action .chart{
-    margin-right: 660px;
-    margin-left: 20px;
-}
-.right{
-    text-align: right;
-}
-
-.custom-modal2 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    max-width: 600px; /* Adjust as needed */
-    width: 90%;
-}
-
-.custom-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content2 {
-    text-align: center;
-}
-.modal-buttons2{
-    display: flex;
-    justify-content: center;
-
-}
-
-.cancel-button {
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-
-}
-
-.cancel-button:hover {
-    background-color: #d32f2f;
-}
-
-.cancel-button:focus {
-    outline: none;
-}
-a {
-    text-decoration: none;
-}
-.error-message {
-    color: red;
-}
-
-.pagination{
-    position: fixed;
-    top: 80%;
-    left: 0;
-}
-.btn-group{
-    position: fixed;
-    top: 10%;
-    right: -10%;
-}
-
-.group2 {
-    display: flex;
-    padding: 10px;
-}
-.group-button{
-    display: flex;
-}
-.btn1{
-    margin-left: 10px;
-}
-
-fieldset {
-    border: 2px solid #000;
-}
-
-.group21 {
-    display: flex;
-    flex-direction: column;
-}
-
-a {
-    margin-left: 30px;
-}
-
-p {
-    margin-left: 20px;
-}
-
-.main {
-    display: flex;
-}
-
-
-label {
-    font-size: 15px;
-    margin-top: 20px;
-}
-
-.alo4 {
-    display: flex;
-}
-
-select {
-    font-size: 15px;
-    margin-top: 13px;
-}
-
-.main-right {
-    flex: 6;
-    display: flex;
-    flex-direction: row;
-}
-
-.select-filter {
-    display: flex;
-}
-.search-group {
-    display: flex;
-    margin-top: 13px;
-
-}
-.sort {
-    display: flex;
-}
-
-.header-2 {
-    display: flex;
-}
-
-.heading {
-    text-align: center;
-    margin-bottom: 2rem;
-    position: relative;
-}
-
-.action {
-    margin-left: 65%;
-}
-
-.btn {
-    display: inline-block;
-    margin-top: 1rem;
-    border-radius: .5rem;
-    color: #fff;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-input, select {
-    border: 1px solid;
-}
-
-.slay {
-    display: flex;
-    margin-bottom: 10px;
-}
-
-.slay1 {
-    flex: 2;
-    padding-right: 10px;
-}
-.form-group div {
-    margin-right: 20px;
-}
-
-.slay2 {
-    flex: 4;
-
-}
-
-
-.slay4 {
-    flex: 4;
-}
-
-.slay5 {
-    flex: 1;
-    display: flex;
-    margin-top: 12px;
-}
-
-legend {
-    all: revert;
-    font-weight: bold;
-}
-
-.selected-row {
-    background-color: #61dafb;
-    color: white;
-}
-
-.slay6 {
-    flex: 1;
-}
-
-.slay7 {
-    margin-top: -20px;
-}
-
-.end {
-    display: flex;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-
-/*modal*/
-.custom-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-}
-
-.custom-modal-overlay {
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.modal-content {
-    margin-bottom: 20px;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.modal-buttons button {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.modal-buttons button:hover {
-    background-color: #ddd;
-}
-
-.confirm-button {
-    background-color: #d9534f;
-    color: #fff;
-}
-
-.cancel-button {
-    background-color: #5bc0de;
-    color: #fff;
-}
-.error-message{
-    color: red;
-}
-/*modal*/
-
-@media (max-width: 991px) {
-    .header .header-2 {
-        background: var(--blue);
-    }
-
-    html {
-        font-size: 55%;
-    }
-
-    section {
-        padding: 3rem 2rem;
-    }
-
-}
-
-@media (max-width: 767px) {
-    .header .header-2 {
-        background: var(--blue);
-        padding-left: 10px;
-    }
-
-    html {
-        font-size: 50%;
-    }
-
-    section {
-        padding: 2rem 1rem;
-    }
-
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-
-    .group2 {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-    select,
-    input {
-        appearance: none;
-        border: 1px solid #ccc;
-        padding: 8px;
-        font-size: 5px;
-    }
-    .main {
-        display: grid;
-        grid-template-columns: 0fr 2fr;
-    }
-
-}
-
-
-
-`;
-
+import Header from "../../components/header/Header";
 
 AddPrescriptionModalComponent.propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     id: PropTypes.number.isRequired,
 };
+
+const StyleNav = styled.nav`
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .page-item {
+    margin: 0 5px;
+    list-style: none;
+  }
+
+  .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: 1px solid #ced4da;
+    color: #333;
+    width: 40px;
+    height: 40px;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+  }
+
+  .page-link:hover {
+    background-color: #f0f0f0;
+  }
+
+  .page-item.active .page-link {
+    color: #fff;
+    background-color: #449af8;
+  }
+
+
+  .page-link.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+`
+const StyledP = styled.div`
+    
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+    @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
+
+
+    * {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        transition: all .2s linear;
+    }
+
+    body {
+        font-family: Poppins, serif;;
+    }
+    .row-scope{
+        text-align: center;
+    }
+    .row-scope th{
+        background-color: #449af8;
+        color: white;
+    }
+    .row-name{
+        text-align: left;
+        width: 200px;
+    }
+    .row-address{
+        text-align: left;
+        width: 200px;
+    }
+    .myTable {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        border-radius: 2px;
+    }
+
+   
+    fieldset{
+        width: 100%;
+        box-sizing: border-box;
+    }
+ 
+    .filter{
+        font-size: 20px;
+    }
+
+    legend {
+        all: revert;
+    }
+
+   
+    b{
+        font-size: 16px;
+    }
+    .myButton {
+        background-color:  #449af8;
+        border: none; /* Không viền */
+        color: white; /* Màu chữ */
+        padding: 8px 13px; /* Đệm */
+        text-align: center; /* Căn giữa chữ */
+        text-decoration: none; /* Không gạch chân */
+        display: inline-block;
+        font-size: 16px; /* Kích thước chữ */
+        margin: 2px 0px; /* Lề */
+        cursor: pointer; /* Con trỏ chuột */
+        border-radius: 0.375rem;
+
+    }
+    .sort{
+        margin-left: 150px;
+    }
+    .modal-label {
+        height: 37px;
+    }
+    .modal-input{
+        height: 37px;
+    }
+    .sort:last-child{
+        margin-right: 0px;
+    }
+    nav {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        justify-content: center;
+    }
+    .chucNang{
+        margin-top: 10px;
+        margin-left: 30%;
+    }
+    .btn-success {
+        margin-left: 44.8%;
+    }
+    .chucNang button{
+        margin-right: 1.4%;
+
+    }
+    .chucNang button:last-child{
+        margin-right: 0px;
+    }
+    .btn-custom {
+        background-color: #123456 !important;
+        color: #ffffff !important;
+    }
+    .btn-custom:hover{
+        background-color: #0c253f !important;
+        color: #ffffff !important;
+    }
+    .myTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .myTable th, .myTable td {
+        border: 1px solid #dee2e6;
+        padding: 0.75rem;
+        vertical-align: top;
+    }
+
+    .myTable thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .myTable tbody + tbody {
+        border-top: 2px solid #dee2e6;
+    }
+    .table-row{
+        cursor: pointer;
+    }
+    .selected-row{
+        background-color: #082b34;
+        color: white;
+    }
+
+
+    .form-group {
+        display: flex;
+    }
+    
+    a {
+        text-decoration: none;
+    }
+
+    .btn-group{
+        position: fixed;
+        top: 10%;
+        right: -10%;
+    }
+
+    .group2 {
+        display: flex;
+        padding: 10px;
+    }
+    .group-button{
+        display: flex;
+    }
+    .btn1{
+        margin-left: 10px;
+    }
+
+    fieldset {
+        border: 2px solid #000;
+    }
+
+    //.group21 {
+    //    display: flex;
+    //    flex-direction: column;
+    //}
+
+    a {
+        margin-left: 30px;
+    }
+
+    p {
+        margin-left: 20px;
+    }
+
+    .main {
+        display: flex;
+    }
+
+    .main-left {
+        flex: 2;
+    }
+
+    label {
+        font-size: 15px;
+        margin-top: 20px;
+    }
+
+    .alo4 {
+        display: flex;
+    }
+
+    select {
+        font-size: 15px;
+        margin-top: 13px;
+    }
+    
+    .select-filter {
+        display: flex;
+    }
+    .search-group {
+        display: flex;
+        margin-top: 13px;
+
+    }
+    //.sort {
+    //    display: flex;
+    //}
+    //
+    //.action {
+    //    margin-left: 65%;
+    //}
+
+    .btn {
+        margin-top: 1rem;
+        display: inline-block;
+        border-radius: .3rem;
+        color: #fff;
+        cursor: pointer;
+        width: 90px;
+        height: 40px;
+        font-weight: 500;
+    }
+
+    input, select {
+        border: 1px solid;
+    }
+
+    .pagination {
+        display: flex;
+        position: fixed;
+        top: 80%;
+        left: 20px;
+        height: 100px;
+    }
+
+
+   
+
+
+    legend {
+        all: revert;
+        font-weight: bold;
+    }
+
+
+
+    
+
+    @media (max-width: 991px) {
+        .header .header-2 {
+            background: var(--blue);
+        }
+
+        html {
+            font-size: 55%;
+        }
+
+        section {
+            padding: 3rem 2rem;
+        }
+        .btn-success {
+            margin-left: 30.8%;
+        }
+
+    }
+
+    @media (max-width: 767px) {
+        .btn-success {
+            margin-left: 30.8%;
+        }
+        .group2 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        select,
+        input {
+            appearance: none;
+            border: 1px solid #ccc;
+            padding: 8px;
+            font-size: 5px;
+        }
+        .main {
+            display: grid;
+            grid-template-columns: 0fr 2fr;
+        }
+    }
+
+`
 
 export const ListPrescription = () => {
 
@@ -582,6 +401,7 @@ export const ListPrescription = () => {
         }
         if (row === selectedRow) {
             setSelectedRow(null);
+            setSelectedPrescriptionId(null);
 
         } else {
             row.classList.add('selected-row');
@@ -728,7 +548,9 @@ export const ListPrescription = () => {
 
             await prescriptionService.deletePrescription(id);
             await fetchApi();
-            toast.success('Prescription deleted successfully!');
+            toast.success('Xoá toa thuốc thành công!',{
+                autoClose: 1000
+            });
         } catch (error) {
             console.error('Error deleting prescription:', error);
             toast.error('Error deleting prescription');
@@ -753,56 +575,58 @@ export const ListPrescription = () => {
 
 
     return (
-        <StyleP>
+        <>
+            <Header/>
+        <StyledP>
             <div className="container">
                 <div className="row">
                     <div className="col-1"></div>
                     <div className="col-10">
 
-                            <fieldset className="border p-2">
-                                <legend ><b>Bộ lọc</b></legend>
-                                <div className="alo4">
-                                    <div className="select-filter form-group">
-                                        <label>Lọc theo</label>
-                                        <select style={{border: '1px solid', height: '40px'}} name="cars" id="medicals">
-                                            <option value="code">Mã toa thuốc</option>
-                                            <option value="saab">Tên toa thuốc</option>
-                                            <option value="opel">Đối tượng</option>
-                                            <option value="audi">Triệu chứng</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="search-group">
-
-                                            <input
-                                                style={{
-                                                    border: '1px solid',
-                                                    height: '40px',
-                                                    width: '250px',
-                                                    marginLeft: '5px'
-                                                }}
-                                                type="search"
-                                                name=""
-                                                placeholder="search here..." id="search-box"/>
-                                            <button style={{height: '40px', fontSize: '15px', marginBottom: '16px'}}
-                                                    type="submit"
-                                                    className="myButton">Lọc kết quả
-                                            </button>
-
-                                    </div>
-
-                                    <div className="sort">
-                                        <label style={{marginLeft: '50px'}} htmlFor="sort">Sắp xếp</label>
-                                        <select style={{border: '1px solid', height: '40px'}} name="sort" id="sort">
-                                            <option value="code">Mã toa thuốc</option>
-                                            <option value="saab">Tên toa thuốc</option>
-                                            <option value="opel">Đối tượng</option>
-                                            <option value="audi">Triệu chứng</option>
-                                        </select>
-                                    </div>
+                        <fieldset className="border p-2">
+                            <legend ><b>Bộ lọc</b></legend>
+                            <div className="alo4">
+                                <div className="select-filter form-group">
+                                    <label>Lọc theo</label>
+                                    <select style={{border: '1px solid', height: '40px'}} name="cars" id="medicals">
+                                        <option value="code">Mã toa thuốc</option>
+                                        <option value="saab">Tên toa thuốc</option>
+                                        <option value="opel">Đối tượng</option>
+                                        <option value="audi">Triệu chứng</option>
+                                    </select>
                                 </div>
 
-                            </fieldset>
+                                <div className="search-group">
+
+                                    <input
+                                        style={{
+                                            border: '1px solid',
+                                            height: '40px',
+                                            width: '250px',
+                                            marginLeft: '5px'
+                                        }}
+                                        type="search"
+                                        name=""
+                                        placeholder="search here..." id="search-box"/>
+                                    <button style={{height: '40px', fontSize: '15px', marginBottom: '16px'}}
+                                            type="submit"
+                                            className="myButton">Lọc kết quả
+                                    </button>
+
+                                </div>
+
+                                <div className="sort">
+                                    <label style={{marginLeft: '50px'}} htmlFor="sort">Sắp xếp</label>
+                                    <select style={{border: '1px solid', height: '40px'}} name="sort" id="sort">
+                                        <option value="code">Mã toa thuốc</option>
+                                        <option value="saab">Tên toa thuốc</option>
+                                        <option value="opel">Đối tượng</option>
+                                        <option value="audi">Triệu chứng</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </fieldset>
 
                         <div>
                             <fieldset className="border rounded-3 p-3">
@@ -864,7 +688,8 @@ export const ListPrescription = () => {
                             <button type="button" className="btn btn-success" onClick={(evt) => openCreateModal()}>
                                 <i className="bi bi-plus-circle"></i> Thêm
                             </button>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#editModal"
+                            {/*remove data-bs-toggle="modal" for error backdrop*/}
+                            <button type="button" data-bs-target="#editModal"
                                     className="btn btn-custom" onClick={() => openUpdateModal(selectedPrescriptionId, updateModal)}><i
                                 className="bi bi-pencil-square"></i> Sửa
                             </button>
@@ -878,43 +703,46 @@ export const ListPrescription = () => {
                     </div>
                     <div className="col-1"></div>
                 </div>
+                <StyleNav>
+                    <nav className="pagination">
+                        {records?.length > 0 && (
+                            <>
+                                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                    <a className="page-link" href="#" onClick={prePage}>Prev</a>
+                                </li>
+                                {
+                                    numbers.map((n, i) => (
+                                        <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
+                                            <a href="#" className="page-link"
+                                               onClick={() => changeCPage(n)}>
+                                                {n}
+                                            </a>
+                                        </li>
 
-                <nav className="pagination">
-                    {records?.length > 0 && (
-                        <>
-                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                                <a className="page-link" href="#" onClick={prePage}>Prev</a>
-                            </li>
-                            {
-                                numbers.map((n, i) => (
-                                    <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-                                        <a href="#" className="page-link"
-                                           onClick={() => changeCPage(n)}>
-                                            {n}
-                                        </a>
-                                    </li>
+                                    ))
+                                }
+                                <li className={`page-item ${currentPage === numbers?.length ? 'disabled' : ''}`}>
+                                    <a className="page-link" href="#" onClick={nextPage}>Next</a>
+                                </li>
+                            </>
+                        )}
+                    </nav>
+                </StyleNav>
 
-                                ))
-                            }
-                            <li className={`page-item ${currentPage === numbers?.length ? 'disabled' : ''}`}>
-                                <a className="page-link" href="#" onClick={nextPage}>Next</a>
-                            </li>
-                        </>
-                    )}
-                </nav>
 
                 <AddPrescriptionModalComponent
                     show={createModal}
                     onHide={(() => setCreateModal(false))}
                     onLoad={loadData}
                 />
+
                 <UpdatePrescriptionComponent
                     show={updateModal === true && selectedPrescriptionId !== null}
                     exName={prescriptionName}
                     uid={selectedPrescriptionId}
                     onLoad={loadData}
                     onHide={() => {
-                        setUpdateModal(false);
+                        setUpdateModal(false)
                     }}
                 />
 
@@ -928,6 +756,7 @@ export const ListPrescription = () => {
 
 
             </div>
-        </StyleP>
+        </StyledP>
+            </>
     );
 }

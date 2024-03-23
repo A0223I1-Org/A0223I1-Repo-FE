@@ -8,25 +8,31 @@ import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom";
 import {useRef, useState} from "react";
 import styled from 'styled-components';
+import Header from "../header/Header";
 
 const StyledReport = styled.div`
-  .LoiTH-report body{
+  .LoiTH-report body {
     font-family: "Poppins";
   }
-  .LoiTH-report legend{
+
+  .LoiTH-report legend {
     all: revert;
   }
-  .LoiTH-report fieldset{
+
+  .LoiTH-report fieldset {
     width: 100%;
     margin-bottom: 20px;
   }
+
   .LoiTH-report .form-group {
     display: flex;
     flex-wrap: wrap;
   }
+
   .LoiTH-report .form-group div {
     margin-right: 140px;
   }
+
   .LoiTH-report .form-group div:last-child {
     margin-right: 0;
   }
@@ -48,24 +54,27 @@ const StyledReport = styled.div`
     flex-wrap: wrap; /* Cho phép các mục bọc nếu không đủ không gian */
   }
 
-  .LoiTH-report .action .chart{
+  .LoiTH-report .action .chart {
     margin-right: 660px;
   }
 
-  .LoiTH-report .report .debt{
+  .LoiTH-report .report .debt {
     margin-top: 10px;
   }
-  .LoiTH-report .report .list{
+
+  .LoiTH-report .report .list {
     margin-top: 10px;
   }
+
   .LoiTH-report .col-10 fieldset {
-    margin-top:15px;
+    margin-top: 15px;
   }
+
   .LoiTH-report .yup-error-message {
     color: red;
     font-size: 13px;
   }
-  
+
 `;
 export const Report = () => {
 
@@ -159,211 +168,219 @@ export const Report = () => {
     }
 
     return (
-        <StyledReport>
-            <Formik innerRef={formikRef} initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
-                {formikProps => {
-                    function setDefaultDateTime() {
-                        formikProps.setErrors({});
-                        formikRef.current.resetForm();
+        <>
+            <Header/>
+            <StyledReport>
+                <Formik innerRef={formikRef} initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={onSubmit}>
+                    {formikProps => {
+                        function setDefaultDateTime() {
+                            formikProps.setErrors({});
+                            formikRef.current.resetForm();
 
-                        if (formikRef.current.values.inputStartDate || formikRef.current.values.inputEndDate ||
-                            formikRef.current.values.inputTimeStart || formikRef.current.values.inputTimeEnd) {
-                            // formikRef.current.resetForm();
-                            toast.warning("Báo cáo này không cần cột thời gian");
+                            if (formikRef.current.values.inputStartDate || formikRef.current.values.inputEndDate ||
+                                formikRef.current.values.inputTimeStart || formikRef.current.values.inputTimeEnd) {
+                                // formikRef.current.resetForm();
+                                toast.warning("Báo cáo này không cần cột thời gian");
+                            }
+
+                            setValidateFlag(false);
                         }
 
-                        setValidateFlag(false);
-                    }
-
-                    return (
-                        <Form>
-                            <div className="LoiTH-report">
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-1"></div>
-                                        <div className="col-10">
-                                            <div>
-                                                <fieldset className="border rounded-3 p-3">
-                                                    <legend><b>Thời gian</b></legend>
-                                                    <div className="row">
-                                                        <div className="col-md-3">
-                                                            <div className="form-group">
-                                                                <label htmlFor="inputStartDate">Từ ngày</label>
-                                                                <Field
-                                                                    type="date"
-                                                                    id="inputStartDate"
-                                                                    name="inputStartDate"
-                                                                    className="form-control"
-                                                                    disabled={!isTimeRequired}
-                                                                />
-                                                                <ErrorMessage
-                                                                    name="inputStartDate"
-                                                                    component="div"
-                                                                    className="yup-error-message"
-                                                                />
+                        return (
+                            <Form>
+                                <div className="LoiTH-report">
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-1"></div>
+                                            <div className="col-10">
+                                                <div>
+                                                    <fieldset className="border rounded-3 p-3">
+                                                        <legend><b>Thời gian</b></legend>
+                                                        <div className="row">
+                                                            <div className="col-md-3">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="inputStartDate">Từ ngày</label>
+                                                                    <Field
+                                                                        type="date"
+                                                                        id="inputStartDate"
+                                                                        name="inputStartDate"
+                                                                        className="form-control"
+                                                                        disabled={!isTimeRequired}
+                                                                    />
+                                                                    <ErrorMessage
+                                                                        name="inputStartDate"
+                                                                        component="div"
+                                                                        className="yup-error-message"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-3">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="inputEndDate">Đến ngày</label>
+                                                                    <Field
+                                                                        type="date"
+                                                                        id="inputEndDate"
+                                                                        className="form-control"
+                                                                        name="inputEndDate"
+                                                                        disabled={!formikProps.values.inputStartDate}
+                                                                    />
+                                                                    <ErrorMessage
+                                                                        name="inputEndDate"
+                                                                        component="div"
+                                                                        className="yup-error-message"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-3">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="inputTimeStart">Từ giờ</label>
+                                                                    <Field
+                                                                        type="time"
+                                                                        id="inputTimeStart"
+                                                                        className="form-control"
+                                                                        name="inputTimeStart"
+                                                                        disabled={!isTimeRequired}
+                                                                    />
+                                                                    <ErrorMessage
+                                                                        name="inputTimeStart"
+                                                                        component="div"
+                                                                        className="yup-error-message"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-3">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="inputTimeEnd">Đến giờ</label>
+                                                                    <Field
+                                                                        type="time"
+                                                                        id="inputTimeEnd"
+                                                                        className="form-control"
+                                                                        name="inputTimeEnd"
+                                                                        disabled={!formikProps.values.inputTimeStart}
+                                                                    />
+                                                                    <ErrorMessage
+                                                                        name="inputTimeEnd"
+                                                                        component="div"
+                                                                        className="yup-error-message"
+                                                                    />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-3">
-                                                            <div className="form-group">
-                                                                <label htmlFor="inputEndDate">Đến ngày</label>
-                                                                <Field
-                                                                    type="date"
-                                                                    id="inputEndDate"
-                                                                    className="form-control"
-                                                                    name="inputEndDate"
-                                                                    disabled={!formikProps.values.inputStartDate}
-                                                                />
-                                                                <ErrorMessage
-                                                                    name="inputEndDate"
-                                                                    component="div"
-                                                                    className="yup-error-message"
-                                                                />
+                                                    </fieldset>
+                                                </div>
+                                                <div>
+                                                    <fieldset className="border rounded-3 p-3">
+                                                        <legend><b>Hệ thống báo cáo</b></legend>
+                                                        <div className="report">
+                                                            <div className="debt">
+                                                                <h6>THU CHI - CÔNG NỢ</h6>
+                                                                <div>
+                                                                    <Field type="radio" id="revenue" name="reportType"
+                                                                           value="revenue" onClick={() => {
+                                                                        setTimeRequired(true);
+                                                                        setValidateFlag(true);
+                                                                    }}/>
+                                                                    <label htmlFor="revenue">Báo cáo danh
+                                                                        thu</label><br/>
+                                                                </div>
+                                                                <div>
+                                                                    <Field type="radio" id="profit" name="reportType"
+                                                                           value="profit" onClick={() => {
+                                                                        setTimeRequired(true);
+                                                                        setValidateFlag(true);
+                                                                    }}/>
+                                                                    <label htmlFor="profit">Báo cáo lợi
+                                                                        nhuận</label><br/>
+                                                                </div>
+                                                                <div>
+                                                                    <Field type="radio" id="debt" name="reportType"
+                                                                           value="debt" onClick={() => {
+                                                                        setTimeRequired(true);
+                                                                        setValidateFlag(true);
+                                                                    }}/>
+                                                                    <label htmlFor="debt">Báo cáo công nợ</label><br/>
+                                                                </div>
+                                                                <div>
+                                                                    <Field type="radio" id="sellingDiary"
+                                                                           name="reportType"
+                                                                           value="sales-diary" onClick={() => {
+                                                                        setTimeRequired(true);
+                                                                        setValidateFlag(true);
+                                                                    }}/>
+                                                                    <label htmlFor="sellingDiary">Nhật ký bán
+                                                                        hàng</label>
+                                                                </div>
+                                                            </div>
+                                                            <div className="list">
+                                                                <h6>DANH SÁCH ,PHÂN TÍCH</h6>
+                                                                <div>
+                                                                    <Field type="radio" id="enterMore" name="reportType"
+                                                                           value="drug-enter" onClick={() => {
+                                                                        setDefaultDateTime();
+                                                                        setTimeRequired(false);
+                                                                        // setValidateFlag(true);
+                                                                    }}/>
+                                                                    <label htmlFor="enterMore">Báo cáo thuốc cần nhập
+                                                                        thêm</label><br/>
+                                                                </div>
+                                                                <div>
+                                                                    <Field type="radio" id="expired" name="reportType"
+                                                                           value="medicines-expiring-soon"
+                                                                           onClick={() => {
+                                                                               setDefaultDateTime();
+                                                                               setTimeRequired(false);
+                                                                           }}/>
+                                                                    <label htmlFor="expired"> Báo cáo thuốc sắp hết
+                                                                        hạn</label><br/>
+                                                                </div>
+                                                                <div>
+                                                                    <Field type="radio" id="selling" name="reportType"
+                                                                           value="top-selling-medicine" onClick={() => {
+                                                                        setTimeRequired(true);
+                                                                        // setTimeRequired(false);
+                                                                        setValidateFlag(true);
+                                                                    }}/>
+                                                                    <label htmlFor="selling">Báo cáo 100 thuốc bán
+                                                                        chạy</label><br/>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col-md-3">
-                                                            <div className="form-group">
-                                                                <label htmlFor="inputTimeStart">Từ giờ</label>
-                                                                <Field
-                                                                    type="time"
-                                                                    id="inputTimeStart"
-                                                                    className="form-control"
-                                                                    name="inputTimeStart"
-                                                                    disabled={!isTimeRequired}
-                                                                />
-                                                                <ErrorMessage
-                                                                    name="inputTimeStart"
-                                                                    component="div"
-                                                                    className="yup-error-message"
-                                                                />
-                                                            </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div>
+                                                    <div className="action">
+                                                        <div className="chart">
+                                                            <Link to="/chart">
+                                                                <button type="button" className="btn btn-warning"><i
+                                                                    className="bi bi-bar-chart"></i> Biểu đồ thống kê
+                                                                </button>
+                                                            </Link>
                                                         </div>
-                                                        <div className="col-md-3">
-                                                            <div className="form-group">
-                                                                <label htmlFor="inputTimeEnd">Đến giờ</label>
-                                                                <Field
-                                                                    type="time"
-                                                                    id="inputTimeEnd"
-                                                                    className="form-control"
-                                                                    name="inputTimeEnd"
-                                                                    disabled={!formikProps.values.inputTimeStart}
-                                                                />
-                                                                <ErrorMessage
-                                                                    name="inputTimeEnd"
-                                                                    component="div"
-                                                                    className="yup-error-message"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div>
-                                                <fieldset className="border rounded-3 p-3">
-                                                    <legend><b>Hệ thống báo cáo</b></legend>
-                                                    <div className="report">
-                                                        <div className="debt">
-                                                            <h6>THU CHI - CÔNG NỢ</h6>
-                                                            <div>
-                                                                <Field type="radio" id="revenue" name="reportType"
-                                                                       value="revenue" onClick={() => {
-                                                                    setTimeRequired(true);
-                                                                    setValidateFlag(true);
-                                                                }}/>
-                                                                <label htmlFor="revenue">Báo cáo danh thu</label><br/>
-                                                            </div>
-                                                            <div>
-                                                                <Field type="radio" id="profit" name="reportType"
-                                                                       value="profit" onClick={() => {
-                                                                    setTimeRequired(true);
-                                                                    setValidateFlag(true);
-                                                                }}/>
-                                                                <label htmlFor="profit">Báo cáo lợi nhuận</label><br/>
-                                                            </div>
-                                                            <div>
-                                                                <Field type="radio" id="debt" name="reportType"
-                                                                       value="debt" onClick={() => {
-                                                                    setTimeRequired(true);
-                                                                    setValidateFlag(true);
-                                                                }}/>
-                                                                <label htmlFor="debt">Báo cáo công nợ</label><br/>
-                                                            </div>
-                                                            <div>
-                                                                <Field type="radio" id="sellingDiary" name="reportType"
-                                                                       value="sales-diary" onClick={() => {
-                                                                    setTimeRequired(true);
-                                                                    setValidateFlag(true);
-                                                                }}/>
-                                                                <label htmlFor="sellingDiary">Nhật ký bán hàng</label>
-                                                            </div>
-                                                        </div>
-                                                        <div className="list">
-                                                            <h6>DANH SÁCH ,PHÂN TÍCH</h6>
-                                                            <div>
-                                                                <Field type="radio" id="enterMore" name="reportType"
-                                                                       value="drug-enter" onClick={() => {
-                                                                    setDefaultDateTime();
-                                                                    setTimeRequired(false);
-                                                                    // setValidateFlag(true);
-                                                                }}/>
-                                                                <label htmlFor="enterMore">Báo cáo thuốc cần nhập
-                                                                    thêm</label><br/>
-                                                            </div>
-                                                            <div>
-                                                                <Field type="radio" id="expired" name="reportType"
-                                                                       value="medicines-expiring-soon" onClick={() => {
-                                                                    setDefaultDateTime();
-                                                                    setTimeRequired(false);
-                                                                }}/>
-                                                                <label htmlFor="expired"> Báo cáo thuốc sắp hết
-                                                                    hạn</label><br/>
-                                                            </div>
-                                                            <div>
-                                                                <Field type="radio" id="selling" name="reportType"
-                                                                       value="top-selling-medicine" onClick={() => {
-                                                                    setTimeRequired(true);
-                                                                    // setTimeRequired(false);
-                                                                    setValidateFlag(true);
-                                                                }}/>
-                                                                <label htmlFor="selling">Báo cáo 100 thuốc bán
-                                                                    chạy</label><br/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div>
-                                                <div className="action">
-                                                    <div className="chart">
-                                                        <Link to="/chart">
-                                                            <button type="button" className="btn btn-warning"><i
-                                                                className="bi bi-bar-chart"></i> Biểu đồ thống kê
+                                                        <div>
+                                                            <button type="submit" className="btn btn-success"
+                                                                    disabled={!formikProps.values.reportType}>
+                                                                <i className="bi bi-plus-circle"></i> Xuất excel
                                                             </button>
-                                                        </Link>
-                                                    </div>
-                                                    <div>
-                                                        <button type="submit" className="btn btn-success"
-                                                                disabled={!formikProps.values.reportType}>
-                                                            <i className="bi bi-plus-circle"></i> Xuất excel
-                                                        </button>
-                                                    </div>
-                                                    <div>
-                                                        <button type="button" className="btn btn-primary"><i
-                                                            className="bi bi-arrow-return-left"></i> Trở về
-                                                        </button>
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" className="btn btn-primary"><i
+                                                                className="bi bi-arrow-return-left"></i> Trở về
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div className="col-1"></div>
                                         </div>
-                                        <div className="col-1"></div>
                                     </div>
                                 </div>
-                            </div>
-                        </Form>
-                    )
-                }}
-            </Formik>
-        </StyledReport>
+                            </Form>
+                        )
+                    }}
+                </Formik>
+            </StyledReport>
+        </>
     )
 }

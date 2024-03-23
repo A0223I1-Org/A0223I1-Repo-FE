@@ -2,232 +2,135 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React, {useEffect, useRef, useState} from "react";
 
-import 'bootstrap/dist/css/bootstrap.min.css'; 
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
 import * as medicineService from "../../utils/InformationService/MedicineInformationManagementService/MedicineInformationService";
 import * as detailPrescriptionService from "../../utils/InformationService/PrescriptionManagementService/PrescriptionDetailService";
 
 import {toast} from "react-toastify";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-
 import styled from 'styled-components';
 
-const StylePA = styled.div`
 
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
-
-* {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    outline: none;
-    border: none;
-    transition: all .2s linear;
-}
-
-body {
-    font-family: Poppins, serif;
-    padding: 0;
-}
-
-
-.modal-label {
-    height: 37px;
-}
-.modal-input{
-    height: 37px;
-}
-
-
-.custom-modal2 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    max-width: 600px; /* Adjust as needed */
-    width: 90%;
-}
-
-.custom-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content2 {
-    text-align: center;
-}
-.modal-buttons2{
-    display: flex;
-    justify-content: center;
-
-}
-
-.cancel-button {
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-
-}
-
-.cancel-button:hover {
-    background-color: #d32f2f;
-}
-
-.cancel-button:focus {
-    outline: none;
-}
-a {
-    text-decoration: none;
-}
-.error-message {
-    color: red;
-}
-
-
-
-
-
-
-input, select {
-    border: 1px solid;
-}
-
-.slay {
-    display: flex;
-    margin-bottom: 10px;
-}
-
-.slay1 {
-    flex: 2;
-    padding-right: 10px;
-}
-.form-group div {
-    margin-right: 20px;
-}
-
-.slay2 {
-    flex: 4;
-
-}
-
-.slay4 {
-    flex: 4;
-}
-
-.slay5 {
-    flex: 1;
-    display: flex;
-    margin-top: 12px;
-}
-
-legend {
-    all: revert;
-    font-weight: bold;
-}
-
-.selected-row {
-    background-color: #61dafb;
-    color: white;
-}
-
-.slay6 {
-    flex: 1;
-}
-
-.slay7 {
-    margin-top: -20px;
-}
-
-.end {
-    display: flex;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-
-/*modal*/
-.custom-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-}
-
-.custom-modal-overlay {
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.modal-content {
-    margin-bottom: 20px;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.modal-buttons button {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.modal-buttons button:hover {
-    background-color: #ddd;
-}
-
-.confirm-button {
-    background-color: #d9534f;
-    color: #fff;
-}
-
-.cancel-button {
-    background-color: #5bc0de;
-    color: #fff;
-}
-.error-message{
-    color: red;
-}
-
-
-
-}
-
+const StyledModalHeader = styled(Modal.Header)`
+    background-color: #449af8;
+    color: white; 
 `;
+
+const StyledPA = styled.div`
+    
+    a {
+        text-decoration: none;
+    }
+  
+    .btn1{
+        margin-left: 10px;
+    }
+
+    fieldset {
+        border: 2px solid #000;
+    }
+    
+    a {
+        margin-left: 30px;
+    }
+
+    p {
+        margin-left: 20px;
+    }
+    .form-group {
+        display: flex;
+    }
+    
+    label {
+        font-size: 15px;
+        margin-top: 20px;
+    }
+    
+    select {
+        font-size: 15px;
+        margin-top: 13px;
+    }
+
+    .slay {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .slay1 {
+        flex: 2;
+        padding-right: 10px;
+    }
+    .form-group div {
+        margin-right: 20px;
+    }
+
+    .slay2 {
+        flex: 4;
+
+    }
+
+
+    .slay4 {
+        flex: 4;
+    }
+
+    .slay5 {
+        flex: 1;
+        display: flex;
+        margin-top: 12px;
+    }
+
+    legend {
+        all: revert;
+        font-weight: bold;
+    }
+
+    .slay6 {
+        flex: 1;
+    }
+
+    .slay7 {
+        margin-top: -20px;
+    }
+
+
+    fieldset{
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        margin-top: 1rem;
+        display: inline-block;
+        border-radius: .5rem;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    input, select {
+        border: 1px solid;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .error-message1{
+        color: red;
+        font-size: 14px;
+        font-weight: bold;
+    }
+`
+const StyleErrorMessage = styled.span`
+  .error-message1{
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+  }
+`
+
+
+
 export default function AddPrescriptionModalComponent(props) {
     const [medicines, setMedicines] = useState([])
     const [errors, setErrors] = useState('');
@@ -526,9 +429,9 @@ export default function AddPrescriptionModalComponent(props) {
                     validationErrors.quantity7 = "Số lượng thuốc, số lần uống và số viên mỗi lần phải là một số nguyên";
                 }
 
-                // if(!formData.medicineId.trim() && !formData.medicineId2.trim() && !formData.medicineId3.trim() && !formData.medicineId4.trim() && !formData.medicineId5.trim() && !formData.medicineId6.trim() && !formData.medicineId7.trim()){
-                //     validationErrors.medicineId = "Hãy chọn it nhất một loại thuốc"
-                // }
+                if(!formData.medicineId.trim() && !formData.medicineId2.trim() && !formData.medicineId3.trim() && !formData.medicineId4.trim() && !formData.medicineId5.trim() && !formData.medicineId6.trim() && !formData.medicineId7.trim()){
+                    validationErrors.medicineId = "Hãy chọn it nhất một loại thuốc"
+                }
 
                 setErrors(validationErrors);
 
@@ -544,11 +447,11 @@ export default function AddPrescriptionModalComponent(props) {
                         props.onHide();
                         props.onLoad();
                         handleClearForm();
-                        toast.success('Create prescription successful!', {
+                        toast.success('Tạo đơn thuốc mới thành công!', {
                             autoClose: 1000
                         });
                     } else {
-                        console.log('The result is of an unexpected type.');
+                        console.log('Sai.');
                     }
 
                 }
@@ -562,9 +465,9 @@ export default function AddPrescriptionModalComponent(props) {
     }
 
     return (
-        <StylePA>
-            <div>
-            <Formik initialValues={{
+
+        <Formik
+            initialValues={{
                 name: "",
                 target: 1,
                 treatmentPeriod: "",
@@ -583,31 +486,34 @@ export default function AddPrescriptionModalComponent(props) {
 
             }}
 
+        >
 
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
             >
 
+                <form onSubmit={handleSubmit}>
+                    <StyledModalHeader closeButton>
 
-                <Modal
-                    {...props}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                >
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Thêm Toa Thuốc
+                        </Modal.Title>
 
-                    <form onSubmit={handleSubmit}>
-                        <Modal.Header closeButton className="bg text-white">
-                            <Modal.Title id="contained-modal-title-vcenter">
-                                Thêm Toa Thuốc
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
+                    </StyledModalHeader>
+                    <Modal.Body>
+
+                        <StyleErrorMessage>
+
 
                             <div className="mb-3">
                                 <label htmlFor="name" className="form-label">
                                     Tên Toa Thuốc
                                 </label>
                                 <input type="text" name="name" id="name" className="form-control" autoFocus
-                                    value={formData.prescriptionName}
+                                       value={formData.prescriptionName}
                                        onChange={(e) => setFormData({ ...formData, prescriptionName: e.target.value })}
                                 />
 
@@ -666,24 +572,30 @@ export default function AddPrescriptionModalComponent(props) {
                                 </span>
                                 </span>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="note" className="form-label">
-                                    Ghi chú
-                                </label>
-                                <input type="text" name="note" id="note" className="form-control"
-                                       value={formData.note}
-                                       onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-                                />
-                            </div>
+                        </StyleErrorMessage>
+                        <div className="mb-3">
+                            <label htmlFor="note" className="form-label">
+                                Ghi chú
+                            </label>
+                            <input type="text" name="note" id="note" className="form-control"
+                                   value={formData.note}
+                                   onChange={(e) => setFormData({ ...formData, note: e.target.value })}
+                            />
+                        </div>
+                        <StyledPA>
+
                             <fieldset>
                                 <legend className="w-auto">
                                     Chỉ định
                                 </legend>
 
+
+
+
                                 {formData.medicineId ? (
                                     <>
                                         <div className="form-group slay">
-                                                <label>1.</label>
+                                            <label>1.</label>
                                             <div className="slay4">
                                                 <Field name="medicineId" as="select" className="form-select"
                                                        value={formData.medicineId}
@@ -831,6 +743,7 @@ export default function AddPrescriptionModalComponent(props) {
 
                                 }
 
+
                                 {/*2*/}
 
                                 {
@@ -907,7 +820,7 @@ export default function AddPrescriptionModalComponent(props) {
                                     ) : (
                                         <>
                                             <div className="form-group slay">
-                                            <div className="slay3">
+                                                <div className="slay3">
                                                     <label htmlFor="applicable-object" className="form-label">2.</label>
                                                 </div>
                                                 <div className="slay4">
@@ -938,7 +851,7 @@ export default function AddPrescriptionModalComponent(props) {
                                                                ...formData,
                                                                quantity2: e.target.value
                                                            })}
-                                                          disabled
+                                                           disabled
                                                     />
                                                     <label className="form-label" htmlFor="quantity3"
                                                            style={{marginLeft: '2px'}}>viên</label>
@@ -1056,7 +969,7 @@ export default function AddPrescriptionModalComponent(props) {
                                 ) : (
                                     <>
                                         <div className="form-group slay">
-                                        <div className="slay3">
+                                            <div className="slay3">
                                                 <label htmlFor="applicable-object" className="form-label">3.</label>
                                             </div>
                                             <div className="slay4">
@@ -1120,7 +1033,7 @@ export default function AddPrescriptionModalComponent(props) {
                                ...formData,
                                quantityPerTimes3: e.target.value
                            })}
-                          disabled
+                           disabled
                     />
                     <label className="form-label" htmlFor="quantity2" style={{marginLeft: '2px'}}>viên</label>
                 </span></p>
@@ -1200,7 +1113,7 @@ export default function AddPrescriptionModalComponent(props) {
                                 ) : (
                                     <>
                                         <div className="form-group slay">
-                                        <div className="slay3">
+                                            <div className="slay3">
                                                 <label htmlFor="applicable-object" className="form-label">4.</label>
                                             </div>
                                             <div className="slay4">
@@ -1261,7 +1174,7 @@ export default function AddPrescriptionModalComponent(props) {
                                quantityPerTimes4: e.target.value
                            })}
 
-                    disabled/>
+                           disabled/>
                     <label className="form-label" htmlFor="quantity2" style={{marginLeft: '2px'}}>viên</label>
                 </span></p>
                                         </div>
@@ -1345,7 +1258,7 @@ export default function AddPrescriptionModalComponent(props) {
                                     <>
 
                                         <div className="form-group slay">
-                                        <div className="slay3">
+                                            <div className="slay3">
                                                 <label htmlFor="applicable-object" className="form-label">5.</label>
                                             </div>
 
@@ -1409,7 +1322,7 @@ export default function AddPrescriptionModalComponent(props) {
                                ...formData,
                                quantityPerTimes5: e.target.value
                            })}
-                          disabled
+                           disabled
                     />
                     <label className="form-label" htmlFor="quantity2" style={{marginLeft: '2px'}}>viên</label>
                 </span></p>
@@ -1493,7 +1406,7 @@ export default function AddPrescriptionModalComponent(props) {
                                     ) : (
                                         <>
                                             <div className="form-group slay">
-                                            <div className="slay3">
+                                                <div className="slay3">
                                                     <label htmlFor="applicable-object" className="form-label">6.</label>
                                                 </div>
                                                 <div className="slay4">
@@ -1545,7 +1458,7 @@ export default function AddPrescriptionModalComponent(props) {
                                ...formData,
                                times6: e.target.value
                            })}
-                          disabled
+                           disabled
                     />
                     <label className="form-label" htmlFor="quantity1" style={{marginLeft: '2px'}}>lần</label>
                 </span>, mỗi lần uống <span>
@@ -1714,29 +1627,32 @@ export default function AddPrescriptionModalComponent(props) {
                                 )}
 
 
+
+
                             </fieldset>
+                        </StyledPA>
 
-                        </Modal.Body>
-                        <Modal.Footer className="bg-light">
+                    </Modal.Body>
+                    <Modal.Footer className="bg-light">
                         <div className="group-button d-flex justify-content-between">
-                                <div className="mb-3 d-flex justify-content-center gr1 btn1">
-                                    <Button onClick={handleClearForm} className="btn btn-info custom-button">
-                                        Hủy
-                                    </Button>
-                                </div>
-
-                                <div className="mb-3 d-flex justify-content-center gr2 btn2">
-                                    <button type="submit" className="btn btn-primary">
-                                        Lưu
-                                    </button>
-                                </div>
+                            <div className="mb-3 d-flex justify-content-center gr1 btn1">
+                                <Button onClick={handleClearForm} className="btn btn-info custom-button">
+                                    Hủy
+                                </Button>
                             </div>
-                        </Modal.Footer>
-                    </form>
-                </Modal>
-            </Formik>
-            </div>
-        </StylePA>
+
+                            <div className="mb-3 d-flex justify-content-center gr2 btn2">
+                                <button type="submit" className="btn btn-primary">
+                                    Lưu
+                                </button>
+                            </div>
+                        </div>
+                    </Modal.Footer>
+                </form>
+            </Modal>
+        </Formik>
+
+
     );
 
 }

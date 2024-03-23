@@ -6,6 +6,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {toast} from "react-toastify";
 
 import styled from 'styled-components';
+import Header from "../../../components/header/Header";
 const StyledListEmployee = styled.div`
 
 body {
@@ -218,6 +219,8 @@ export function EmployeeCreate(){
         }
     }
     return (
+        <>
+            <Header/>
         <StyledListEmployee>
             <h1 className="bg-primary text-light" style={{display: "flex", justifyContent: "center", marginLeft: "50px", marginRight: "50px"}}>Thêm mới nhân viên</h1>
             <Formik initialValues={employee} onSubmit={(values,{setSubmitting}) => {
@@ -293,5 +296,6 @@ export function EmployeeCreate(){
                 }
             </Formik>
         </StyledListEmployee>
+            </>
     )
 }

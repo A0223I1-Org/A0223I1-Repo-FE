@@ -131,6 +131,7 @@ const Header = () => {
           <a href="#reviews">Tra cứu</a>
           <NavLink to="/report">Báo cáo</NavLink>
           <a href="#helps">Trợ giúp</a>
+          <NavLink to="/customerService">Hỗ trợ khách hàng</NavLink>
         </nav>
       </div>
     </header>

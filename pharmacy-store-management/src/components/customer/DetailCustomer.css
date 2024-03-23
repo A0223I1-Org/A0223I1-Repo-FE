@@ -1,100 +1,100 @@
-.NhiNTH-detailCustomer body {
-    font-family: Poppins, serif;
-}
-.NhiNTH-detailCustomer .row {
-    margin-bottom: 5px;
-}
-.NhiNTH-detailCustomer .row-scope{
-    text-align: center;
-}
-.NhiNTH-detailCustomer .row-scope td{
-    background-color: #449af8;
-    color: white;
-}
-.NhiNTH-detailCustomer .row-name{
-    text-align: left;
-    width: 200px;
-}
-.NhiNTH-detailCustomer .row-address{
-    text-align: left;
-    width: 200px;
-}
-.NhiNTH-detailCustomer .myTable {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    border-radius: 2px;
-}
-.NhiNTH-detailCustomer .form-select{
-    width: 100%;
-    margin-right: 10px;
-}
-.NhiNTH-detailCustomer fieldset{
-    margin-bottom: 10px;
-    width: 100%;
-    box-sizing: border-box;
-}
-.NhiNTH-detailCustomer legend {
-    all: revert;
-}
-.NhiNTH-detailCustomer b{
-    font-size: 16px;
-}
-.NhiNTH-detailCustomer .chucNang {
-    margin-top: 1%;
-    display: flex;
-    justify-content: flex-end; /* aligns items to the left */
-}
-.NhiNTH-detailCustomer .chucNang button{
-    margin: 0px 5px;
-}
-.NhiNTH-detailCustomer nav {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    justify-content: center;
-}
-.NhiNTH-detailCustomer .myTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-.NhiNTH-detailCustomer .myTable th, .myTable td {
-    border: 1px solid #dee2e6;
-    padding: 0.75rem;
-    vertical-align: top;
-}
-.NhiNTH-detailCustomer .myTable thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-}
-.NhiNTH-detailCustomer .myTable tbody + tbody {
-    border-top: 2px solid #dee2e6;
-}
-.NhiNTH-detailCustomer .table-row{
-    cursor: pointer;
-}
-.NhiNTH-detailCustomer .selected-row{
-    background-color: #082b34;
-    color: white;
-}
+/*.NhiNTH-detailCustomer body {*/
+/*    font-family: Poppins, serif;*/
+/*}*/
+/*.NhiNTH-detailCustomer .row {*/
+/*    margin-bottom: 5px;*/
+/*}*/
+/*.NhiNTH-detailCustomer .row-scope{*/
+/*    text-align: center;*/
+/*}*/
+/*.NhiNTH-detailCustomer .row-scope td{*/
+/*    background-color: #449af8;*/
+/*    color: white;*/
+/*}*/
+/*.NhiNTH-detailCustomer .row-name{*/
+/*    text-align: left;*/
+/*    width: 200px;*/
+/*}*/
+/*.NhiNTH-detailCustomer .row-address{*/
+/*    text-align: left;*/
+/*    width: 200px;*/
+/*}*/
+/*.NhiNTH-detailCustomer .myTable {*/
+/*    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);*/
+/*    text-align: center;*/
+/*    border-radius: 2px;*/
+/*}*/
+/*.NhiNTH-detailCustomer .form-select{*/
+/*    width: 100%;*/
+/*    margin-right: 10px;*/
+/*}*/
+/*.NhiNTH-detailCustomer fieldset{*/
+/*    margin-bottom: 10px;*/
+/*    width: 100%;*/
+/*    box-sizing: border-box;*/
+/*}*/
+/*.NhiNTH-detailCustomer legend {*/
+/*    all: revert;*/
+/*}*/
+/*.NhiNTH-detailCustomer b{*/
+/*    font-size: 16px;*/
+/*}*/
+/*.NhiNTH-detailCustomer .chucNang {*/
+/*    margin-top: 1%;*/
+/*    display: flex;*/
+/*    justify-content: flex-end; !* aligns items to the left *!*/
+/*}*/
+/*.NhiNTH-detailCustomer .chucNang button{*/
+/*    margin: 0px 5px;*/
+/*}*/
+/*.NhiNTH-detailCustomer nav {*/
+/*    margin-top: 15px;*/
+/*    margin-bottom: 15px;*/
+/*    justify-content: center;*/
+/*}*/
+/*.NhiNTH-detailCustomer .myTable {*/
+/*    width: 100%;*/
+/*    border-collapse: collapse;*/
+/*}*/
+/*.NhiNTH-detailCustomer .myTable th, .myTable td {*/
+/*    border: 1px solid #dee2e6;*/
+/*    padding: 0.75rem;*/
+/*    vertical-align: top;*/
+/*}*/
+/*.NhiNTH-detailCustomer .myTable thead th {*/
+/*    vertical-align: bottom;*/
+/*    border-bottom: 2px solid #dee2e6;*/
+/*}*/
+/*.NhiNTH-detailCustomer .myTable tbody + tbody {*/
+/*    border-top: 2px solid #dee2e6;*/
+/*}*/
+/*.NhiNTH-detailCustomer .table-row{*/
+/*    cursor: pointer;*/
+/*}*/
+/*.NhiNTH-detailCustomer .selected-row{*/
+/*    background-color: #082b34;*/
+/*    color: white;*/
+/*}*/
 
-.NhiNTH-detailCustomer .time .form-group {
-    /*display: flex;*/
-    /*flex-wrap: wrap;*/
-    align-items: center; /* Canh chỉnh các phần tử trong form-group theo chiều dọc */
-}
+/*.NhiNTH-detailCustomer .time .form-group {*/
+/*    !*display: flex;*!*/
+/*    !*flex-wrap: wrap;*!*/
+/*    align-items: center; !* Canh chỉnh các phần tử trong form-group theo chiều dọc *!*/
+/*}*/
 
-.NhiNTH-detailCustomer .time .form-group label {
-    width: 100px; /* Độ rộng cố định cho nhãn */
-    margin-right: 20px; /* Khoảng cách giữa nhãn và ô input */
-    /*text-align: right; !* Canh chỉnh nhãn sang phải *!*/
-}
+/*.NhiNTH-detailCustomer .time .form-group label {*/
+/*    width: 100px; !* Độ rộng cố định cho nhãn *!*/
+/*    margin-right: 20px; !* Khoảng cách giữa nhãn và ô input *!*/
+/*    !*text-align: right; !* Canh chỉnh nhãn sang phải *!*!*/
+/*}*/
 
-.NhiNTH-detailCustomer .time .form-group input,
-.NhiNTH-detailCustomer .time .form-group .form-control {
-    flex: 1; /* Ô input chiếm phần còn lại của form-group */
-    margin-right: 15px; /* Khoảng cách giữa các ô input */
-}
+/*.NhiNTH-detailCustomer .time .form-group input,*/
+/*.NhiNTH-detailCustomer .time .form-group .form-control {*/
+/*    flex: 1; !* Ô input chiếm phần còn lại của form-group *!*/
+/*    margin-right: 15px; !* Khoảng cách giữa các ô input *!*/
+/*}*/
 
-.NhiNTH-detailCustomer .time .form-group .yup-error-message {
-    flex: 1; /* Hiển thị errormessage full width */
-    margin-top: 5px; /* Khoảng cách giữa ô input và errormessage */
-}
+/*.NhiNTH-detailCustomer .time .form-group .yup-error-message {*/
+/*    flex: 1; !* Hiển thị errormessage full width *!*/
+/*    margin-top: 5px; !* Khoảng cách giữa ô input và errormessage *!*/
+/*}*/

@@ -7,6 +7,7 @@ import {toast} from "react-toastify";
 import {seeChartRevenueAndProfit} from "../../utils/ReportService/ReportService";
 import {Link} from "react-router-dom";
 import styled from 'styled-components';
+import Header from "../header/Header";
 
 const timeOptions = [
     {value: 'year', label: 'Năm'},
@@ -124,8 +125,8 @@ const StyleReportChart = styled.div`
   .LoiTH-chart #fieldset-time {
     height: 170px;
     display: flex;
-    flex-direction: column;  /* Hiển thị các thành phần theo chiều dọc */
-    align-items: flex-start;  /* Canh trái các thành phần trong #fieldset-time */
+    flex-direction: column; /* Hiển thị các thành phần theo chiều dọc */
+    align-items: flex-start; /* Canh trái các thành phần trong #fieldset-time */
     gap: 10px;
     position: relative;
   }
@@ -337,121 +338,127 @@ export const ReportChart = () => {
     }
 
     return (
-        <StyleReportChart>
-            <div className="LoiTH-chart">
-            <div className="container">
-                <div className="row">
-                    <div className="col-1"></div>
-                    <div className="col-4">
-                        <div>
-                            <fieldset className="border rounded-3 p-3" id="fieldset-time">
-                                <legend><b>Thời gian</b></legend>
-                                <div className="time-selector">
-                                    <Select value={selectedTimeOption} onChange={handleTimeChange}
-                                            options={timeOptions} placeholder="Chọn loại thời gian"/>
-                                    {selectedTimeOption && selectedTimeOption.value === 'year' && (
-                                        <Select
-                                            value={selectedYear} onChange={handleYearChange}
-                                            options={yearOptions} placeholder="Năm"/>
-                                    )}
-                                    {(selectedTimeOption && selectedTimeOption.value === 'month') && (
-                                        <>
-                                            <Select value={selectedMonth} onChange={handleMonthChange}
-                                                    options={monthOptions} placeholder="Tháng"/>
-                                            <Select value={selectedYear} onChange={handleYearChange}
+        <>
+            <Header/>
+            <StyleReportChart>
+                <div className="LoiTH-chart">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-1"></div>
+                            <div className="col-4">
+                                <div>
+                                    <fieldset className="border rounded-3 p-3" id="fieldset-time">
+                                        <legend><b>Thời gian</b></legend>
+                                        <div className="time-selector">
+                                            <Select value={selectedTimeOption} onChange={handleTimeChange}
+                                                    options={timeOptions} placeholder="Chọn loại thời gian"/>
+                                            {selectedTimeOption && selectedTimeOption.value === 'year' && (
+                                                <Select
+                                                    value={selectedYear} onChange={handleYearChange}
                                                     options={yearOptions} placeholder="Năm"/>
-                                        </>
-                                    )}
+                                            )}
+                                            {(selectedTimeOption && selectedTimeOption.value === 'month') && (
+                                                <>
+                                                    <Select value={selectedMonth} onChange={handleMonthChange}
+                                                            options={monthOptions} placeholder="Tháng"/>
+                                                    <Select value={selectedYear} onChange={handleYearChange}
+                                                            options={yearOptions} placeholder="Năm"/>
+                                                </>
+                                            )}
 
-                                    {selectedTimeOption && selectedTimeOption.value === 'week' && (
-                                        <>
-                                            <Select value={selectedYear} onChange={handleYearChange}
-                                                    options={yearOptions} placeholder="Năm"/>
-                                            <Select value={selectedWeek} onChange={handleWeekChange}
-                                                    options={weekOptions} placeholder="Tuần"/>
-                                        </>
-                                    )}
+                                            {selectedTimeOption && selectedTimeOption.value === 'week' && (
+                                                <>
+                                                    <Select value={selectedYear} onChange={handleYearChange}
+                                                            options={yearOptions} placeholder="Năm"/>
+                                                    <Select value={selectedWeek} onChange={handleWeekChange}
+                                                            options={weekOptions} placeholder="Tuần"/>
+                                                </>
+                                            )}
+                                        </div>
+                                        <p>{displayTime()}</p>
+                                        <button className="button-view-chart" onClick={handleViewChart}>
+                                            <i className="bi bi-bar-chart"> </i> Xem báo cáo và biểu đồ
+                                        </button>
+                                    </fieldset>
                                 </div>
-                                <p>{displayTime()}</p>
-                                <button className="button-view-chart" onClick={handleViewChart}>
-                                    <i className="bi bi-bar-chart"> </i> Xem báo cáo và biểu đồ
-                                </button>
-                            </fieldset>
-                        </div>
-                        <div>
-                            <fieldset className="border rounded-3 p-3" id="fieldset-repot">
-                                <legend><b>Báo cáo chi tiết</b></legend>
-                                {showChart ? (
-                                    <div className="detail-report">
-                                        <div className="revenue">
-                                            <label htmlFor="revenue">Doanh thu</label>
-                                            <input type="text" name="" id="revenue" value={formatCurrency(revenue)}
-                                                   readOnly/>
-                                        </div>
+                                <div>
+                                    <fieldset className="border rounded-3 p-3" id="fieldset-repot">
+                                        <legend><b>Báo cáo chi tiết</b></legend>
+                                        {showChart ? (
+                                            <div className="detail-report">
+                                                <div className="revenue">
+                                                    <label htmlFor="revenue">Doanh thu</label>
+                                                    <input type="text" name="" id="revenue"
+                                                           value={formatCurrency(revenue)}
+                                                           readOnly/>
+                                                </div>
 
-                                        <div className="profit">
-                                            <label htmlFor="profit">Lợi nhuận</label>
-                                            <input type="text" name="" id="profit" value={formatCurrency(profit)}
-                                                   readOnly/>
-                                        </div>
+                                                <div className="profit">
+                                                    <label htmlFor="profit">Lợi nhuận</label>
+                                                    <input type="text" name="" id="profit"
+                                                           value={formatCurrency(profit)}
+                                                           readOnly/>
+                                                </div>
 
-                                        <div className="revenue">
-                                            <label htmlFor="medium-revenue">Doanh thu TB</label>
-                                            <input type="text" name="" id="medium-revenue"
-                                                   value={formatCurrency(averageRevenue)} readOnly/>
-                                        </div>
+                                                <div className="revenue">
+                                                    <label htmlFor="medium-revenue">Doanh thu TB</label>
+                                                    <input type="text" name="" id="medium-revenue"
+                                                           value={formatCurrency(averageRevenue)} readOnly/>
+                                                </div>
 
-                                        <div className="profit">
-                                            <label htmlFor="medium-profit">Lợi nhuận TB</label>
-                                            <input type="text" name="" id="medium-profit"
-                                                   value={formatCurrency(averageProfit)} readOnly/>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <p>Chưa có dữ liệu</p>
-                                )
-                                }
-                            </fieldset>
+                                                <div className="profit">
+                                                    <label htmlFor="medium-profit">Lợi nhuận TB</label>
+                                                    <input type="text" name="" id="medium-profit"
+                                                           value={formatCurrency(averageProfit)} readOnly/>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <p>Chưa có dữ liệu</p>
+                                        )
+                                        }
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div className="col-6">
+                                <div>
+                                    <fieldset className="border rounded-3 p-3" id="fieldset-chart">
+                                        <legend><b>Biểu đồ Doanh thu và Lợi nhuận</b></legend>
+                                        {showChart ? (
+                                            data.length > 0 ? (
+                                                <ResponsiveContainer className="chart" height={300}>
+                                                    <LineChart width={600} height={300} data={data}
+                                                               margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                                                        <XAxis dataKey="date"/>
+                                                        {/*<YAxis/>*/}
+                                                        <YAxis tickFormatter={(value) => `${value}\u00A0₫`}/>
+                                                        <CartesianGrid strokeDasharray="3 3"/>
+                                                        <Tooltip/>
+                                                        <Legend/>
+                                                        <Line type="monotone" dataKey="revenue" stroke="#8884d8"
+                                                              activeDot={{r: 8}} name="Doanh thu"/>
+                                                        <Line type="monotone" dataKey="profit" stroke="#82ca9d"
+                                                              name="Lợi nhuận"/>
+                                                    </LineChart>
+                                                </ResponsiveContainer>
+                                            ) : (
+                                                <p>Chưa có dữ liệu</p>
+                                            )
+                                        ) : (
+                                            <p>Chưa có dữ liệu</p>
+                                        )}
+                                    </fieldset>
+                                </div>
+                                <Link to="/">
+                                    <button style={{float: "right"}} type="button" className="btn btn-primary"><i
+                                        className="bi bi-arrow-return-left"></i> Trở về
+                                    </button>
+                                </Link>
+                            </div>
+                            <div className="col-1"></div>
                         </div>
                     </div>
-                    <div className="col-6">
-                        <div>
-                            <fieldset className="border rounded-3 p-3" id="fieldset-chart">
-                                <legend><b>Biểu đồ Doanh thu và Lợi nhuận</b></legend>
-                                {showChart ? (
-                                    data.length > 0 ? (
-                                        <ResponsiveContainer className="chart" height={300}>
-                                            <LineChart width={600} height={300} data={data}
-                                                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-                                                <XAxis dataKey="date"/>
-                                                {/*<YAxis/>*/}
-                                                <YAxis tickFormatter={(value) => `${value}\u00A0₫`}/>                                                <CartesianGrid strokeDasharray="3 3"/>
-                                                <Tooltip/>
-                                                <Legend/>
-                                                <Line type="monotone" dataKey="revenue" stroke="#8884d8"
-                                                      activeDot={{r: 8}} name="Doanh thu"/>
-                                                <Line type="monotone" dataKey="profit" stroke="#82ca9d"
-                                                      name="Lợi nhuận"/>
-                                            </LineChart>
-                                        </ResponsiveContainer>
-                                    ) : (
-                                        <p>Chưa có dữ liệu</p>
-                                    )
-                                ) : (
-                                    <p>Chưa có dữ liệu</p>
-                                )}
-                            </fieldset>
-                        </div>
-                        <Link to="/">
-                            <button style={{float:"right"}} type="button" className="btn btn-primary"><i
-                                className="bi bi-arrow-return-left"></i> Trở về
-                            </button>
-                        </Link>
-                    </div>
-                    <div className="col-1"></div>
                 </div>
-            </div>
-            </div>
-        </StyleReportChart>
+            </StyleReportChart>
+        </>
     );
 }

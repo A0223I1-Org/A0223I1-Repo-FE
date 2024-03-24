@@ -9,16 +9,9 @@ import {toast} from "react-toastify";
 import {NavLink, useNavigate} from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import Nav from '../../components/nav/Nav';
 import * as retailInvoice from '../../utils/SaleManagementService/RetailInvoice';
 import styled from 'styled-components';
-import img1 from '../SalesManagement/image/banthuoc.png';
-import img2 from '../SalesManagement/image/nhapkho.png';
-import img3 from '../SalesManagement/image/xuathoantra.png';
-import img4 from '../SalesManagement/image/xuathuy.png';
-import img5 from '../SalesManagement/image/search.png';
-import img6 from '../SalesManagement/image/baocao.png';
-import img7 from '../SalesManagement/image/nhatky.png';
-import img8 from '../SalesManagement/image/logout.png';
 
 const StyleReportChart = styled.div`
   
@@ -186,17 +179,48 @@ input {
 }
 
 .total {
+  margin-top: 10px;
     font-size: 15px;
     margin-left: 75%;
 }
 
-
-.table-row{
-    cursor: pointer;
+.myTable {
+  text-align: center;
+  border-radius: 2px;
+  width: 100%;
+  border-collapse: collapse;
+  boder-radius: 3px;
 }
+
+.myTable th, .myTable td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  vertical-align: top;
+}
+
+.myTable thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.myTable tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+.table-row{
+  cursor: pointer;
+}
+.row-scope{
+  text-align: center;
+}
+
+.row-scope th{
+  background-color: #449af8;
+  color: white;
+}
+
 .selected-row{
-    background-color: #082b34;
-    color: white;
+  background-color: #082b34;
+  color: white;
 }
 
 .btn i {
@@ -365,48 +389,56 @@ input {
   };
 
   const totalAmount = useMemo(() => calculateTotal(), [formData.medicineListF]);
-  const handlePayment = async () => {
-    if (isProcessingPayment) {
-      return;
-    }
-  
-    try {
-      setIsProcessingPayment(true);
 
-      const newTotal = formData.medicineListF.reduce((acc, medicine) => {
-        const subtotal = medicine.quantityF * medicine.retailPriceF;
-        return acc + subtotal;
-      }, 0);
-  
-      const updatedFormData = {
-        ...formData,
-        totalF: newTotal,
-      };
-  
-      await retailInvoice.createInvoice(updatedFormData);
-  
-      setFormData({
-        dateCreateF: '',
-        noteF: '',
-        employeeIdF: '',
-        customerIdF: '',
-        symptomIdF: '',
-        totalF: '',
-        medicineListF: [{ medicineIdF: '', medicineNameF: '', unitF: '', quantityF: '', retailPriceF: '' }],
-      });
-  
-      setIsFirstTime(true);
-  
-      toast.success('Thanh toán thành công');
-  
-    } catch (error) {
-      console.error('Error in handlePayment:', error);
-      toast.error('Thanh toán thất bại');
-    } finally {
-      setIsProcessingPayment(false);
-    }
-  };
-  
+  const handlePayment = async () => {
+            if (isProcessingPayment) {
+              return;
+            }
+
+            // Tính tổng tiền mới
+            const newTotal = formData.medicineListF.reduce((acc, medicine) => {
+              const subtotal = medicine.quantityF * medicine.retailPriceF;
+              return acc + subtotal;
+            }, 0);
+
+            // Kiểm tra nếu tổng tiền mới là 0, hiện thông báo và không thực hiện thanh toán
+            if (newTotal === 0) {
+              toast.error('Hãy chọn thuốc vào hóa đơn');
+              return;
+            }
+
+            try {
+              setIsProcessingPayment(true);
+
+              const updatedFormData = {
+                ...formData,
+                totalF: newTotal,
+              };
+
+              await retailInvoice.createInvoice(updatedFormData);
+
+              // Reset form và hiển thị thông báo khi thanh toán thành công
+              setFormData({
+                dateCreateF: '',
+                noteF: '',
+                employeeIdF: '',
+                customerIdF: '',
+                symptomIdF: '',
+                totalF: '',
+                medicineListF: [{ medicineIdF: '', medicineNameF: '', unitF: '', quantityF: '', retailPriceF: '' }],
+              });
+
+              setIsFirstTime(true);
+
+              toast.success('Thanh toán thành công');
+            } catch (error) {
+              console.error('Error in handlePayment:', error);
+              toast.error('Thanh toán thất bại');
+            } finally {
+              setIsProcessingPayment(false);
+            }
+          };
+
 
   const highlightRow = (event, medicineId) => {
     const row = event.currentTarget;
@@ -429,8 +461,9 @@ input {
 };
 
   const removeHighlight = () => {
-    if (selectedRow) {
-      selectedRow.classList.remove('.selected-row');
+    const highlightedRow = document.querySelector('.selected-row');
+    if (highlightedRow) {
+      highlightedRow.classList.remove('.selected-row');
       setSelectedRow(null);
       setIdMedicineDelete(null); // Set to null when removing the highlight
     }
@@ -483,36 +516,9 @@ input {
 
     return (
         <StyleReportChart>
-        <section class="main">
-                  <div className="main-left">
-                  <nav className="sidebar">
-                  <ul>
-                      <li style={{ textAlign: "center", fontSize: "22.8px", padding: " 0px 3px"}}>Chọn nhanh</li>
-                      <li>
-                          <hr className="dropdown-divider" />
-                      </li>
-                      <li><a href="#Banhang"><img src={img1} alt="icon" /> Bán hàng</a></li>
-                      <li><a href="#Nhapkho"><img src={img2} alt="icon" /> Nhập kho</a></li>
-                      <li><a href="#Xuathoantra"><img src={img3} alt="icon" /> Xuất hoàn trả </a></li>
-                      <li><a href="#Xuathuy"><img src={img4} alt="icon" /> Xuất hủy</a></li>
-                      <li>
-                          <hr className="dropdown-divider" />
-                      </li>
-                      <li><a href="#Tracuunhanh"><img src={img5} alt="icon" /> Tra cứu nhanh</a></li>
-                      <li>
-                          <hr className="dropdown-divider" />
-                      </li>
-                      <li><a href="#Hethongbaocao"><img src={img6} alt="icon" /> Hệ thống báo cáo</a></li>
-                      <li><a href="#Nhatkybanhang"><img src={img7} alt="icon" /> Nhật ký bán hàng</a></li>
-                      <li>
-                          <hr className="dropdown-divider" />
-                      </li>
-                      <li><a href="#Dangxuat"><img src={img8} alt="icon" /> Đăng xuất</a></li>
-                  </ul>
-              </nav>
-              
-              </div>
-            <div className="main-right">
+    <section class="main">
+        <Nav />
+    <div className="main-right">
       <div className="container">
         <fieldset className="border p-2" style={{ borderRadius: '5px' }}>
           <legend className="w-auto">Bán lẻ</legend>
@@ -520,9 +526,9 @@ input {
           <Formik
                 initialValues={{
                   invoiceId: '',
-                  dateCreate: '',
+                  dateCreate: formData.dateCreateF,
                   note: '',
-                  employeeName: '',
+                  employeeName: formData.employeeIdF,
                   customerName: '',
                   systomName: '',
                   medicineName: '',
@@ -537,12 +543,12 @@ input {
                  <div className="secondary-infomation-1">
                       <div>
                       <label htmlFor="invoiceId" style={{ marginTop: '6.75px' }}>Số phiếu: </label>
-                      <input type="text" id="invoiceId" name="invoiceId" style={{ marginLeft: '24px', marginRight: '30px' }} placeholder="TT00001" readOnly/>
+                      <input type="text" id="invoiceId" name="invoiceId" style={{ marginLeft: '14px', marginRight: '30px' }} placeholder="TT00001" readOnly/>
                     
                       </div>
                       <div>
                       <label htmlFor="dateCreate" style={{ marginTop: '6.75px' }}>Ngày lập: </label>
-                      <input type="date" id="dateCreate" name="dateCreate" style={{ marginLeft: '28.5px', marginRight: '30px' }}
+                      <input type="date" id="dateCreate" name="dateCreate" style={{ marginLeft: '24px', marginRight: '33px' }}
                        value={values.dateCreate}
                        onChange={handleChange} />
                       <div className='erros-mess'> 
@@ -603,7 +609,7 @@ input {
               <div className="main-infomation">
                     <div className="disease-symptoms">
                       <label htmlFor="medicineName">Tên thuốc: </label>
-                      <input type="text" name="medicineName" id="medicineName" list="medicineList" placeholder="Tên thuốc" style={{ marginRight: '30px' }}
+                      <input type="text" name="medicineName" id="medicineName" list="medicineList" placeholder="Tên thuốc" style={{ marginRight: '29px' }}
                        value={values.medicineName}
                        onChange={handleChange}/>
                       <datalist id="medicineList">
@@ -617,7 +623,7 @@ input {
                     </div>
                     <div>                   
                      <label htmlFor="quantity" style={{ marginTop: '6.75px' }}>Số lượng: </label>
-                    <input type="number" id="quantity" name="quantity" style={{ marginLeft: '32.5px', marginRight: '30px' }} placeholder="0" 
+                    <input type="number" id="quantity" name="quantity" style={{ marginLeft: '25px', marginRight: '36px' }} placeholder="0" 
                      value={values.quantity}
                      onChange={handleChange}
                     />
@@ -650,9 +656,9 @@ input {
         <br />
         <fieldset className="border p-2" style={{ borderRadius: '5px' }}>
           <legend className="w-auto">Danh sách thuốc</legend>
-          <table className="table table-bordered">
+          <table className="myTable">
             <thead>
-              <tr>
+            <tr className="row-scope">
                 <th>Tên thuốc</th>
                 <th>Đơn vị tính</th>
                 <th>Số lượng</th>

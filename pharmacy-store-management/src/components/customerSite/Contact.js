@@ -2,6 +2,7 @@ import {Nav} from "./Nav";
 import styled from "styled-components";
 import {useState} from "react";
 import {useAuth0} from "@auth0/auth0-react";
+import { toast } from "react-toastify";
 
 const ContactCSS = styled.div`
     *
@@ -110,11 +111,11 @@ export const Contact=()=>{
         const res = await fetch('https://e-commerce-contact-190c8-default-rtdb.firebaseio.com/Message.json',options)
         console.log(res)
         if(res){
-            alert("Tin nhắn của bạn đã được gửi, chờ phản hồi")
+            toast("Tin nhắn của bạn đã được gửi, chờ phản hồi")
         }
         else
         {
-            alert("Lỗi")
+            toast("Lỗi")
         }
     }
     return(

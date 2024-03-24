@@ -17,7 +17,7 @@ export const findAllInvoice = async (page, size) => {
     }
 }
 
-export const findInvoiceByDateAndTimeRange = async (fromDate, toDate, fromTime, toTime, sortField, displayField,page,size) => {
+export const findInvoiceByDateAndTimeRange = async (fromDate, toDate, fromTime, toTime, sortField, displayField, page, size) => {
     try {
         // Check if sortField and displayField are provided
         const hasSortField = sortField ? `&sortField=${sortField}` : '';

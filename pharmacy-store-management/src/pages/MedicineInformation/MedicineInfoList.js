@@ -152,7 +152,7 @@ export function MedicineInfoList() {
         <>
             <Header/>
             <section className="main">
-                <Nav />
+                {/* <Nav /> */}
                 <div className="main-right">
                     <div className="container">
                         <h1 className="text-center bg-primary">Danh sách thuốc</h1>

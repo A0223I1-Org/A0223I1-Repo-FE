@@ -122,7 +122,8 @@ const Header = () => {
             <Dropdown.Menu>
               {/* Dropdown items */}
               <Dropdown.Item as={NavLink} to="/medicineGroup">Quản lý nhóm thuốc</Dropdown.Item>
-              <Dropdown.Item as={NavLink} to="/listPrescription">Quản lý đơn thuốc</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/medicineInfo">Quản lý thông tin thuốc</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/listPrescription">Quản lý toa thuốc</Dropdown.Item>
               <Dropdown.Item as={NavLink} to="/supplier">Quản lý nhà cung cấp</Dropdown.Item>
               <Dropdown.Item as={NavLink} to="/listCustomer">Quản lý khách hàng</Dropdown.Item>
               <Dropdown.Item as={NavLink} to="/employee/list">Quản lý nhân viên</Dropdown.Item>

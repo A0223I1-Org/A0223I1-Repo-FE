@@ -191,7 +191,18 @@ export const DetailCustomer = () => {
     useEffect(() => {
         fetchApi()
     }, [customerId])
+    const fetchAllInvoices = async () => {
+        try {
+            const allInvoices = await CustomerService.seeInvoiceCustomer(customerId);
+            setInvoiceCustomer(allInvoices);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
+    useEffect(() => {
+        fetchAllInvoices(); // Gọi hàm để lấy tất cả các hóa đơn khi trang được tải lần đầu tiên
+    }, []);
 
     const onSubmit = async (values, actions, formikProps) => {
         const {inputStartDate, inputEndDate, inputTimeStart, inputTimeEnd} = values;

@@ -720,7 +720,7 @@ input {
           Xoá thuốc
         </button>        
           <button type="button" className="btn btn-info"><span className="em-1"><i className="bi bi-printer"></i></span>In phiếu</button>
-          <NavLink to={`/`} type="button" className="btn btn-secondary">
+          <NavLink to={`/retailSale`} type="button" className="btn btn-secondary">
             <span className="em-1">
               <i className="bi bi-arrow-left-square"></i>
             </span>

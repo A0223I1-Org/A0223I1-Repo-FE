@@ -101,7 +101,7 @@ legend{
 
 .show-sort-button .demo {
    position: absolute;
-   right: 443px;
+   right: 464px;
 }
 .show-sort-button .demo .btn {
     height: 40px;
@@ -182,7 +182,7 @@ export function RetailSalesManagement() {
 
     useEffect(() => {
         fetchApi(currentPage, itemsPerPage);
-    }, [currentPage, itemsPerPage, isFiltering, currentFilter]);
+    }, [currentPage]);
     
 
     const fetchApi = async (page, size) => {
@@ -221,9 +221,8 @@ export function RetailSalesManagement() {
     };
     
 
-    const handlePaginate = (pageNumber) => {
-        fetchApi(pageNumber, itemsPerPage);
-        setCurrentPage(pageNumber); // Cập nhật currentPage sau khi fetchApi được gọi
+    const handlePaginate = async (pageNumber) => {
+        setCurrentPage(pageNumber);
     };
     
 
@@ -252,7 +251,7 @@ export function RetailSalesManagement() {
         });
         setIsFiltering(true);
         setCurrentPage(0);
-        fetchApi(0, itemsPerPage);
+        await fetchApi(0, itemsPerPage);
     };
     
     if (isLoading) {
@@ -419,35 +418,25 @@ export function RetailSalesManagement() {
 
 
                 </table>
-                <div aria-label="Page navigation example" className="Haunav-wrapper" >
-                                    <ul className="pagination justify-content-center">
-                                        {currentPage !== 0 && (
-                                            <li className="page-item">
-                                                <span className="page-link" onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
-                                            </li>
-                                        )}
-
-                                        {Array.from({ length: totalPages }, (_, index) => {
-                                            // Kiem tra neu index trang gan voi trang hien tai
-                                            if (index === 0 || index === totalPages - 1 || Math.abs(currentPage - index) <= 2) {
-                                                return (
-                                                    <li key={index} className={`page-item ${currentPage === index ? 'active' : ''}`}>
-                                                        <span className="page-link" onClick={() => handlePaginate(index)}>{index + 1}</span>
+                <div aria-label="Page navigation example" className="Haunav-wrapper">
+                                            <ul className="pagination justify-content-center">
+                                                <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
+                                            <span className="page-link"
+                                                  onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
+                                                </li>
+                                                {Array.from({length: totalPages}, (_, index) => (
+                                                    <li key={index}
+                                                        className={`page-item ${currentPage === index ? 'active' : ''}`}>
+                                                <span className="page-link"
+                                                      onClick={() => handlePaginate(index)}>{index + 1}</span>
                                                     </li>
-                                                );
-                                            } else if (Math.abs(currentPage - index) === 3) {
-                                                // Hien thi '...' neu khoang cach giua trang va trang hien tai la 3
-                                                return <li key={index} className="page-item disabled"><span className="page-link">...</span></li>;
-                                            }
-                                            return null;
-                                        })}
-                                        {currentPage !== totalPages - 1 && (
-                                            <li className="page-item">
-                                                <span className="page-link" onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
-                                            </li>
-                                        )}
-                                    </ul>
-                                </div>
+                                                ))}
+                                                <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
+                                            <span className="page-link"
+                                                  onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
+                                                </li>
+                                            </ul>
+                                        </div>
             </fieldset>
 
             <div className="action1" style= {{ marginLeft: '65%' }}> 

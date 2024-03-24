@@ -104,7 +104,7 @@ const Header = () => {
 
             <Dropdown.Menu>
               {/* Dropdown items */}
-              <Dropdown.Item as={NavLink} to="/">Hóa đơn bán hàng</Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/retailSale">Hóa đơn bán hàng</Dropdown.Item>
               <Dropdown.Item as={NavLink} to="/retail">Bán lẻ</Dropdown.Item>
               <Dropdown.Item href="#">Bán sỉ</Dropdown.Item>
               <Dropdown.Item href="#">Bán theo đơn</Dropdown.Item>

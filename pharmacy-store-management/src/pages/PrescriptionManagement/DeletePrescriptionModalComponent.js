@@ -1,9 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
-import "./prescription.css";
 
-
-class DeletePrescriptionModal extends React.Component {
+class DeletePrescriptionModalComponent extends React.Component {
     render() {
         return <Modal
             isOpen={this.props.open}
@@ -13,17 +11,22 @@ class DeletePrescriptionModal extends React.Component {
             overlayClassName="custom-modal-overlay"
         >
             <div className="modal-content">
-                <p>Are you sure you want to delete this item?</p>
+                <p>Bạn có muốn xoá đơn thuốc <span className="error-message1">{this.props.name}</span> không?</p>
             </div>
             <div className="modal-buttons">
                 <button className="confirm-button" onClick={this.props.onClick}>
-                    Yes, Delete
+                    Có, Xoá đi
                 </button>
+
+                <div style={{ marginRight: '10px' }}></div>
+
                 <button className="cancel-button" onClick={this.props.onRequestClose}>
-                    Cancel
+                    Huỷ
                 </button>
             </div>
+
         </Modal>;
     }
 }
-export default DeletePrescriptionModal;
+
+export default DeletePrescriptionModalComponent;

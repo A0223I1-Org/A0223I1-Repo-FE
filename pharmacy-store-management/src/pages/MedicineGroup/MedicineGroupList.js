@@ -2,10 +2,12 @@
 import {useEffect, useState} from "react";
 import * as medicineGroupService from "../../utils/InformationService/MedicineGroupManagementService/MedicineGroupService"
 import {toast} from "react-toastify";
-import styled from 'styled-components';
+import Header from "../../components/header/Header";
+import Nav from "../../components/nav/Nav";
+import styled from "styled-components";
 
-const StyledContainer = styled.div`
-    body {
+const StyledMedicineGroup = styled.div`
+body {
     padding: 20px
 }
 
@@ -17,8 +19,8 @@ const StyledContainer = styled.div`
 legend {
     all: revert!important;
 }
-
 `;
+
 export function MedicineGroupList() {
     const [medicineGroup, setMedicineGroup] = useState([]);
 
@@ -28,6 +30,8 @@ export function MedicineGroupList() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [checkId, setCheckId] = useState("");
+    const [disableButton, setDisableButton] = useState(false);
 
     useEffect(() => {
         getAllMedicineGroup();
@@ -40,12 +44,16 @@ export function MedicineGroupList() {
 
     function checkMedicineGroup(value){
         return value == null || value === "";
+    }
 
+    // Kiểm tra độ dài tên nhóm thuốc
+    function checkMedicineGroupNameLength(value) {
+        return value.length <= 25;
     }
 
     const createNewMedicineGroup = async () => {
         if (!isAdding) {
-            toast("Please fill in {Tên Nhóm Thuốc} to add new medicineGroup");
+            toast("Phải điền vào {Tên Nhóm Thuốc} để thêm mới một nhóm thuốc");
             setMedicineGroupName("");
             setMedicineGroupId("");
             setIsAdding(true);
@@ -56,23 +64,36 @@ export function MedicineGroupList() {
                 setErrorMessage("Tên nhóm thuốc không được để trống");
                 return;
             }
+            if (!checkMedicineGroupNameLength(medicineGroupName)) {
+                setErrorMessage("Tên nhóm thuốc không được quá 25 ký tự");
+                return;
+            }
+            setDisableButton(true);
             const newMedicineGroup = {
                 medicineGroupName: medicineGroupName
             };
-            await medicineGroupService.createNewMedicineGroup(newMedicineGroup);
+            const checkCreate = await medicineGroupService.createNewMedicineGroup(newMedicineGroup);
+            if (checkCreate) {
+                setDisableButton(false);
+                console.log("ok");
+                // Refresh the medicine group list
+                getAllMedicineGroup();
 
-            // Refresh the medicine group list
-            getAllMedicineGroup();
-
-            toast("Create successfully");
-            setIsAdding(false);
-            setErrorMessage("");
-            setMedicineGroupName("");
+                toast("Create successfully");
+                setIsAdding(false);
+                setErrorMessage("");
+                setMedicineGroupName("");
+                setMedicineGroupId("");
+            }
         }
     }
 
     const updateMedicineGroupById = async () => {
-        if (checkMedicineGroup(medicineGroupId)) {
+        if (checkMedicineGroup(checkId)) {
+            toast("đã xảy ra lỗi khi cập nhật!! vui lòng thực hiện lại");
+            return;
+        }
+        if (checkMedicineGroup(checkId)) {
             toast("Chưa chọn nhóm thuốc");
             return;
         }
@@ -82,25 +103,34 @@ export function MedicineGroupList() {
             return;
         }
 
+        if (!checkMedicineGroupNameLength(medicineGroupName)) {
+            setErrorMessage("Tên nhóm thuốc không được quá 25 ký tự");
+            return;
+        }
+        setDisableButton(true);
         const updateMedicineGroup = {
-            id : medicineGroupId,
+            id : checkId,
             medicineGroupName: medicineGroupName
         }
         console.log("update object:" + updateMedicineGroup.id + ", " + updateMedicineGroup.medicineGroupName)
 
-        await medicineGroupService.updateMedicineGroupById(updateMedicineGroup, medicineGroupId);
+        const checkUpdate = await medicineGroupService.updateMedicineGroupById(updateMedicineGroup, updateMedicineGroup.id);
 
-        // Refresh the medicine group list
-        getAllMedicineGroup();
-        toast("Update successfully");
-        setMedicineGroupId("");
-        setMedicineGroupName("");
-        setErrorMessage("");
-        console.log("ok");
+        if (checkUpdate) {
+            setDisableButton(false);
+            // Refresh the medicine group list
+            getAllMedicineGroup();
+            toast("Cập nhật thành công");
+            setMedicineGroupId("");
+            setMedicineGroupName("");
+            setErrorMessage("");
+            console.log("ok");
+        }
     }
     const selectRow = (row) => {
         setMedicineGroupId(row.medicineGroupId);
         setMedicineGroupName(row.medicineGroupName);
+        setCheckId(row.medicineGroupId);
         console.log(row)
     };
     const confirmDelete = () => {
@@ -111,8 +141,12 @@ export function MedicineGroupList() {
         setShowDeleteModal(true);
     };
     const deleteMedicineGroupById = async () => {
+        if (checkMedicineGroup(checkId)) {
+            toast("đã xảy ra lỗi khi xóa!! vui lòng thực hiện lại");
+            return;
+        }
         try {
-            await medicineGroupService.deleteMedicineGroup(medicineGroupId);
+            await medicineGroupService.deleteMedicineGroup(checkId);
         } catch (e) {
             console.log(e)
         }
@@ -120,87 +154,96 @@ export function MedicineGroupList() {
         getAllMedicineGroup();
         setMedicineGroupId("");
         setMedicineGroupName("");
-        toast("Delete successfully!")
+        toast("Xóa thành công!")
     };
     const backButton = () => {
+        setMedicineGroupId("");
+        setMedicineGroupName("");
+        setErrorMessage("");
         if (isAdding) {
             setIsAdding(false);
         }
         // ...
     };
     return (
-        <StyledContainer>
-            <div className="container">
-                <h1 className="text-center bg-primary">Nhóm thuốc</h1>
+        <StyledMedicineGroup>
+            <section className="main">
+                <Nav />
+                <div className="main-right">
+                    <div className="container">
+                        <h1 className="text-center bg-primary">Nhóm thuốc</h1>
 
-                <fieldset className="border border-dark border-3 rounded-3 p-3 mt-4">
-                    <legend><h2>Danh sách nhóm thuốc</h2></legend>
-                    <table className="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th className="bg-primary text-light">Mã nhóm thuốc</th>
-                            <th className="bg-primary text-light">Tên nhóm thuốc</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            medicineGroup?.map((item) => (
-                                <tr key={item.medicineGroupId} onClick={() => selectRow(item)} className={medicineGroupId === item.medicineGroupId ? 'table-primary' : ''}>
-                                    <td>{item.medicineGroupId}</td>
-                                    <td>{item.medicineGroupName}</td>
+                        <fieldset className="border border-dark border-3 rounded-3 p-3 mt-4">
+                            <legend><h2>Danh sách nhóm thuốc</h2></legend>
+                            <table className="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th className="bg-primary text-light">Mã nhóm thuốc</th>
+                                    <th className="bg-primary text-light">Tên nhóm thuốc</th>
                                 </tr>
-                            ))
-                        }
-                        </tbody>
-                    </table>
-                </fieldset>
+                                </thead>
+                                <tbody>
+                                {
+                                    medicineGroup?.map((item) => (
+                                        <tr key={item.medicineGroupId} onClick={() => selectRow(item)} className={medicineGroupId === item.medicineGroupId ? 'table-primary' : ''}>
+                                            <td>{item.medicineGroupId}</td>
+                                            <td>{item.medicineGroupName}</td>
+                                        </tr>
+                                    ))
+                                }
+                                </tbody>
+                            </table>
+                        </fieldset>
 
 
+                        <fieldset className="border border-dark border-3 rounded-3 p-3 mt-4">
+                            <legend><h2>Thông tin nhóm thuốc</h2></legend>
+                            <form>
+                                <div className="mb-3">
+                                    <label htmlFor="groupId" className="form-label">Mã nhóm thuốc</label>
+                                    <input type="text" className="form-control" id="groupId" value={medicineGroupId} onChange={(e) => setMedicineGroupId(e.target.value)} disabled/>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="groupName" className="form-label">Tên nhóm thuốc</label>
+                                    <input type="text" className="form-control" id="groupName"  value={medicineGroupName} onChange={(e) => setMedicineGroupName(e.target.value)}/>
+                                    {errorMessage && <div className="text-danger">{errorMessage}</div>}
+                                </div>
+                            </form>
+                        </fieldset>
 
-                <fieldset className="border border-dark border-3 rounded-3 p-3 mt-4">
-                    <legend><h2>Thông tin nhóm thuốc</h2></legend>
-                    <form>
-                        <div className="mb-3">
-                            <label htmlFor="groupId" className="form-label">Mã nhóm thuốc</label>
-                            <input type="text" className="form-control" id="groupId" value={medicineGroupId} onChange={(e) => setMedicineGroupId(e.target.value)} readOnly/>
+
+                        <div className="my-3" style={{textAlign: 'right'}}>
+                            <button className="btn btn-success" id="addBtn" disabled={disableButton} onClick={() => createNewMedicineGroup()}>
+                                <i className="bi bi-plus-circle"></i> {isAdding ? "Hoàn Thành" : "Thêm"}</button>
+                            <button className="btn btn-custom" id="editBtn" disabled={disableButton} onClick={() => updateMedicineGroupById()}><i className="bi bi-pencil-square"></i> Sửa</button>
+                            <button className="btn btn-danger" id="deleteBtn" onClick={() => confirmDelete()}><i className="bi bi-x-circle"></i> Xóa</button>
+                            <button className="btn btn-primary" id="backBtn" onClick={() => backButton()}><i className="bi bi-arrow-return-left"></i> Trở về</button>
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="groupName" className="form-label">Tên nhóm thuốc</label>
-                            <input type="text" className="form-control" id="groupName"  value={medicineGroupName} onChange={(e) => setMedicineGroupName(e.target.value)}/>
-                            {errorMessage && <div className="text-danger">{errorMessage}</div>}
-                        </div>
-                    </form>
-                </fieldset>
 
 
-                <div className="my-3" style={{textAlign: 'right'}}>
-                    <button className="btn btn-success" id="addBtn" onClick={() => createNewMedicineGroup()}>
-                        <i className="bi bi-plus-circle"></i> {isAdding ? "Hoàn Thành" : "Thêm"}</button>
-                    <button className="btn btn-custom" id="editBtn" onClick={() => updateMedicineGroupById()}><i className="bi bi-pencil-square"></i> Sửa</button>
-                    <button className="btn btn-danger" id="deleteBtn" onClick={() => confirmDelete()}><i className="bi bi-x-circle"></i> Xóa</button>
-                    <button className="btn btn-primary" id="backBtn" onClick={() => backButton()}><i className="bi bi-arrow-return-left"></i> Trở về</button>
-                </div>
-
-
-                <div className={`modal ${showDeleteModal ? 'show' : ''}`} style={{ display: showDeleteModal ? 'block' : 'none' }}
-                     id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden={!showDeleteModal}>
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Xóa nhóm thuốc</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setShowDeleteModal(false)}></button>
-                            </div>
-                            <div className="modal-body">
-                                <p>Bạn có chắc chắn muốn xóa nhóm thuốc không</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => setShowDeleteModal(false)}>Close</button>
-                                <button type="button" className="btn btn-danger" onClick={() => deleteMedicineGroupById()}>Delete</button>
+                        <div className={`modal ${showDeleteModal ? 'show' : ''}`} style={{ display: showDeleteModal ? 'block' : 'none' }}
+                             id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden={!showDeleteModal}>
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title">Xóa nhóm thuốc</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setShowDeleteModal(false)}></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <p>Bạn có chắc chắn muốn xóa nhóm thuốc không</p>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => setShowDeleteModal(false)}>Close</button>
+                                        <button type="button" className="btn btn-danger" onClick={() => deleteMedicineGroupById()}>Delete</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
-        </StyledContainer>
+
+            </section>
+        </StyledMedicineGroup>
     )
 }

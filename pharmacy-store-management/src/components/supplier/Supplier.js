@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {toast} from "react-toastify";
 import * as Yup from 'yup';
 import styled from 'styled-components';
+import Nav from "../nav/Nav";
 
 const StyledContainer = styled.div`
     body {
@@ -27,6 +28,7 @@ const StyledContainer = styled.div`
 .form-select{
     width: 100%;
     margin-right: 10px;
+    margin-top: 5px
 }
 .form-control{
     width: 100%;
@@ -82,7 +84,7 @@ b{
     margin: 2px 0px; /* Lề */
     cursor: pointer; /* Con trỏ chuột */
     border-radius: 0.375rem;
-    width: 70%;
+    width: 75%;
 }
 .sort{
     margin-left: 150px;
@@ -173,7 +175,17 @@ i{
     margin-right: 5px;
 }
 
-
+.main {
+    display: flex;
+    padding-left: 3px;
+    padding-top: 10px;
+}
+.main-right {
+    flex: 5; 
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+}
 
 `;
 
@@ -351,8 +363,8 @@ export const Supplier = () => {
                 }
                 await SupplierService.addSupplier(newSupplierData);
                 await fetchSuppliers();
-                handleCloseAddModal();
                 setIsFormSubmitted(true); // Set isFormSubmitted to true after successful addition
+                handleCloseAddModal();
                 toast('🦄Thêm nhà cung cấp thành công!');
             } catch (error) {
                 console.error('Error adding supplier:', error);
@@ -435,9 +447,9 @@ export const Supplier = () => {
             try {
                 await SupplierService.updateSupplier(selectedSupplierId, editSupplierData);
                 await fetchSuppliers();
+                setIsFormSubmitted(true); // Set isFormSubmitted to true after successful addition
 
                 handleCloseEditModal();
-                setIsFormSubmitted(true); // Set isFormSubmitted to true after successful addition
 
                 toast('🦄Cập nhật nhà cung cấp thành công!');
             } catch (error) {
@@ -454,259 +466,264 @@ export const Supplier = () => {
 
     return (
         <StyledContainer>
-            <div className="container">
-                <div className="row">
-                    <div className="col-1"></div>
-                    <div className="col-10">
-                        <div className="boloc">
-                            <fieldset className="border rounded-3 p-3">
-                                <legend><b>Bộ lọc</b></legend>
-                                <div style={{ display: "flex" }}>
-                                    <div className="search-selected">
-                                        <span>Lọc theo</span>
-                                        <a style={{ display: "flex", alignItems: "center" }}>
-                                            <select className="form-select" value={searchType} onChange={handleSearchTypeChange}>
-                                                <option value="supplierId">Mã nhà cung cấp</option>
-                                                <option value="supplierName">Tên nhà cung cấp</option>
-                                                <option value="address">Địa chỉ</option>
-                                                <option value="phoneNumber">Số điện thoại</option>
-                                            </select>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                aria-label="Sizing example input"
-                                                aria-describedby="inputGroup-sizing-sm"
-                                                value={searchInput}
-                                                onChange={handleSearchInputChange}
-                                            />
-                                            <button className="myButton" onClick={handleSearch}>
-                                                <i className="bi bi-search"></i>Lọc kết quả
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div className="sort">
-                                        <span>Sắp xếp theo</span>
-                                        <a>
-                                            <select className="form-select" value={orderBy} onChange={handleSortChange}>
-                                                <option value="supplierId">Mã nhà cung cấp</option>
-                                                <option value="supplierName">Tên nhà cung cấp</option>
-                                                <option value="address">Địa chỉ</option>
-                                                <option value="phoneNumber">Số điện thoại</option>
-                                            </select>
-                                        </a>
-                                    </div>
+            <section className="main">
+                <Nav />
+                <div className="main-right">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-1"></div>
+                            <div className="col-10">
+                                <div className="boloc">
+                                    <fieldset className="border rounded-3 p-3">
+                                        <legend><b>Bộ lọc</b></legend>
+                                        <div style={{ display: "flex" }}>
+                                            <div className="search-selected">
+                                                <span>Lọc theo</span>
+                                                <a style={{ display: "flex", alignItems: "center" }}>
+                                                    <select className="form-select" value={searchType} onChange={handleSearchTypeChange}>
+                                                        <option value="supplierId">Mã nhà cung cấp</option>
+                                                        <option value="supplierName">Tên nhà cung cấp</option>
+                                                        <option value="address">Địa chỉ</option>
+                                                        <option value="phoneNumber">Số điện thoại</option>
+                                                    </select>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        aria-label="Sizing example input"
+                                                        aria-describedby="inputGroup-sizing-sm"
+                                                        value={searchInput}
+                                                        onChange={handleSearchInputChange}
+                                                    />
+                                                    <button className="myButton" onClick={handleSearch}>
+                                                        <i className="bi bi-search"></i>Lọc kết quả
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div className="sort">
+                                                <span>Sắp xếp theo</span>
+                                                <a>
+                                                    <select className="form-select" value={orderBy} onChange={handleSortChange}>
+                                                        <option value="supplierId">Mã nhà cung cấp</option>
+                                                        <option value="supplierName">Tên nhà cung cấp</option>
+                                                        <option value="address">Địa chỉ</option>
+                                                        <option value="phoneNumber">Số điện thoại</option>
+                                                    </select>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                 </div>
-                            </fieldset>
-                        </div>
-                        <div>
-                            <fieldset className="border rounded-3 p-3">
-                                <legend><b>Danh sách nhà cung cấp</b></legend>
-                                <table className="myTable">
-                                    <thead>
-                                    <tr className="row-scope">
-                                        <th>Mã nhà cung cấp</th>
-                                        <th>Tên nhà cung cấp</th>
-                                        <th>Địa chỉ</th>
-                                        <th>SĐT</th>
-                                        <th>Công nợ</th>
-                                        <th>Ghi chú</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {suppliers && suppliers.length > 0 ? (
-                                        suppliers.map((supplier, index) => (
-                                            <tr className="table-row" key={index} onClick={(event) => highlightRow(event, supplier)}>
-                                                <td className="row-id">{supplier.supplierId}</td>
-                                                <td className="row-name">{supplier.supplierName}</td>
-                                                <td className="row-address">{supplier.address}</td>
-                                                <td>{supplier.phoneNumber}</td>
-                                                <td>{supplier.toPayDebt.toLocaleString()} đ</td>
-                                                <td>{supplier.note}</td>
+                                <div>
+                                    <fieldset className="border rounded-3 p-3">
+                                        <legend><b>Danh sách nhà cung cấp</b></legend>
+                                        <table className="myTable">
+                                            <thead>
+                                            <tr className="row-scope">
+                                                <th>Mã nhà cung cấp</th>
+                                                <th>Tên nhà cung cấp</th>
+                                                <th>Địa chỉ</th>
+                                                <th>SĐT</th>
+                                                <th>Công nợ</th>
+                                                <th>Ghi chú</th>
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="6">Không có dữ liệu</td>
-                                        </tr>
-                                    )}
-                                    </tbody>
-                                </table>
-                                <nav aria-label="Page navigation example">
-                                    <ul className="pagination justify-content-center">
-                                        {currentPage !== 0 && (
-                                            <li className="page-item">
-                                                <span className="page-link" onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
-                                            </li>
-                                        )}
-
-                                        {Array.from({ length: totalPages }, (_, index) => {
-                                            // Kiem tra neu index trang gan voi trang hien tai
-                                            if (index === 0 || index === totalPages - 1 || Math.abs(currentPage - index) <= 2) {
-                                                return (
-                                                    <li key={index} className={`page-item ${currentPage === index ? 'active' : ''}`}>
-                                                        <span className="page-link" onClick={() => handlePaginate(index)}>{index + 1}</span>
+                                            </thead>
+                                            <tbody>
+                                            {suppliers && suppliers.length > 0 ? (
+                                                suppliers.map((supplier, index) => (
+                                                    <tr className="table-row" key={index} onClick={(event) => highlightRow(event, supplier)}>
+                                                        <td className="row-id">{supplier.supplierId}</td>
+                                                        <td className="row-name">{supplier.supplierName}</td>
+                                                        <td className="row-address">{supplier.address}</td>
+                                                        <td>{supplier.phoneNumber}</td>
+                                                        <td>{supplier.toPayDebt.toLocaleString()} đ</td>
+                                                        <td>{supplier.note}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="6">Không có dữ liệu</td>
+                                                </tr>
+                                            )}
+                                            </tbody>
+                                        </table>
+                                        <nav aria-label="Page navigation example">
+                                            <ul className="pagination justify-content-center">
+                                                {currentPage !== 0 && (
+                                                    <li className="page-item">
+                                                        <span className="page-link" onClick={() => handlePaginate(currentPage - 1)}>Trước</span>
                                                     </li>
-                                                );
-                                            } else if (Math.abs(currentPage - index) === 3) {
-                                                // Hien thi '...' neu khoang cach giua trang va trang hien tai la 3
-                                                return <li key={index} className="page-item disabled"><span className="page-link">...</span></li>;
-                                            }
-                                            return null;
-                                        })}
-                                        {currentPage !== totalPages - 1 && (
-                                            <li className="page-item">
-                                                <span className="page-link" onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
-                                            </li>
-                                        )}
-                                    </ul>
-                                </nav>
-                            </fieldset>
-                        </div>
-                        <div className="chucNang">
-                            <button type="button" className="btn btn-success" onClick={handleShowAddModal}>
-                                <i className="bi bi-plus-circle"></i> Thêm
-                            </button>
-                            <button type="button" className="btn btn-custom" onClick={handleShowEditModal}>
-                                <i className="bi bi-pencil-square"></i> Sửa
-                            </button>
-                            <button type="button" className="btn btn-danger" onClick={handleDeleteButtonClick}>
-                                <i className="bi bi-x-circle"></i> Xóa
-                            </button>
-                            <button type="button" className="btn btn-primary" onClick={handleReset}>
-                                <i className="bi bi-arrow-return-left"></i> Trở về
-                            </button>
-                        </div>
-                    </div>
-                    <div className="col-1"></div>
-                </div>
-                {/* Modal xoá */}
-                <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header text-center">
-                                <h5 className="modal-title w-100" id="deleteModalLabel">Xác nhận xóa</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleCancelDelete}></button>
+                                                )}
+
+                                                {Array.from({ length: totalPages }, (_, index) => {
+                                                    // Kiem tra neu index trang gan voi trang hien tai
+                                                    if (index === 0 || index === totalPages - 1 || Math.abs(currentPage - index) <= 2) {
+                                                        return (
+                                                            <li key={index} className={`page-item ${currentPage === index ? 'active' : ''}`}>
+                                                                <span className="page-link" onClick={() => handlePaginate(index)}>{index + 1}</span>
+                                                            </li>
+                                                        );
+                                                    } else if (Math.abs(currentPage - index) === 3) {
+                                                        // Hien thi '...' neu khoang cach giua trang va trang hien tai la 3
+                                                        return <li key={index} className="page-item disabled"><span className="page-link">...</span></li>;
+                                                    }
+                                                    return null;
+                                                })}
+                                                {currentPage !== totalPages - 1 && (
+                                                    <li className="page-item">
+                                                        <span className="page-link" onClick={() => handlePaginate(currentPage + 1)}>Sau</span>
+                                                    </li>
+                                                )}
+                                            </ul>
+                                        </nav>
+                                    </fieldset>
+                                </div>
+                                <div className="chucNang">
+                                    <button type="button" className="btn btn-success" onClick={handleShowAddModal}>
+                                        <i className="bi bi-plus-circle"></i> Thêm
+                                    </button>
+                                    <button type="button" className="btn btn-custom" onClick={handleShowEditModal}>
+                                        <i className="bi bi-pencil-square"></i> Sửa
+                                    </button>
+                                    <button type="button" className="btn btn-danger" onClick={handleDeleteButtonClick}>
+                                        <i className="bi bi-x-circle"></i> Xóa
+                                    </button>
+                                    <button type="button" className="btn btn-primary" onClick={handleReset}>
+                                        <i className="bi bi-arrow-return-left"></i> Trở về
+                                    </button>
+                                </div>
                             </div>
-                            <div className="modal-body">
-                                Bạn có chắc chắn muốn xóa nhà cung cấp <span id="deleteItem" className="text-danger">
+                            <div className="col-1"></div>
+                        </div>
+                        {/* Modal xoá */}
+                        <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header text-center">
+                                        <h5 className="modal-title w-100" id="deleteModalLabel">Xác nhận xóa</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleCancelDelete}></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        Bạn có chắc chắn muốn xóa nhà cung cấp <span id="deleteItem" className="text-danger">
                     {suppliers.find((x) => x.supplierId === idSupplierDelete)?.supplierName}
                 </span> không?
-                                <p></p>
-                                <p className="text-danger"><i>Lưu ý: thao tác này không được hoàn tác</i></p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleCancelDelete}>Hủy</button>
-                                <button type="button" className="btn btn-danger" onClick={handleConfirmDelete}>Xóa</button>
+                                        <p></p>
+                                        <p className="text-danger"><i>Lưu ý: thao tác này không được hoàn tác</i></p>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleCancelDelete}>Hủy</button>
+                                        <button type="button" className="btn btn-danger" onClick={handleConfirmDelete}>Xóa</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        {/* Modal thêm */}
+                        {showAddModal && (
+                            <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
+                                <div className="modal-dialog modal-dialog-centered modal-lg">
+                                    <div className="modal-content">
+                                        <div className="modal-header text-center">
+                                            <h5 className="modal-title w-100" id="addSupplierModalLabel">Thêm Nhà Cung Cấp Mới</h5>
+                                            <button type="button" className="btn-close" onClick={handleCloseAddModal} aria-label="Close"></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierId" className="form-label modal-label">Mã nhà cung cấp</label>
+                                                    <input type="text" className="form-control" id="supplierId" name="supplierId" placeholder="ex: DOMESCO" onChange={handleChange} required />
+                                                    {errors.supplierId && <div className="text-danger">{errors.supplierId}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierName" className="form-label modal-label">Tên nhà cung cấp</label>
+                                                    <input type="text" className="form-control" id="supplierName" name="supplierName" placeholder="ex: Công ty DOMESCO" onChange={handleChange} required />
+                                                    {errors.supplierName && <div className="text-danger">{errors.supplierName}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierAddress" className="form-label modal-label">Địa chỉ</label>
+                                                    <input type="text" className="form-control" id="supplierAddress" name="address" placeholder="ex: 123 Phan Đăng Lưu, Đà Nẵng" onChange={handleChange}/>
+                                                    {errors.address && <div className="text-danger">{errors.address}</div>}
+
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierPhone" className="form-label modal-label">Điện thoại</label>
+                                                    <input type="tel" className="form-control" id="supplierPhone" name="phoneNumber" placeholder="ex: 0972346898" onChange={handleChange}/>
+                                                    {errors.phoneNumber && <div className="text-danger">{errors.phoneNumber}</div>}
+
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierEmail" className="form-label modal-label">Email</label>
+                                                    <input type="email" className="form-control" id="supplierEmail" name="email" placeholder="ex: abc123@gmail.com" onChange={handleChange}/>
+                                                    {errors.email && <div className="text-danger">{errors.email}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierNote" className="form-label modal-label">Ghi chú</label>
+                                                    <textarea className="form-control" id="supplierNote" name="note" rows="3" onChange={handleChange}></textarea>
+                                                    {errors.note && <div className="text-danger">{errors.note}</div>}
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-success" onClick={handleAddSupplier} disabled={isFormSubmitted}><i className="bi bi-plus-circle"></i>Thêm</button>
+                                            <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i className="bi bi-arrow-return-left"></i>Trở về</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {/* Modal sửa */}
+                        {showEditModal && (
+                            <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
+                                <div className="modal-dialog modal-dialog-centered modal-lg">
+                                    <div className="modal-content">
+                                        <div className="modal-header text-center">
+                                            <h5 className="modal-title w-100" id="editSupplierModalLabel">Sửa Thông Tin Nhà Cung Cấp</h5>
+                                            <button type="button" className="btn-close" onClick={handleCloseEditModal} aria-label="Close"></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form>
+                                                {/* Điền thông tin nhà cung cấp được chọn vào các input */}
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierId" className="form-label modal-label">Mã nhà cung cấp</label>
+                                                    <input type="text" className="form-control" id="supplierId" name="supplierId" value={editSupplierData.supplierId} onChange={handleEditChange} required />
+                                                    {errors.supplierId && <div className="text-danger">{errors.supplierId}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierName" className="form-label modal-label">Tên nhà cung cấp</label>
+                                                    <input type="text" className="form-control" id="supplierName" name="supplierName" value={editSupplierData.supplierName} onChange={handleEditChange} required />
+                                                    {errors.supplierName && <div className="text-danger">{errors.supplierName}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierAddress" className="form-label modal-label">Địa chỉ</label>
+                                                    <input type="text" className="form-control" id="supplierAddress" name="address" value={editSupplierData.address} onChange={handleEditChange} />
+                                                    {errors.address && <div className="text-danger">{errors.address}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierPhone" className="form-label modal-label">Điện thoại</label>
+                                                    <input type="tel" className="form-control" id="supplierPhone" name="phoneNumber" value={editSupplierData.phoneNumber} onChange={handleEditChange} />
+                                                    {errors.phoneNumber && <div className="text-danger">{errors.phoneNumber}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierEmail" className="form-label modal-label">Email</label>
+                                                    <input type="email" className="form-control" id="supplierEmail" name="email" value={editSupplierData.email} onChange={handleEditChange} />
+                                                    {errors.email && <div className="text-danger">{errors.email}</div>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label htmlFor="supplierNote" className="form-label modal-label">Ghi chú</label>
+                                                    <textarea className="form-control" id="supplierNote" name="note" rows="3" value={editSupplierData.note} onChange={handleEditChange}></textarea>
+                                                    {errors.note && <div className="text-danger">{errors.note}</div>}
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-success" onClick={handleEditSupplier} disabled={isFormSubmitted}><i className="bi bi-check-circle"></i>Hoàn thành</button>
+                                            <button type="button" className="btn btn-primary" onClick={handleCloseEditModal}><i className="bi bi-arrow-return-left"></i>Trở về</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
-                {/* Modal thêm */}
-                {showAddModal && (
-                    <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
-                        <div className="modal-dialog modal-dialog-centered modal-lg">
-                            <div className="modal-content">
-                                <div className="modal-header text-center">
-                                    <h5 className="modal-title w-100" id="addSupplierModalLabel">Thêm Nhà Cung Cấp Mới</h5>
-                                    <button type="button" className="btn-close" onClick={handleCloseAddModal} aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <form>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierId" className="form-label modal-label">Mã nhà cung cấp</label>
-                                            <input type="text" className="form-control" id="supplierId" name="supplierId" placeholder="ex: DOMESCO" onChange={handleChange} required />
-                                            {errors.supplierId && <div className="text-danger">{errors.supplierId}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierName" className="form-label modal-label">Tên nhà cung cấp</label>
-                                            <input type="text" className="form-control" id="supplierName" name="supplierName" placeholder="ex: Công ty DOMESCO" onChange={handleChange} required />
-                                            {errors.supplierName && <div className="text-danger">{errors.supplierName}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierAddress" className="form-label modal-label">Địa chỉ</label>
-                                            <input type="text" className="form-control" id="supplierAddress" name="address" placeholder="ex: 123 Phan Đăng Lưu, Đà Nẵng" onChange={handleChange}/>
-                                            {errors.address && <div className="text-danger">{errors.address}</div>}
-
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierPhone" className="form-label modal-label">Điện thoại</label>
-                                            <input type="tel" className="form-control" id="supplierPhone" name="phoneNumber" placeholder="ex: 0972346898" onChange={handleChange}/>
-                                            {errors.phoneNumber && <div className="text-danger">{errors.phoneNumber}</div>}
-
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierEmail" className="form-label modal-label">Email</label>
-                                            <input type="email" className="form-control" id="supplierEmail" name="email" placeholder="ex: abc123@gmail.com" onChange={handleChange}/>
-                                            {errors.email && <div className="text-danger">{errors.email}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierNote" className="form-label modal-label">Ghi chú</label>
-                                            <textarea className="form-control" id="supplierNote" name="note" rows="3" onChange={handleChange}></textarea>
-                                            {errors.note && <div className="text-danger">{errors.note}</div>}
-                                        </div>
-                                    </form>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={handleAddSupplier} disabled={isFormSubmitted}><i className="bi bi-plus-circle"></i>Thêm</button>
-                                    <button type="button" className="btn btn-primary" onClick={handleCloseAddModal}><i className="bi bi-arrow-return-left"></i>Trở về</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {/* Modal sửa */}
-                {showEditModal && (
-                    <div className="modal fade show" tabIndex="-1" style={{ display: "block" }}>
-                        <div className="modal-dialog modal-dialog-centered modal-lg">
-                            <div className="modal-content">
-                                <div className="modal-header text-center">
-                                    <h5 className="modal-title w-100" id="editSupplierModalLabel">Sửa Thông Tin Nhà Cung Cấp</h5>
-                                    <button type="button" className="btn-close" onClick={handleCloseEditModal} aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <form>
-                                        {/* Điền thông tin nhà cung cấp được chọn vào các input */}
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierId" className="form-label modal-label">Mã nhà cung cấp</label>
-                                            <input type="text" className="form-control" id="supplierId" name="supplierId" value={editSupplierData.supplierId} onChange={handleEditChange} required />
-                                            {errors.supplierId && <div className="text-danger">{errors.supplierId}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierName" className="form-label modal-label">Tên nhà cung cấp</label>
-                                            <input type="text" className="form-control" id="supplierName" name="supplierName" value={editSupplierData.supplierName} onChange={handleEditChange} required />
-                                            {errors.supplierName && <div className="text-danger">{errors.supplierName}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierAddress" className="form-label modal-label">Địa chỉ</label>
-                                            <input type="text" className="form-control" id="supplierAddress" name="address" value={editSupplierData.address} onChange={handleEditChange} />
-                                            {errors.address && <div className="text-danger">{errors.address}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierPhone" className="form-label modal-label">Điện thoại</label>
-                                            <input type="tel" className="form-control" id="supplierPhone" name="phoneNumber" value={editSupplierData.phoneNumber} onChange={handleEditChange} />
-                                            {errors.phoneNumber && <div className="text-danger">{errors.phoneNumber}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierEmail" className="form-label modal-label">Email</label>
-                                            <input type="email" className="form-control" id="supplierEmail" name="email" value={editSupplierData.email} onChange={handleEditChange} />
-                                            {errors.email && <div className="text-danger">{errors.email}</div>}
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="supplierNote" className="form-label modal-label">Ghi chú</label>
-                                            <textarea className="form-control" id="supplierNote" name="note" rows="3" value={editSupplierData.note} onChange={handleEditChange}></textarea>
-                                            {errors.note && <div className="text-danger">{errors.note}</div>}
-                                        </div>
-                                    </form>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={handleEditSupplier} disabled={isFormSubmitted}>><i className="bi bi-check-circle"></i>Hoàn thành</button>
-                                    <button type="button" className="btn btn-primary" onClick={handleCloseEditModal}><i className="bi bi-arrow-return-left"></i>Trở về</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
+            </section>
         </StyledContainer>
     );
 };

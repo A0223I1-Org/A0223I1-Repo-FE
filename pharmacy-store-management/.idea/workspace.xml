@@ -71,8 +71,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2bf2e803-508b-479f-bbd6-9bff2d97ca23" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/customer/DetailCustomer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/header/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/Nav.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/banhang.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/banthuoc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/baocao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/cart-shopping-solid.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/google-docs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/logout.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/nhapkho.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/nhatky.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/right-from-bracket-solid.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/truck-solid.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/xuathoantra.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/image/xuathuy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/navInformation/NavInformation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/report/report-chart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/report/report.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/AddPrescriptionModalComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/ListPrescription.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/NotficationModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/UpdatePrescriptionComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/SalesManagement/RetailInvoice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/SalesManagement/RetailSalesManagement.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/EmployeeManagementService/EmployeeCreate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/EmployeeManagementService/EmployeeList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/EmployeeManagementService/EmployeeUpdate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionDetailService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/ReportService/ReportService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/SaleManagementService/RetailInvoice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/SaleManagementService/RetailSalesManagementService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreateUpdateCustomer/ListCustomer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreateUpdateCustomer/ListCustomer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/customer/ListCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/customer/ListCustomer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/supplier/Supplier.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/supplier/Supplier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MedicineGroup/MedicineGroupList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MedicineGroup/MedicineGroupList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MedicineInformation/MedicineInfoList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MedicineInformation/MedicineInfoList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/AddPrescriptionModal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/DeletePrescriptionModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PrescriptionManagement/DeletePrescriptionModalComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/ListPrescription.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/UpdatePrescription.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/prescriptionmanagement/prescription.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AccountService/text.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AccountService/text.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/CustomerManagementService/CustomerService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/CustomerManagementService/CustomerService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/MedicineGroupManagementService/MedicineGroupService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/MedicineGroupManagementService/MedicineGroupService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/InformationService/PrescriptionManagementService/PrescriptionService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,8 +144,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../module1-5/A0223I1-Repo-FE/pharmacy-store-management" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Codegym\Module 6 - part 2\A0223I1-Repo-FE\pharmacy-store-management\src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Codegym\Module 6 - part 2\A0223I1-Repo-FE\pharmacy-store-management\src\utils\InformationService" />
+      <recent name="D:\Codegym\Module 6 - part 2\A0223I1-Repo-FE\pharmacy-store-management\src\pages" />
+      <recent name="D:\Codegym\Module 6 - part 2\A0223I1-Repo-FE\pharmacy-store-management\src" />
+      <recent name="D:\Codegym\Module 6 - part 2\A0223I1-Repo-FE\pharmacy-store-management\src\components" />
+    </key>
   </component>
   <component name="RunManager" selected="npm.start">
     <configuration name="Debug" type="JavascriptDebugType" uri="http://localhost:3000">
@@ -149,7 +209,13 @@
       <workItem from="1710326746853" duration="5657000" />
       <workItem from="1710413013137" duration="5000000" />
       <workItem from="1710475281810" duration="6790000" />
-      <workItem from="1710561081225" duration="5850000" />
+      <workItem from="1710561081225" duration="6119000" />
+      <workItem from="1710686265977" duration="2417000" />
+      <workItem from="1710868013357" duration="216000" />
+      <workItem from="1710899934468" duration="7165000" />
+      <workItem from="1711010796400" duration="588000" />
+      <workItem from="1711021225932" duration="2899000" />
+      <workItem from="1711274615325" duration="1519000" />
     </task>
     <servers />
   </component>
@@ -177,25 +243,25 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="499" y="155" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.816@0.0.1536.816" timestamp="1710417524164" />
-    <state x="548" y="149" key="FileChooserDialogImpl" timestamp="1710480730295">
+    <state x="548" y="149" key="FileChooserDialogImpl" timestamp="1711276140690">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="548" y="149" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1710480730295" />
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1710519229877">
+    <state x="548" y="149" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1711276140690" />
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1711276143796">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1710519229877" />
-    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1710519229877">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1711276143796" />
+    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1711276143796">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1710519229877" />
-    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1710519229877">
+    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1711276143796" />
+    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1711276143796">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1710519229877" />
-    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1710519229877">
+    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1711276143796" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1711276143796">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1710519229877" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1711276143796" />
   </component>
 </project>
